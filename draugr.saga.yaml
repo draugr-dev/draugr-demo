@@ -1,0 +1,39 @@
+# The Saga for the Draugr demo/UAT app. It enables every implemented control against this
+# repo (the checkout) plus one intentionally-old container image, and renders + publishes
+# reports. See README.md for the guided UAT walkthrough.
+release:
+  name: draugr-demo
+  version: "1.0"
+
+config:
+  controllers:
+    sca:
+      enabled: true # Trivy fs → app/requirements.txt (old, vulnerable deps)
+    secrets:
+      enabled: true # Gitleaks → app/config.example.pem (planted fake key)
+    sast:
+      enabled: true # Semgrep → app/app.py (command injection, eval, …)
+    iac:
+      enabled: true # Trivy config → app/Dockerfile, deploy/pod.yaml
+    images:
+      enabled: true # Trivy → the component's container image
+
+  # Render several formats and deliver them: files locally, plus GitHub code scanning in CI.
+  reports:
+    - format: sarif
+    - format: markdown
+    - format: html
+  publishers:
+    - kind: file
+      dir: ./draugr-out
+    - kind: github # no-ops locally; uploads to the Security tab in GitHub Actions
+
+components:
+  - name: api
+    # exposure/criticality feed prioritization (P1–P4). Run `draugr classify` to change them.
+    exposure: public
+    criticality: important
+    repositories:
+      - url: . # scan this repository's checkout
+    images:
+      - image: python:3.8-slim # images: old base with known CVEs (Trivy)
