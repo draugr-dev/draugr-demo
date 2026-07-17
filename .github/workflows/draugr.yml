@@ -29,7 +29,7 @@ jobs:
         # Non-blocking: this repo is intentionally vulnerable, so the scan "fails" by design.
         # Findings still upload to code scanning (the publisher runs before the gate verdict).
         continue-on-error: true
-        uses: draugr-dev/draugr@v0.21.0 # pin a released version
+        uses: draugr-dev/draugr@v0.22.0 # pin a released version
         with:
           saga: draugr.saga.yaml
           # fail-on: error   # in a real repo, drop continue-on-error and gate here
