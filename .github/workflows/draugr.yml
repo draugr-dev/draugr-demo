@@ -1,10 +1,11 @@
 # Scan with Draugr and publish findings to code scanning via the native `github` publisher.
+# Runs on push to main (populates the Security tab). PRs are covered by the Draugr diff
+# workflow (a sticky new/fixed comment) — keeping code-scanning upload off PRs avoids a second,
+# overlapping "GitHub Advanced Security" PR comment alongside Draugr's own.
 name: Draugr
 
 on:
   push:
-    branches: [main]
-  pull_request:
     branches: [main]
   workflow_dispatch:
 
