@@ -1,0 +1,50 @@
+# Keep the demo clean and predictable. On a weekly schedule — and on demand — re-run the main
+# scan and the curated example PRs against the *latest* stable Draugr release, so the Security tab
+# and each PR's sticky diff comment always reflect the newest release. Nothing new is ever opened:
+# the Draugr workflow pins `version: latest`, so a plain re-run picks up whatever released last.
+name: Refresh demo
+
+on:
+  schedule:
+    - cron: "37 6 * * 1" # weekly, Monday ~06:37 UTC
+  workflow_dispatch: {} # on demand, when you don't want to wait for the weekly run
+
+permissions:
+  contents: read
+  actions: write # dispatch the main scan + re-run the example PRs' checks
+  pull-requests: read
+
+concurrency:
+  group: refresh-demo
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Show the release being showcased
+        run: |
+          latest=$(gh release view --repo draugr-dev/draugr --json tagName --jq .tagName)
+          echo "Refreshing the demo against Draugr $latest" | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - name: Refresh the main scan (code scanning)
+        run: gh workflow run Draugr --repo "$GITHUB_REPOSITORY" --ref main
+
+      - name: Re-run each open example PR's diff
+        run: |
+          set -euo pipefail
+          gh pr list --repo "$GITHUB_REPOSITORY" --state open --json number,headRefName \
+            | jq -c '.[]' | while read -r pr; do
+            num=$(echo "$pr" | jq -r .number)
+            branch=$(echo "$pr" | jq -r .headRefName)
+            run_id=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow=Draugr --branch "$branch" \
+              --event pull_request --limit 1 --json databaseId --jq '.[0].databaseId // empty')
+            if [ -n "$run_id" ]; then
+              echo "PR #$num ($branch): re-running Draugr run $run_id"
+              gh run rerun "$run_id" --repo "$GITHUB_REPOSITORY"
+            else
+              echo "PR #$num ($branch): no prior pull_request run to re-run; skipping"
+            fi
+          done

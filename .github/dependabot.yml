@@ -1,9 +1,0 @@
-# Keep the GitHub Action refs current (draugr-dev/draugr, actions/*). The Draugr binary itself
-# already tracks the newest release via `version: latest` in the workflow; this bumps the pinned
-# action ref so new action features land too.
-version: 2
-updates:
-  - package-ecosystem: github-actions
-    directory: /
-    schedule:
-      interval: weekly
