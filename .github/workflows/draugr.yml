@@ -19,20 +19,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Provision the scanners the Saga's controls need (Trivy, Gitleaks, Semgrep).
-      - uses: aquasecurity/setup-trivy@v0.3.1
-      - run: pipx install semgrep
-      - run: |
-          curl -fsSL https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz \
-            | tar -xz gitleaks && sudo mv gitleaks /usr/local/bin/
-
       - name: Draugr scan + publish
         # Non-blocking: this repo is intentionally vulnerable, so the scan "fails" by design.
         # Findings still upload to code scanning (the publisher runs before the gate verdict).
         continue-on-error: true
-        uses: draugr-dev/draugr@v0.22.0 # pin a released version
+        uses: draugr-dev/draugr@v0.26.1 # pin a released version
         with:
           saga: draugr.saga.yaml
+          tools: true # provision the scanners the Saga needs (Trivy, Gitleaks, Semgrep)
           # fail-on: error   # in a real repo, drop continue-on-error and gate here
 
       - uses: actions/upload-artifact@v4
