@@ -1,35 +1,43 @@
 """
-Intentionally insecure sample service — for exercising Draugr's `sast` control.
-DO NOT copy these patterns into real code.
+Sample service — hardened version.
+
+This is the "after" for the SAST-fix example PR: the command injection, eval, shell=True,
+and debug/all-interfaces issues are removed, so Draugr's `sast` findings for this file clear.
 """
-import os
+import ipaddress
 import subprocess
-from flask import Flask, request
+
+from flask import Flask, abort, request
 
 app = Flask(__name__)
 
 
 @app.route("/ping")
 def ping():
-    # sast: OS command injection — user input flows into a shell command.
+    # Validate input is an IP address, then exec without a shell (argument list, not a string).
     host = request.args.get("host", "")
-    return os.popen("ping -c1 " + host).read()
-
-
-@app.route("/run")
-def run():
-    # sast: subprocess with shell=True and untrusted input.
-    cmd = request.args.get("cmd", "")
-    return subprocess.check_output(cmd, shell=True)
+    try:
+        ipaddress.ip_address(host)
+    except ValueError:
+        abort(400, "invalid host")
+    result = subprocess.run(
+        ["ping", "-c1", host], capture_output=True, text=True, check=False
+    )
+    return result.stdout
 
 
 @app.route("/calc")
 def calc():
-    # sast: use of eval on user input.
-    expr = request.args.get("expr", "0")
-    return str(eval(expr))  # noqa: S307
+    # Arithmetic without eval: sum a fixed set of integer query params.
+    total = 0
+    for value in request.args.getlist("n"):
+        try:
+            total += int(value)
+        except ValueError:
+            abort(400, "n must be an integer")
+    return str(total)
 
 
 if __name__ == "__main__":
-    # sast: binding to all interfaces with debug enabled.
-    app.run(host="0.0.0.0", debug=True)
+    # Bind to loopback, no debug server in production.
+    app.run(host="127.0.0.1", port=5000)
