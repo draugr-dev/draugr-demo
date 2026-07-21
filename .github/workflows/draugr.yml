@@ -1,36 +1,45 @@
-# Scan with Draugr and publish findings to code scanning via the native `github` publisher.
-# Runs on push to main (populates the Security tab). PRs are covered by the Draugr diff
-# workflow (a sticky new/fixed comment) — keeping code-scanning upload off PRs avoids a second,
-# overlapping "GitHub Advanced Security" PR comment alongside Draugr's own.
+# One event-aware Draugr workflow. With the action's default `mode: auto`:
+#   - push to main  → full scan, findings uploaded to code scanning (the Security tab);
+#   - pull request  → scan the base + head and post one sticky new/fixed comment.
+# Keeping code-scanning upload on push (not PRs) is what avoids a second, overlapping
+# "GitHub Advanced Security" comment next to Draugr's own. One workflow, one Saga.
 name: Draugr
 
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: read
-  security-events: write # lets the Saga's `github` publisher upload SARIF to code scanning
+  security-events: write # push: upload SARIF to code scanning
+  pull-requests: write # PR: the sticky diff comment
 
 jobs:
-  scan:
+  draugr:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # diff mode needs the PR's base commit
 
-      - name: Draugr scan + publish
-        # Non-blocking: this repo is intentionally vulnerable, so the scan "fails" by design.
-        # Findings still upload to code scanning (the publisher runs before the gate verdict).
+      - name: Draugr
+        # This repo is intentionally vulnerable, so a full scan "fails" by design — keep the push
+        # scan non-blocking so findings still upload. In a real repo, drop this and gate with
+        # fail-on (push) / fail-on-new (PR).
         continue-on-error: true
-        uses: draugr-dev/draugr@v0.26.1 # pin a released version
+        uses: draugr-dev/draugr@v0.27.0 # Dependabot keeps this current; binary tracks latest below
         with:
           saga: draugr.saga.yaml
+          version: latest # always scan with the newest Draugr release
           tools: true # provision the scanners the Saga needs (Trivy, Gitleaks, Semgrep)
-          # fail-on: error   # in a real repo, drop continue-on-error and gate here
+          # fail-on: error       # (push) gate the build
+          # fail-on-new: error   # (PR)   gate only on findings this PR introduces
 
       - uses: actions/upload-artifact@v4
-        if: always()
+        if: ${{ always() && github.event_name == 'push' }}
         with:
           name: draugr-reports
           path: draugr-out/
