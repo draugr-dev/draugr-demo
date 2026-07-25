@@ -30,7 +30,7 @@ jobs:
         # scan non-blocking so findings still upload. In a real repo, drop this and gate with
         # fail-on (push) / fail-on-new (PR).
         continue-on-error: true
-        uses: draugr-dev/draugr@v0.27.0 # Dependabot keeps this current; binary tracks latest below
+        uses: draugr-dev/draugr@v0.29.0 # action pin; binary tracks latest via version: latest below
         with:
           saga: draugr.saga.yaml
           version: latest # always scan with the newest Draugr release
