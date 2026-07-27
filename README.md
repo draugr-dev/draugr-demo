@@ -74,7 +74,20 @@ draugr scan draugr.saga.yaml --min-priority P2   # focus on what matters now
 Change `exposure`/`criticality` in the Saga and watch the P1–P4 banding shift.
 
 ### Diff — the PR story
-Compare two scans to see what a change introduced, and gate only on *new* findings:
+
+**Three example pull requests are permanently open on this repo, on purpose.** They aren't
+neglected work — each one carries a live Draugr diff comment, which is the only place you can
+see the pull-request gate without setting it up yourself:
+
+| PR | What it shows |
+|---|---|
+| [#3 Add /download endpoint](https://github.com/draugr-dev/draugr-demo/pull/3) | A change that **introduces** a new finding — what the gate is for |
+| [#2 Bump vulnerable dependencies](https://github.com/draugr-dev/draugr-demo/pull/2) | Findings reported as **fixed** |
+| [#1 Harden the API](https://github.com/draugr-dev/draugr-demo/pull/1) | Source fixes clearing `sast` findings |
+
+Their checks are re-run against each new Draugr release, so the comments stay current.
+
+To do the same locally — compare two scans and gate only on *new* findings:
 ```bash
 # Baseline the current state.
 draugr scan draugr.saga.yaml -o base/
