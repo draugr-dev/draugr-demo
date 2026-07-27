@@ -1,0 +1,6161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Draugr report — draugr-demo 1.0</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { font: 15px/1.5 system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 2rem auto; max-width: 60rem; padding: 0 1rem; }
+  h1 { font-size: 1.5rem; margin: 0 0 .25rem; }
+  .verdict { display: inline-block; padding: .15rem .6rem; border-radius: .4rem; font-weight: 700; color: #fff; }
+  .pass { background: #197a3d; }
+  .fail { background: #b3261e; }
+  .rel { color: #666; margin: 0 0 1.25rem; }
+  table { border-collapse: collapse; width: 100%; margin: .5rem 0 1.5rem; font-size: .92rem; }
+  th, td { text-align: left; padding: .4rem .6rem; border-bottom: 1px solid #8883; vertical-align: top; }
+  th { font-weight: 600; }
+  td.num, th.num { text-align: right; }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .88em; }
+  .chips span { display: inline-block; margin-right: 1rem; }
+  .p1 { color: #b3261e; font-weight: 700; }
+  .p2 { color: #c25e00; font-weight: 600; }
+  .sev-critical { color: #b3261e; font-weight: 700; }
+  .sev-high { color: #c2410c; font-weight: 600; }
+  .sev-medium { color: #b45309; }
+  .sev-low { color: #888; }
+  footer { color: #888; font-size: .82rem; margin-top: 2rem; }
+</style>
+</head>
+<body>
+<h1>Draugr — <span class="verdict fail">FAIL</span></h1>
+<p class="rel">draugr-demo 1.0</p>
+
+
+<p class="chips">
+  <span class="p1">P1 99</span>
+  <span class="p2">P2 174</span>
+  <span>P3 166</span>
+  <span>P4 0</span>
+</p>
+
+
+
+<h2>Controls</h2>
+<table>
+<thead><tr><th>Control</th><th>Verdict</th><th class="num">Critical</th><th class="num">High</th><th class="num">Medium</th><th class="num">Low</th></tr></thead>
+<tbody>
+<tr>
+  <td>secrets</td>
+  <td><strong>FAIL</strong></td>
+  <td class="num">0</td>
+  <td class="num">1</td>
+  <td class="num">0</td>
+  <td class="num">0</td>
+</tr><tr>
+  <td>iac</td>
+  <td><strong>FAIL</strong></td>
+  <td class="num">0</td>
+  <td class="num">4</td>
+  <td class="num">5</td>
+  <td class="num">12</td>
+</tr><tr>
+  <td>images</td>
+  <td><strong>FAIL</strong></td>
+  <td class="num">10</td>
+  <td class="num">68</td>
+  <td class="num">152</td>
+  <td class="num">153</td>
+</tr><tr>
+  <td>sast</td>
+  <td><strong>FAIL</strong></td>
+  <td class="num">0</td>
+  <td class="num">7</td>
+  <td class="num">9</td>
+  <td class="num">0</td>
+</tr><tr>
+  <td>sca</td>
+  <td><strong>FAIL</strong></td>
+  <td class="num">3</td>
+  <td class="num">6</td>
+  <td class="num">8</td>
+  <td class="num">1</td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>Findings</h2>
+
+<table>
+<thead><tr><th>Priority</th><th>Severity</th><th class="num">Score</th><th>Rule</th><th>Control</th><th>Scanner</th><th>Location</th><th>Message</th></tr></thead>
+<tbody>
+<tr>
+  <td>P1</td>
+  <td class="sev-critical">critical</td>
+  <td class="num">9.8</td>
+  <td><code>CVE-2026-42010</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libgnutls30
+Installed Version: 3.7.9-2&#43;deb12u3
+Vulnerability CVE-2026-42010
+Severity: CRITICAL
+Fixed Version: 3.7.9-2&#43;deb12u7
+Link: [CVE-2026-42010](https://avd.aquasec.com/nvd/cve-2026-42010)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-critical">critical</td>
+  <td class="num">9.8</td>
+  <td><code>CVE-2026-31789</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libssl3
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-31789
+Severity: CRITICAL
+Fixed Version: 3.0.19-1~deb12u2
+Link: [CVE-2026-31789](https://avd.aquasec.com/nvd/cve-2026-31789)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-critical">critical</td>
+  <td class="num">9.8</td>
+  <td><code>CVE-2026-31789</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: openssl
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-31789
+Severity: CRITICAL
+Fixed Version: 3.0.19-1~deb12u2
+Link: [CVE-2026-31789](https://avd.aquasec.com/nvd/cve-2026-31789)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-critical">critical</td>
+  <td class="num">9.8</td>
+  <td><code>CVE-2026-8376</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: perl-base
+Installed Version: 5.36.0-7&#43;deb12u1
+Vulnerability CVE-2026-8376
+Severity: CRITICAL
+Fixed Version: 
+Link: [CVE-2026-8376](https://avd.aquasec.com/nvd/cve-2026-8376)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-critical">critical</td>
+  <td class="num">9.8</td>
+  <td><code>CVE-2023-45853</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: zlib1g
+Installed Version: 1:1.2.13.dfsg-1
+Vulnerability CVE-2023-45853
+Severity: CRITICAL
+Fixed Version: 
+Link: [CVE-2023-45853](https://avd.aquasec.com/nvd/cve-2023-45853)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-critical">critical</td>
+  <td class="num">9.8</td>
+  <td><code>CVE-2019-20477</code></td>
+  <td>sca</td>
+  <td>Trivy</td>
+  <td><code>app/requirements.txt:4</code></td>
+  <td>Package: PyYAML
+Installed Version: 5.1
+Vulnerability CVE-2019-20477
+Severity: CRITICAL
+Fixed Version: 5.2
+Link: [CVE-2019-20477](https://avd.aquasec.com/nvd/cve-2019-20477)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-critical">critical</td>
+  <td class="num">9.8</td>
+  <td><code>CVE-2020-14343</code></td>
+  <td>sca</td>
+  <td>Trivy</td>
+  <td><code>app/requirements.txt:4</code></td>
+  <td>Package: PyYAML
+Installed Version: 5.1
+Vulnerability CVE-2020-14343
+Severity: CRITICAL
+Fixed Version: 5.4
+Link: [CVE-2020-14343](https://avd.aquasec.com/nvd/cve-2020-14343)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-critical">critical</td>
+  <td class="num">9.8</td>
+  <td><code>CVE-2020-1747</code></td>
+  <td>sca</td>
+  <td>Trivy</td>
+  <td><code>app/requirements.txt:4</code></td>
+  <td>Package: PyYAML
+Installed Version: 5.1
+Vulnerability CVE-2020-1747
+Severity: CRITICAL
+Fixed Version: 5.3.1
+Link: [CVE-2020-1747](https://avd.aquasec.com/nvd/cve-2020-1747)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-critical">critical</td>
+  <td class="num">9.5</td>
+  <td><code>CVE-2026-57433</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: perl-base
+Installed Version: 5.36.0-7&#43;deb12u1
+Vulnerability CVE-2026-57433
+Severity: CRITICAL
+Fixed Version: 
+Link: [CVE-2026-57433](https://avd.aquasec.com/nvd/cve-2026-57433)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-critical">critical</td>
+  <td class="num">9.1</td>
+  <td><code>CVE-2026-33845</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libgnutls30
+Installed Version: 3.7.9-2&#43;deb12u3
+Vulnerability CVE-2026-33845
+Severity: CRITICAL
+Fixed Version: 3.7.9-2&#43;deb12u7
+Link: [CVE-2026-33845](https://avd.aquasec.com/nvd/cve-2026-33845)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-critical">critical</td>
+  <td class="num">9.1</td>
+  <td><code>CVE-2025-7458</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libsqlite3-0
+Installed Version: 3.40.1-2
+Vulnerability CVE-2025-7458
+Severity: CRITICAL
+Fixed Version: 
+Link: [CVE-2025-7458](https://avd.aquasec.com/nvd/cve-2025-7458)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-critical">critical</td>
+  <td class="num">9.1</td>
+  <td><code>CVE-2026-13221</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: perl-base
+Installed Version: 5.36.0-7&#43;deb12u1
+Vulnerability CVE-2026-13221
+Severity: CRITICAL
+Fixed Version: 
+Link: [CVE-2026-13221](https://avd.aquasec.com/nvd/cve-2026-13221)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-critical">critical</td>
+  <td class="num">9.1</td>
+  <td><code>CVE-2026-42496</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: perl-base
+Installed Version: 5.36.0-7&#43;deb12u1
+Vulnerability CVE-2026-42496
+Severity: CRITICAL
+Fixed Version: 
+Link: [CVE-2026-42496](https://avd.aquasec.com/nvd/cve-2026-42496)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.8</td>
+  <td><code>CVE-2024-6345</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: setuptools
+Installed Version: 57.5.0
+Vulnerability CVE-2024-6345
+Severity: HIGH
+Fixed Version: 70.0.0
+Link: [CVE-2024-6345](https://avd.aquasec.com/nvd/cve-2024-6345)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.6</td>
+  <td><code>CVE-2019-10906</code></td>
+  <td>sca</td>
+  <td>Trivy</td>
+  <td><code>app/requirements.txt:5</code></td>
+  <td>Package: Jinja2
+Installed Version: 2.10
+Vulnerability CVE-2019-10906
+Severity: HIGH
+Fixed Version: 2.10.1
+Link: [CVE-2019-10906](https://avd.aquasec.com/nvd/cve-2019-10906)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.4</td>
+  <td><code>CVE-2026-57432</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: perl-base
+Installed Version: 5.36.0-7&#43;deb12u1
+Vulnerability CVE-2026-57432
+Severity: HIGH
+Fixed Version: 
+Link: [CVE-2026-57432](https://avd.aquasec.com/nvd/cve-2026-57432)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.2</td>
+  <td><code>CVE-2025-32988</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libgnutls30
+Installed Version: 3.7.9-2&#43;deb12u3
+Vulnerability CVE-2025-32988
+Severity: HIGH
+Fixed Version: 3.7.9-2&#43;deb12u5
+Link: [CVE-2025-32988](https://avd.aquasec.com/nvd/cve-2025-32988)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.2</td>
+  <td><code>CVE-2025-32990</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libgnutls30
+Installed Version: 3.7.9-2&#43;deb12u3
+Vulnerability CVE-2025-32990
+Severity: HIGH
+Fixed Version: 3.7.9-2&#43;deb12u5
+Link: [CVE-2025-32990](https://avd.aquasec.com/nvd/cve-2025-32990)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.1</td>
+  <td><code>CVE-2026-28387</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libssl3
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-28387
+Severity: HIGH
+Fixed Version: 3.0.19-1~deb12u2
+Link: [CVE-2026-28387](https://avd.aquasec.com/nvd/cve-2026-28387)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.1</td>
+  <td><code>CVE-2026-28387</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: openssl
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-28387
+Severity: HIGH
+Fixed Version: 3.0.19-1~deb12u2
+Link: [CVE-2026-28387](https://avd.aquasec.com/nvd/cve-2026-28387)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.1</td>
+  <td><code>CVE-2023-31484</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: perl-base
+Installed Version: 5.36.0-7&#43;deb12u1
+Vulnerability CVE-2023-31484
+Severity: HIGH
+Fixed Version: 5.36.0-7&#43;deb12u3
+Link: [CVE-2023-31484](https://avd.aquasec.com/nvd/cve-2023-31484)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.0</td>
+  <td><code>DS-0002</code></td>
+  <td>iac</td>
+  <td>Trivy</td>
+  <td><code>app/Dockerfile:1</code></td>
+  <td>Artifact: app/Dockerfile
+Type: dockerfile
+Vulnerability DS-0002
+Severity: HIGH
+Message: Specify at least 1 USER command in Dockerfile with non-root user as argument
+Link: [DS-0002](https://avd.aquasec.com/misconfig/ds-0002)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.0</td>
+  <td><code>KSV-0014</code></td>
+  <td>iac</td>
+  <td>Trivy</td>
+  <td><code>deploy/pod.yaml:8</code></td>
+  <td>Artifact: deploy/pod.yaml
+Type: kubernetes
+Vulnerability KSV-0014
+Severity: HIGH
+Message: Container &#39;api&#39; of Pod &#39;demo-api&#39; should set &#39;securityContext.readOnlyRootFilesystem&#39; to true
+Link: [KSV-0014](https://avd.aquasec.com/misconfig/ksv-0014)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.0</td>
+  <td><code>KSV-0017</code></td>
+  <td>iac</td>
+  <td>Trivy</td>
+  <td><code>deploy/pod.yaml:8</code></td>
+  <td>Artifact: deploy/pod.yaml
+Type: kubernetes
+Vulnerability KSV-0017
+Severity: HIGH
+Message: Container &#39;api&#39; of Pod &#39;demo-api&#39; should set &#39;securityContext.privileged&#39; to false
+Link: [KSV-0017](https://avd.aquasec.com/misconfig/ksv-0017)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.0</td>
+  <td><code>KSV-0118</code></td>
+  <td>iac</td>
+  <td>Trivy</td>
+  <td><code>deploy/pod.yaml:6</code></td>
+  <td>Artifact: deploy/pod.yaml
+Type: kubernetes
+Vulnerability KSV-0118
+Severity: HIGH
+Message: pod demo-api in default namespace is using the default security context, which allows root privileges
+Link: [KSV-0118](https://avd.aquasec.com/misconfig/ksv-0118)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.0</td>
+  <td><code>CVE-2026-53615</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: bsdutils
+Installed Version: 1:2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-53615
+Severity: HIGH
+Fixed Version: 
+Link: [CVE-2026-53615](https://avd.aquasec.com/nvd/cve-2026-53615)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.0</td>
+  <td><code>CVE-2026-54369</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libacl1
+Installed Version: 2.3.1-3
+Vulnerability CVE-2026-54369
+Severity: HIGH
+Fixed Version: 
+Link: [CVE-2026-54369](https://avd.aquasec.com/nvd/cve-2026-54369)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.0</td>
+  <td><code>CVE-2026-53615</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libblkid1
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-53615
+Severity: HIGH
+Fixed Version: 
+Link: [CVE-2026-53615](https://avd.aquasec.com/nvd/cve-2026-53615)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.0</td>
+  <td><code>CVE-2025-59375</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libexpat1
+Installed Version: 2.5.0-1&#43;deb12u1
+Vulnerability CVE-2025-59375
+Severity: HIGH
+Fixed Version: 
+Link: [CVE-2025-59375](https://avd.aquasec.com/nvd/cve-2025-59375)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.0</td>
+  <td><code>CVE-2026-56131</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libexpat1
+Installed Version: 2.5.0-1&#43;deb12u1
+Vulnerability CVE-2026-56131
+Severity: HIGH
+Fixed Version: 
+Link: [CVE-2026-56131](https://avd.aquasec.com/nvd/cve-2026-56131)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.0</td>
+  <td><code>CVE-2026-56407</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libexpat1
+Installed Version: 2.5.0-1&#43;deb12u1
+Vulnerability CVE-2026-56407
+Severity: HIGH
+Fixed Version: 
+Link: [CVE-2026-56407](https://avd.aquasec.com/nvd/cve-2026-56407)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.0</td>
+  <td><code>CVE-2026-56408</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libexpat1
+Installed Version: 2.5.0-1&#43;deb12u1
+Vulnerability CVE-2026-56408
+Severity: HIGH
+Fixed Version: 
+Link: [CVE-2026-56408](https://avd.aquasec.com/nvd/cve-2026-56408)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.0</td>
+  <td><code>CVE-2026-33846</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libgnutls30
+Installed Version: 3.7.9-2&#43;deb12u3
+Vulnerability CVE-2026-33846
+Severity: HIGH
+Fixed Version: 3.7.9-2&#43;deb12u7
+Link: [CVE-2026-33846](https://avd.aquasec.com/nvd/cve-2026-33846)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.0</td>
+  <td><code>CVE-2026-42009</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libgnutls30
+Installed Version: 3.7.9-2&#43;deb12u3
+Vulnerability CVE-2026-42009
+Severity: HIGH
+Fixed Version: 3.7.9-2&#43;deb12u7
+Link: [CVE-2026-42009](https://avd.aquasec.com/nvd/cve-2026-42009)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.0</td>
+  <td><code>CVE-2025-31115</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: liblzma5
+Installed Version: 5.4.1-0.2
+Vulnerability CVE-2025-31115
+Severity: HIGH
+Fixed Version: 5.4.1-1
+Link: [CVE-2025-31115](https://avd.aquasec.com/nvd/cve-2025-31115)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.0</td>
+  <td><code>CVE-2026-53615</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libmount1
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-53615
+Severity: HIGH
+Fixed Version: 
+Link: [CVE-2026-53615](https://avd.aquasec.com/nvd/cve-2026-53615)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.0</td>
+  <td><code>CVE-2025-6020</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libpam-modules
+Installed Version: 1.5.2-6&#43;deb12u1
+Vulnerability CVE-2025-6020
+Severity: HIGH
+Fixed Version: 1.5.2-6&#43;deb12u2
+Link: [CVE-2025-6020](https://avd.aquasec.com/nvd/cve-2025-6020)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.0</td>
+  <td><code>CVE-2025-6020</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libpam-modules-bin
+Installed Version: 1.5.2-6&#43;deb12u1
+Vulnerability CVE-2025-6020
+Severity: HIGH
+Fixed Version: 1.5.2-6&#43;deb12u2
+Link: [CVE-2025-6020](https://avd.aquasec.com/nvd/cve-2025-6020)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.0</td>
+  <td><code>CVE-2025-6020</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libpam-runtime
+Installed Version: 1.5.2-6&#43;deb12u1
+Vulnerability CVE-2025-6020
+Severity: HIGH
+Fixed Version: 1.5.2-6&#43;deb12u2
+Link: [CVE-2025-6020](https://avd.aquasec.com/nvd/cve-2025-6020)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.0</td>
+  <td><code>CVE-2025-6020</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libpam0g
+Installed Version: 1.5.2-6&#43;deb12u1
+Vulnerability CVE-2025-6020
+Severity: HIGH
+Fixed Version: 1.5.2-6&#43;deb12u2
+Link: [CVE-2025-6020](https://avd.aquasec.com/nvd/cve-2025-6020)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.0</td>
+  <td><code>CVE-2026-53615</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libsmartcols1
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-53615
+Severity: HIGH
+Fixed Version: 
+Link: [CVE-2026-53615](https://avd.aquasec.com/nvd/cve-2026-53615)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.0</td>
+  <td><code>CVE-2025-15467</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libssl3
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2025-15467
+Severity: HIGH
+Fixed Version: 3.0.18-1~deb12u2
+Link: [CVE-2025-15467](https://avd.aquasec.com/nvd/cve-2025-15467)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.0</td>
+  <td><code>CVE-2026-45447</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libssl3
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-45447
+Severity: HIGH
+Fixed Version: 3.0.20-1~deb12u2
+Link: [CVE-2026-45447](https://avd.aquasec.com/nvd/cve-2026-45447)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.0</td>
+  <td><code>CVE-2026-53615</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libuuid1
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-53615
+Severity: HIGH
+Fixed Version: 
+Link: [CVE-2026-53615](https://avd.aquasec.com/nvd/cve-2026-53615)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.0</td>
+  <td><code>CVE-2026-53615</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: mount
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-53615
+Severity: HIGH
+Fixed Version: 
+Link: [CVE-2026-53615](https://avd.aquasec.com/nvd/cve-2026-53615)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.0</td>
+  <td><code>CVE-2025-15467</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: openssl
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2025-15467
+Severity: HIGH
+Fixed Version: 3.0.18-1~deb12u2
+Link: [CVE-2025-15467](https://avd.aquasec.com/nvd/cve-2025-15467)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.0</td>
+  <td><code>CVE-2026-45447</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: openssl
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-45447
+Severity: HIGH
+Fixed Version: 3.0.20-1~deb12u2
+Link: [CVE-2026-45447](https://avd.aquasec.com/nvd/cve-2026-45447)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.0</td>
+  <td><code>CVE-2024-56406</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: perl-base
+Installed Version: 5.36.0-7&#43;deb12u1
+Vulnerability CVE-2024-56406
+Severity: HIGH
+Fixed Version: 5.36.0-7&#43;deb12u2
+Link: [CVE-2024-56406](https://avd.aquasec.com/nvd/cve-2024-56406)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.0</td>
+  <td><code>CVE-2026-48962</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: perl-base
+Installed Version: 5.36.0-7&#43;deb12u1
+Vulnerability CVE-2026-48962
+Severity: HIGH
+Fixed Version: 
+Link: [CVE-2026-48962](https://avd.aquasec.com/nvd/cve-2026-48962)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.0</td>
+  <td><code>CVE-2026-53615</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: util-linux
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-53615
+Severity: HIGH
+Fixed Version: 
+Link: [CVE-2026-53615](https://avd.aquasec.com/nvd/cve-2026-53615)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.0</td>
+  <td><code>CVE-2026-53615</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: util-linux-extra
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-53615
+Severity: HIGH
+Fixed Version: 
+Link: [CVE-2026-53615](https://avd.aquasec.com/nvd/cve-2026-53615)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.0</td>
+  <td><code>CVE-2025-47273</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: setuptools
+Installed Version: 57.5.0
+Vulnerability CVE-2025-47273
+Severity: HIGH
+Fixed Version: 78.1.1
+Link: [CVE-2025-47273](https://avd.aquasec.com/nvd/cve-2025-47273)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">8.0</td>
+  <td><code>CVE-2026-8643</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: pip
+Installed Version: 23.0.1
+Vulnerability CVE-2026-8643
+Severity: MEDIUM
+Fixed Version: 26.1.2
+Link: [CVE-2026-8643](https://avd.aquasec.com/nvd/cve-2026-8643)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.8</td>
+  <td><code>CVE-2026-25210</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libexpat1
+Installed Version: 2.5.0-1&#43;deb12u1
+Vulnerability CVE-2026-25210
+Severity: HIGH
+Fixed Version: 
+Link: [CVE-2026-25210](https://avd.aquasec.com/nvd/cve-2026-25210)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.8</td>
+  <td><code>CVE-2025-69720</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libncursesw6
+Installed Version: 6.4-4
+Vulnerability CVE-2025-69720
+Severity: HIGH
+Fixed Version: 
+Link: [CVE-2025-69720](https://avd.aquasec.com/nvd/cve-2025-69720)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.8</td>
+  <td><code>CVE-2025-69720</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libtinfo6
+Installed Version: 6.4-4
+Vulnerability CVE-2025-69720
+Severity: HIGH
+Fixed Version: 
+Link: [CVE-2025-69720](https://avd.aquasec.com/nvd/cve-2025-69720)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.8</td>
+  <td><code>CVE-2025-69720</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: ncurses-base
+Installed Version: 6.4-4
+Vulnerability CVE-2025-69720
+Severity: HIGH
+Fixed Version: 
+Link: [CVE-2025-69720](https://avd.aquasec.com/nvd/cve-2025-69720)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.8</td>
+  <td><code>CVE-2025-69720</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: ncurses-bin
+Installed Version: 6.4-4
+Vulnerability CVE-2025-69720
+Severity: HIGH
+Fixed Version: 
+Link: [CVE-2025-69720](https://avd.aquasec.com/nvd/cve-2025-69720)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.8</td>
+  <td><code>CVE-2024-56326</code></td>
+  <td>sca</td>
+  <td>Trivy</td>
+  <td><code>app/requirements.txt:5</code></td>
+  <td>Package: Jinja2
+Installed Version: 2.10
+Vulnerability CVE-2024-56326
+Severity: MEDIUM
+Fixed Version: 3.1.5
+Link: [CVE-2024-56326](https://avd.aquasec.com/nvd/cve-2024-56326)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.7</td>
+  <td><code>CVE-2025-6965</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libsqlite3-0
+Installed Version: 3.40.1-2
+Vulnerability CVE-2025-6965
+Severity: HIGH
+Fixed Version: 3.40.1-2&#43;deb12u2
+Link: [CVE-2025-6965](https://avd.aquasec.com/nvd/cve-2025-6965)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.5</td>
+  <td><code>CVE-2026-41992</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: gzip
+Installed Version: 1.12-1
+Vulnerability CVE-2026-41992
+Severity: HIGH
+Fixed Version: 
+Link: [CVE-2026-41992](https://avd.aquasec.com/nvd/cve-2026-41992)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.5</td>
+  <td><code>CVE-2023-52425</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libexpat1
+Installed Version: 2.5.0-1&#43;deb12u1
+Vulnerability CVE-2023-52425
+Severity: HIGH
+Fixed Version: 2.5.0-1&#43;deb12u2
+Link: [CVE-2023-52425](https://avd.aquasec.com/nvd/cve-2023-52425)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.5</td>
+  <td><code>CVE-2026-45186</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libexpat1
+Installed Version: 2.5.0-1&#43;deb12u1
+Vulnerability CVE-2026-45186
+Severity: HIGH
+Fixed Version: 
+Link: [CVE-2026-45186](https://avd.aquasec.com/nvd/cve-2026-45186)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.5</td>
+  <td><code>CVE-2026-40355</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libgssapi-krb5-2
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2026-40355
+Severity: HIGH
+Fixed Version: 1.20.1-2&#43;deb12u5
+Link: [CVE-2026-40355](https://avd.aquasec.com/nvd/cve-2026-40355)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.5</td>
+  <td><code>CVE-2026-40356</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libgssapi-krb5-2
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2026-40356
+Severity: HIGH
+Fixed Version: 1.20.1-2&#43;deb12u5
+Link: [CVE-2026-40356](https://avd.aquasec.com/nvd/cve-2026-40356)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.5</td>
+  <td><code>CVE-2026-40355</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libk5crypto3
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2026-40355
+Severity: HIGH
+Fixed Version: 1.20.1-2&#43;deb12u5
+Link: [CVE-2026-40355](https://avd.aquasec.com/nvd/cve-2026-40355)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.5</td>
+  <td><code>CVE-2026-40356</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libk5crypto3
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2026-40356
+Severity: HIGH
+Fixed Version: 1.20.1-2&#43;deb12u5
+Link: [CVE-2026-40356](https://avd.aquasec.com/nvd/cve-2026-40356)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.5</td>
+  <td><code>CVE-2026-40355</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libkrb5-3
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2026-40355
+Severity: HIGH
+Fixed Version: 1.20.1-2&#43;deb12u5
+Link: [CVE-2026-40355](https://avd.aquasec.com/nvd/cve-2026-40355)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.5</td>
+  <td><code>CVE-2026-40356</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libkrb5-3
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2026-40356
+Severity: HIGH
+Fixed Version: 1.20.1-2&#43;deb12u5
+Link: [CVE-2026-40356](https://avd.aquasec.com/nvd/cve-2026-40356)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.5</td>
+  <td><code>CVE-2026-40355</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libkrb5support0
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2026-40355
+Severity: HIGH
+Fixed Version: 1.20.1-2&#43;deb12u5
+Link: [CVE-2026-40355](https://avd.aquasec.com/nvd/cve-2026-40355)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.5</td>
+  <td><code>CVE-2026-40356</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libkrb5support0
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2026-40356
+Severity: HIGH
+Fixed Version: 1.20.1-2&#43;deb12u5
+Link: [CVE-2026-40356](https://avd.aquasec.com/nvd/cve-2026-40356)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.5</td>
+  <td><code>CVE-2025-69421</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libssl3
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2025-69421
+Severity: HIGH
+Fixed Version: 3.0.18-1~deb12u2
+Link: [CVE-2025-69421](https://avd.aquasec.com/nvd/cve-2025-69421)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.5</td>
+  <td><code>CVE-2026-28388</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libssl3
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-28388
+Severity: HIGH
+Fixed Version: 3.0.19-1~deb12u2
+Link: [CVE-2026-28388](https://avd.aquasec.com/nvd/cve-2026-28388)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.5</td>
+  <td><code>CVE-2026-28389</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libssl3
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-28389
+Severity: HIGH
+Fixed Version: 3.0.19-1~deb12u2
+Link: [CVE-2026-28389](https://avd.aquasec.com/nvd/cve-2026-28389)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.5</td>
+  <td><code>CVE-2026-28390</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libssl3
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-28390
+Severity: HIGH
+Fixed Version: 3.0.19-1~deb12u2
+Link: [CVE-2026-28390](https://avd.aquasec.com/nvd/cve-2026-28390)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.5</td>
+  <td><code>CVE-2025-69421</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: openssl
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2025-69421
+Severity: HIGH
+Fixed Version: 3.0.18-1~deb12u2
+Link: [CVE-2025-69421](https://avd.aquasec.com/nvd/cve-2025-69421)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.5</td>
+  <td><code>CVE-2026-28388</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: openssl
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-28388
+Severity: HIGH
+Fixed Version: 3.0.19-1~deb12u2
+Link: [CVE-2026-28388](https://avd.aquasec.com/nvd/cve-2026-28388)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.5</td>
+  <td><code>CVE-2026-28389</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: openssl
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-28389
+Severity: HIGH
+Fixed Version: 3.0.19-1~deb12u2
+Link: [CVE-2026-28389](https://avd.aquasec.com/nvd/cve-2026-28389)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.5</td>
+  <td><code>CVE-2026-28390</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: openssl
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-28390
+Severity: HIGH
+Fixed Version: 3.0.19-1~deb12u2
+Link: [CVE-2026-28390](https://avd.aquasec.com/nvd/cve-2026-28390)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.5</td>
+  <td><code>CVE-2026-42497</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: perl-base
+Installed Version: 5.36.0-7&#43;deb12u1
+Vulnerability CVE-2026-42497
+Severity: HIGH
+Fixed Version: 
+Link: [CVE-2026-42497](https://avd.aquasec.com/nvd/cve-2026-42497)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.5</td>
+  <td><code>CVE-2026-9538</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: perl-base
+Installed Version: 5.36.0-7&#43;deb12u1
+Vulnerability CVE-2026-9538
+Severity: HIGH
+Fixed Version: 
+Link: [CVE-2026-9538](https://avd.aquasec.com/nvd/cve-2026-9538)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.5</td>
+  <td><code>CVE-2022-40897</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: setuptools
+Installed Version: 57.5.0
+Vulnerability CVE-2022-40897
+Severity: HIGH
+Fixed Version: 65.5.1
+Link: [CVE-2022-40897](https://avd.aquasec.com/nvd/cve-2022-40897)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.5</td>
+  <td><code>CVE-2018-1000656</code></td>
+  <td>sca</td>
+  <td>Trivy</td>
+  <td><code>app/requirements.txt:2</code></td>
+  <td>Package: Flask
+Installed Version: 0.12.2
+Vulnerability CVE-2018-1000656
+Severity: HIGH
+Fixed Version: 0.12.3
+Link: [CVE-2018-1000656](https://avd.aquasec.com/nvd/cve-2018-1000656)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.5</td>
+  <td><code>CVE-2019-1010083</code></td>
+  <td>sca</td>
+  <td>Trivy</td>
+  <td><code>app/requirements.txt:2</code></td>
+  <td>Package: Flask
+Installed Version: 0.12.2
+Vulnerability CVE-2019-1010083
+Severity: HIGH
+Fixed Version: 1.0
+Link: [CVE-2019-1010083](https://avd.aquasec.com/nvd/cve-2019-1010083)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.5</td>
+  <td><code>CVE-2023-30861</code></td>
+  <td>sca</td>
+  <td>Trivy</td>
+  <td><code>app/requirements.txt:2</code></td>
+  <td>Package: Flask
+Installed Version: 0.12.2
+Vulnerability CVE-2023-30861
+Severity: HIGH
+Fixed Version: 2.3.2, 2.2.5
+Link: [CVE-2023-30861](https://avd.aquasec.com/nvd/cve-2023-30861)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.5</td>
+  <td><code>CVE-2018-18074</code></td>
+  <td>sca</td>
+  <td>Trivy</td>
+  <td><code>app/requirements.txt:3</code></td>
+  <td>Package: requests
+Installed Version: 2.19.1
+Vulnerability CVE-2018-18074
+Severity: HIGH
+Fixed Version: 2.20.0
+Link: [CVE-2018-18074](https://avd.aquasec.com/nvd/cve-2018-18074)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.4</td>
+  <td><code>CVE-2026-3833</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libgnutls30
+Installed Version: 3.7.9-2&#43;deb12u3
+Vulnerability CVE-2026-3833
+Severity: HIGH
+Fixed Version: 3.7.9-2&#43;deb12u7
+Link: [CVE-2026-3833](https://avd.aquasec.com/nvd/cve-2026-3833)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.3</td>
+  <td><code>CVE-2023-7104</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libsqlite3-0
+Installed Version: 3.40.1-2
+Vulnerability CVE-2023-7104
+Severity: HIGH
+Fixed Version: 3.40.1-2&#43;deb12u1
+Link: [CVE-2023-7104](https://avd.aquasec.com/nvd/cve-2023-7104)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.1</td>
+  <td><code>CVE-2026-24049</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: wheel
+Installed Version: 0.44.0
+Vulnerability CVE-2026-24049
+Severity: HIGH
+Fixed Version: 0.46.2
+Link: [CVE-2026-24049](https://avd.aquasec.com/nvd/cve-2026-24049)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.0</td>
+  <td><code>CVE-2025-68973</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: gpgv
+Installed Version: 2.2.40-1.1
+Vulnerability CVE-2025-68973
+Severity: HIGH
+Fixed Version: 2.2.40-1.1&#43;deb12u2
+Link: [CVE-2025-68973](https://avd.aquasec.com/nvd/cve-2025-68973)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">7.0</td>
+  <td><code>CVE-2026-4878</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libcap2
+Installed Version: 1:2.66-4
+Vulnerability CVE-2026-4878
+Severity: HIGH
+Fixed Version: 1:2.66-4&#43;deb12u3
+Link: [CVE-2026-4878](https://avd.aquasec.com/nvd/cve-2026-4878)</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">-</td>
+  <td><code>dockerfile.security.missing-user.missing-user</code></td>
+  <td>sast</td>
+  <td>Semgrep OSS</td>
+  <td><code>app/Dockerfile:11</code></td>
+  <td>By not specifying a USER, a program in the container may run as &#39;root&#39;. This is a security hazard. If an attacker can control a process running as root, they may have control over the container. Ensure that the last USER in a Dockerfile is a USER other than &#39;root&#39;.</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">-</td>
+  <td><code>python.lang.security.dangerous-system-call.dangerous-system-call</code></td>
+  <td>sast</td>
+  <td>Semgrep OSS</td>
+  <td><code>app/app.py:16</code></td>
+  <td>Found user-controlled data used in a system call. This could allow a malicious actor to execute commands. Use the &#39;subprocess&#39; module instead, which is easier to use without accidentally exposing a command injection vulnerability.</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">-</td>
+  <td><code>python.flask.security.injection.subprocess-injection.subprocess-injection</code></td>
+  <td>sast</td>
+  <td>Semgrep OSS</td>
+  <td><code>app/app.py:23</code></td>
+  <td>Detected user input entering a `subprocess` call unsafely. This could result in a command injection vulnerability. An attacker could use this vulnerability to execute arbitrary commands on the host, which allows them to download malware, scan sensitive data, or run any command they wish on the server. Do not let users choose the command to run. In general, prefer to use Python API versions of system commands. If you must use subprocess, use a dictionary to allowlist a set of commands.</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">-</td>
+  <td><code>python.lang.security.dangerous-subprocess-use.dangerous-subprocess-use</code></td>
+  <td>sast</td>
+  <td>Semgrep OSS</td>
+  <td><code>app/app.py:23</code></td>
+  <td>Detected subprocess function &#39;check_output&#39; with user controlled data. A malicious actor could leverage this to perform command injection. You may consider using &#39;shlex.escape()&#39;.</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">-</td>
+  <td><code>python.lang.security.audit.subprocess-shell-true.subprocess-shell-true</code></td>
+  <td>sast</td>
+  <td>Semgrep OSS</td>
+  <td><code>app/app.py:23</code></td>
+  <td>Found &#39;subprocess&#39; function &#39;check_output&#39; with &#39;shell=True&#39;. This is dangerous because this call will spawn the command using a shell process. Doing so propagates current shell settings and variables, which makes it much easier for a malicious actor to execute commands. Use &#39;shell=False&#39; instead.</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">-</td>
+  <td><code>python.flask.security.injection.user-eval.eval-injection</code></td>
+  <td>sast</td>
+  <td>Semgrep OSS</td>
+  <td><code>app/app.py:30</code></td>
+  <td>Detected user data flowing into eval. This is code injection and should be avoided.</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">-</td>
+  <td><code>generic.secrets.security.detected-private-key.detected-private-key</code></td>
+  <td>sast</td>
+  <td>Semgrep OSS</td>
+  <td><code>app/config.example.pem:1</code></td>
+  <td>Private Key detected. This is a sensitive credential and should not be hardcoded here. Instead, store this in a separate, private file.</td>
+</tr><tr>
+  <td>P1</td>
+  <td class="sev-high">high</td>
+  <td class="num">-</td>
+  <td><code>private-key</code></td>
+  <td>secrets</td>
+  <td>gitleaks</td>
+  <td><code>app/config.example.pem:1</code></td>
+  <td>private-key has detected secret for file app/config.example.pem.</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">6.9</td>
+  <td><code>CVE-2026-56132</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libexpat1
+Installed Version: 2.5.0-1&#43;deb12u1
+Vulnerability CVE-2026-56132
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-56132](https://avd.aquasec.com/nvd/cve-2026-56132)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">6.9</td>
+  <td><code>CVE-2026-56403</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libexpat1
+Installed Version: 2.5.0-1&#43;deb12u1
+Vulnerability CVE-2026-56403
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-56403](https://avd.aquasec.com/nvd/cve-2026-56403)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">6.9</td>
+  <td><code>CVE-2026-56404</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libexpat1
+Installed Version: 2.5.0-1&#43;deb12u1
+Vulnerability CVE-2026-56404
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-56404](https://avd.aquasec.com/nvd/cve-2026-56404)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">6.9</td>
+  <td><code>CVE-2026-56405</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libexpat1
+Installed Version: 2.5.0-1&#43;deb12u1
+Vulnerability CVE-2026-56405
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-56405](https://avd.aquasec.com/nvd/cve-2026-56405)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">6.5</td>
+  <td><code>CVE-2023-50495</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libncursesw6
+Installed Version: 6.4-4
+Vulnerability CVE-2023-50495
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2023-50495](https://avd.aquasec.com/nvd/cve-2023-50495)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">6.5</td>
+  <td><code>CVE-2023-50495</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libtinfo6
+Installed Version: 6.4-4
+Vulnerability CVE-2023-50495
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2023-50495](https://avd.aquasec.com/nvd/cve-2023-50495)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">6.5</td>
+  <td><code>CVE-2023-50495</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: ncurses-base
+Installed Version: 6.4-4
+Vulnerability CVE-2023-50495
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2023-50495](https://avd.aquasec.com/nvd/cve-2023-50495)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">6.5</td>
+  <td><code>CVE-2023-50495</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: ncurses-bin
+Installed Version: 6.4-4
+Vulnerability CVE-2023-50495
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2023-50495](https://avd.aquasec.com/nvd/cve-2023-50495)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">6.1</td>
+  <td><code>CVE-2026-59890</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: setuptools
+Installed Version: 57.5.0
+Vulnerability CVE-2026-59890
+Severity: MEDIUM
+Fixed Version: 83.0.0
+Link: [CVE-2026-59890](https://avd.aquasec.com/nvd/cve-2026-59890)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">6.1</td>
+  <td><code>CVE-2023-32681</code></td>
+  <td>sca</td>
+  <td>Trivy</td>
+  <td><code>app/requirements.txt:3</code></td>
+  <td>Package: requests
+Installed Version: 2.19.1
+Vulnerability CVE-2023-32681
+Severity: MEDIUM
+Fixed Version: 2.31.0
+Link: [CVE-2023-32681](https://avd.aquasec.com/nvd/cve-2023-32681)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.9</td>
+  <td><code>CVE-2026-50219</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libexpat1
+Installed Version: 2.5.0-1&#43;deb12u1
+Vulnerability CVE-2026-50219
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-50219](https://avd.aquasec.com/nvd/cve-2026-50219)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.9</td>
+  <td><code>CVE-2026-56412</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libexpat1
+Installed Version: 2.5.0-1&#43;deb12u1
+Vulnerability CVE-2026-56412
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-56412](https://avd.aquasec.com/nvd/cve-2026-56412)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.6</td>
+  <td><code>CVE-2024-35195</code></td>
+  <td>sca</td>
+  <td>Trivy</td>
+  <td><code>app/requirements.txt:3</code></td>
+  <td>Package: requests
+Installed Version: 2.19.1
+Vulnerability CVE-2024-35195
+Severity: MEDIUM
+Fixed Version: 2.32.0
+Link: [CVE-2024-35195](https://avd.aquasec.com/nvd/cve-2024-35195)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>KSV-0001</code></td>
+  <td>iac</td>
+  <td>Trivy</td>
+  <td><code>deploy/pod.yaml:8</code></td>
+  <td>Artifact: deploy/pod.yaml
+Type: kubernetes
+Vulnerability KSV-0001
+Severity: MEDIUM
+Message: Container &#39;api&#39; of Pod &#39;demo-api&#39; should set &#39;securityContext.allowPrivilegeEscalation&#39; to false
+Link: [KSV-0001](https://avd.aquasec.com/misconfig/ksv-0001)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>KSV-0012</code></td>
+  <td>iac</td>
+  <td>Trivy</td>
+  <td><code>deploy/pod.yaml:8</code></td>
+  <td>Artifact: deploy/pod.yaml
+Type: kubernetes
+Vulnerability KSV-0012
+Severity: MEDIUM
+Message: Container &#39;api&#39; of Pod &#39;demo-api&#39; should set &#39;securityContext.runAsNonRoot&#39; to true
+Link: [KSV-0012](https://avd.aquasec.com/misconfig/ksv-0012)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>KSV-0013</code></td>
+  <td>iac</td>
+  <td>Trivy</td>
+  <td><code>deploy/pod.yaml:8</code></td>
+  <td>Artifact: deploy/pod.yaml
+Type: kubernetes
+Vulnerability KSV-0013
+Severity: MEDIUM
+Message: Container &#39;api&#39; of Pod &#39;demo-api&#39; should specify an image tag
+Link: [KSV-0013](https://avd.aquasec.com/misconfig/ksv-0013)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>KSV-0104</code></td>
+  <td>iac</td>
+  <td>Trivy</td>
+  <td><code>deploy/pod.yaml:8</code></td>
+  <td>Artifact: deploy/pod.yaml
+Type: kubernetes
+Vulnerability KSV-0104
+Severity: MEDIUM
+Message: container &#34;api&#34; of pod &#34;demo-api&#34; in &#34;default&#34; namespace should specify a seccomp profile
+Link: [KSV-0104](https://avd.aquasec.com/misconfig/ksv-0104)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>KSV-0125</code></td>
+  <td>iac</td>
+  <td>Trivy</td>
+  <td><code>deploy/pod.yaml:8</code></td>
+  <td>Artifact: deploy/pod.yaml
+Type: kubernetes
+Vulnerability KSV-0125
+Severity: MEDIUM
+Message: Container api in pod demo-api (namespace: default) uses an image from an untrusted registry.
+Link: [KSV-0125](https://avd.aquasec.com/misconfig/ksv-0125)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-27456</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: bsdutils
+Installed Version: 1:2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-27456
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-27456](https://avd.aquasec.com/nvd/cve-2026-27456)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-56392</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: coreutils
+Installed Version: 9.1-1
+Vulnerability CVE-2026-56392
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-56392](https://avd.aquasec.com/nvd/cve-2026-56392)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-2219</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: dpkg
+Installed Version: 1.21.22
+Vulnerability CVE-2026-2219
+Severity: MEDIUM
+Fixed Version: 1.21.23
+Link: [CVE-2026-2219](https://avd.aquasec.com/nvd/cve-2026-2219)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-54370</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libacl1
+Installed Version: 2.3.1-3
+Vulnerability CVE-2026-54370
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-54370](https://avd.aquasec.com/nvd/cve-2026-54370)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-54371</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libattr1
+Installed Version: 1:2.5.1-4
+Vulnerability CVE-2026-54371
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-54371](https://avd.aquasec.com/nvd/cve-2026-54371)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-27456</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libblkid1
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-27456
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-27456](https://avd.aquasec.com/nvd/cve-2026-27456)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-42250</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libbz2-1.0
+Installed Version: 1.0.8-5&#43;b1
+Vulnerability CVE-2026-42250
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-42250](https://avd.aquasec.com/nvd/cve-2026-42250)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2025-0395</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc-bin
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2025-0395
+Severity: MEDIUM
+Fixed Version: 2.36-9&#43;deb12u10
+Link: [CVE-2025-0395](https://avd.aquasec.com/nvd/cve-2025-0395)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2025-4802</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc-bin
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2025-4802
+Severity: MEDIUM
+Fixed Version: 2.36-9&#43;deb12u11
+Link: [CVE-2025-4802](https://avd.aquasec.com/nvd/cve-2025-4802)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2025-8058</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc-bin
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2025-8058
+Severity: MEDIUM
+Fixed Version: 2.36-9&#43;deb12u13
+Link: [CVE-2025-8058](https://avd.aquasec.com/nvd/cve-2025-8058)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-0915</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc-bin
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2026-0915
+Severity: MEDIUM
+Fixed Version: 2.36-9&#43;deb12u14
+Link: [CVE-2026-0915](https://avd.aquasec.com/nvd/cve-2026-0915)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-4046</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc-bin
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2026-4046
+Severity: MEDIUM
+Fixed Version: 2.36-9&#43;deb12u14
+Link: [CVE-2026-4046](https://avd.aquasec.com/nvd/cve-2026-4046)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-4437</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc-bin
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2026-4437
+Severity: MEDIUM
+Fixed Version: 2.36-9&#43;deb12u14
+Link: [CVE-2026-4437](https://avd.aquasec.com/nvd/cve-2026-4437)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-5435</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc-bin
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2026-5435
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-5435](https://avd.aquasec.com/nvd/cve-2026-5435)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-5450</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc-bin
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2026-5450
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-5450](https://avd.aquasec.com/nvd/cve-2026-5450)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-5928</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc-bin
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2026-5928
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-5928](https://avd.aquasec.com/nvd/cve-2026-5928)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-6238</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc-bin
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2026-6238
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-6238](https://avd.aquasec.com/nvd/cve-2026-6238)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2025-0395</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc6
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2025-0395
+Severity: MEDIUM
+Fixed Version: 2.36-9&#43;deb12u10
+Link: [CVE-2025-0395](https://avd.aquasec.com/nvd/cve-2025-0395)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2025-4802</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc6
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2025-4802
+Severity: MEDIUM
+Fixed Version: 2.36-9&#43;deb12u11
+Link: [CVE-2025-4802](https://avd.aquasec.com/nvd/cve-2025-4802)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2025-8058</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc6
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2025-8058
+Severity: MEDIUM
+Fixed Version: 2.36-9&#43;deb12u13
+Link: [CVE-2025-8058](https://avd.aquasec.com/nvd/cve-2025-8058)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-0915</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc6
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2026-0915
+Severity: MEDIUM
+Fixed Version: 2.36-9&#43;deb12u14
+Link: [CVE-2026-0915](https://avd.aquasec.com/nvd/cve-2026-0915)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-4046</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc6
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2026-4046
+Severity: MEDIUM
+Fixed Version: 2.36-9&#43;deb12u14
+Link: [CVE-2026-4046](https://avd.aquasec.com/nvd/cve-2026-4046)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-4437</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc6
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2026-4437
+Severity: MEDIUM
+Fixed Version: 2.36-9&#43;deb12u14
+Link: [CVE-2026-4437](https://avd.aquasec.com/nvd/cve-2026-4437)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-5435</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc6
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2026-5435
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-5435](https://avd.aquasec.com/nvd/cve-2026-5435)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-5450</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc6
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2026-5450
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-5450](https://avd.aquasec.com/nvd/cve-2026-5450)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-5928</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc6
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2026-5928
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-5928](https://avd.aquasec.com/nvd/cve-2026-5928)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-6238</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc6
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2026-6238
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-6238](https://avd.aquasec.com/nvd/cve-2026-6238)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2025-1390</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libcap2
+Installed Version: 1:2.66-4
+Vulnerability CVE-2025-1390
+Severity: MEDIUM
+Fixed Version: 1:2.66-4&#43;deb12u1
+Link: [CVE-2025-1390](https://avd.aquasec.com/nvd/cve-2025-1390)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2024-50602</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libexpat1
+Installed Version: 2.5.0-1&#43;deb12u1
+Vulnerability CVE-2024-50602
+Severity: MEDIUM
+Fixed Version: 2.5.0-1&#43;deb12u2
+Link: [CVE-2024-50602](https://avd.aquasec.com/nvd/cve-2024-50602)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2024-8176</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libexpat1
+Installed Version: 2.5.0-1&#43;deb12u1
+Vulnerability CVE-2024-8176
+Severity: MEDIUM
+Fixed Version: 2.5.0-1&#43;deb12u2
+Link: [CVE-2024-8176](https://avd.aquasec.com/nvd/cve-2024-8176)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2025-66382</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libexpat1
+Installed Version: 2.5.0-1&#43;deb12u1
+Vulnerability CVE-2025-66382
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2025-66382](https://avd.aquasec.com/nvd/cve-2025-66382)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-32776</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libexpat1
+Installed Version: 2.5.0-1&#43;deb12u1
+Vulnerability CVE-2026-32776
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-32776](https://avd.aquasec.com/nvd/cve-2026-32776)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-32777</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libexpat1
+Installed Version: 2.5.0-1&#43;deb12u1
+Vulnerability CVE-2026-32777
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-32777](https://avd.aquasec.com/nvd/cve-2026-32777)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-32778</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libexpat1
+Installed Version: 2.5.0-1&#43;deb12u1
+Vulnerability CVE-2026-32778
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-32778](https://avd.aquasec.com/nvd/cve-2026-32778)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-56406</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libexpat1
+Installed Version: 2.5.0-1&#43;deb12u1
+Vulnerability CVE-2026-56406
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-56406](https://avd.aquasec.com/nvd/cve-2026-56406)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-56409</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libexpat1
+Installed Version: 2.5.0-1&#43;deb12u1
+Vulnerability CVE-2026-56409
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-56409](https://avd.aquasec.com/nvd/cve-2026-56409)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-56410</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libexpat1
+Installed Version: 2.5.0-1&#43;deb12u1
+Vulnerability CVE-2026-56410
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-56410](https://avd.aquasec.com/nvd/cve-2026-56410)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-56411</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libexpat1
+Installed Version: 2.5.0-1&#43;deb12u1
+Vulnerability CVE-2026-56411
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-56411](https://avd.aquasec.com/nvd/cve-2026-56411)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-41989</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libgcrypt20
+Installed Version: 1.10.1-3
+Vulnerability CVE-2026-41989
+Severity: MEDIUM
+Fixed Version: 1.10.1-3&#43;deb12u1
+Link: [CVE-2026-41989](https://avd.aquasec.com/nvd/cve-2026-41989)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2024-12243</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libgnutls30
+Installed Version: 3.7.9-2&#43;deb12u3
+Vulnerability CVE-2024-12243
+Severity: MEDIUM
+Fixed Version: 3.7.9-2&#43;deb12u4
+Link: [CVE-2024-12243](https://avd.aquasec.com/nvd/cve-2024-12243)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2025-14831</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libgnutls30
+Installed Version: 3.7.9-2&#43;deb12u3
+Vulnerability CVE-2025-14831
+Severity: MEDIUM
+Fixed Version: 3.7.9-2&#43;deb12u6
+Link: [CVE-2025-14831](https://avd.aquasec.com/nvd/cve-2025-14831)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2025-32989</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libgnutls30
+Installed Version: 3.7.9-2&#43;deb12u3
+Vulnerability CVE-2025-32989
+Severity: MEDIUM
+Fixed Version: 3.7.9-2&#43;deb12u5
+Link: [CVE-2025-32989](https://avd.aquasec.com/nvd/cve-2025-32989)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2025-6395</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libgnutls30
+Installed Version: 3.7.9-2&#43;deb12u3
+Vulnerability CVE-2025-6395
+Severity: MEDIUM
+Fixed Version: 3.7.9-2&#43;deb12u5
+Link: [CVE-2025-6395](https://avd.aquasec.com/nvd/cve-2025-6395)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-42011</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libgnutls30
+Installed Version: 3.7.9-2&#43;deb12u3
+Vulnerability CVE-2026-42011
+Severity: MEDIUM
+Fixed Version: 3.7.9-2&#43;deb12u7
+Link: [CVE-2026-42011](https://avd.aquasec.com/nvd/cve-2026-42011)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-42012</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libgnutls30
+Installed Version: 3.7.9-2&#43;deb12u3
+Vulnerability CVE-2026-42012
+Severity: MEDIUM
+Fixed Version: 3.7.9-2&#43;deb12u7
+Link: [CVE-2026-42012](https://avd.aquasec.com/nvd/cve-2026-42012)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-42013</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libgnutls30
+Installed Version: 3.7.9-2&#43;deb12u3
+Vulnerability CVE-2026-42013
+Severity: MEDIUM
+Fixed Version: 3.7.9-2&#43;deb12u7
+Link: [CVE-2026-42013](https://avd.aquasec.com/nvd/cve-2026-42013)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-42014</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libgnutls30
+Installed Version: 3.7.9-2&#43;deb12u3
+Vulnerability CVE-2026-42014
+Severity: MEDIUM
+Fixed Version: 3.7.9-2&#43;deb12u7
+Link: [CVE-2026-42014](https://avd.aquasec.com/nvd/cve-2026-42014)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-42015</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libgnutls30
+Installed Version: 3.7.9-2&#43;deb12u3
+Vulnerability CVE-2026-42015
+Severity: MEDIUM
+Fixed Version: 3.7.9-2&#43;deb12u7
+Link: [CVE-2026-42015](https://avd.aquasec.com/nvd/cve-2026-42015)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-5260</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libgnutls30
+Installed Version: 3.7.9-2&#43;deb12u3
+Vulnerability CVE-2026-5260
+Severity: MEDIUM
+Fixed Version: 3.7.9-2&#43;deb12u7
+Link: [CVE-2026-5260](https://avd.aquasec.com/nvd/cve-2026-5260)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2024-26462</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libgssapi-krb5-2
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2024-26462
+Severity: MEDIUM
+Fixed Version: 1.20.1-2&#43;deb12u3
+Link: [CVE-2024-26462](https://avd.aquasec.com/nvd/cve-2024-26462)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2025-24528</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libgssapi-krb5-2
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2025-24528
+Severity: MEDIUM
+Fixed Version: 1.20.1-2&#43;deb12u3
+Link: [CVE-2025-24528](https://avd.aquasec.com/nvd/cve-2025-24528)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2025-3576</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libgssapi-krb5-2
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2025-3576
+Severity: MEDIUM
+Fixed Version: 1.20.1-2&#43;deb12u4
+Link: [CVE-2025-3576](https://avd.aquasec.com/nvd/cve-2025-3576)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2024-26462</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libk5crypto3
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2024-26462
+Severity: MEDIUM
+Fixed Version: 1.20.1-2&#43;deb12u3
+Link: [CVE-2024-26462](https://avd.aquasec.com/nvd/cve-2024-26462)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2025-24528</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libk5crypto3
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2025-24528
+Severity: MEDIUM
+Fixed Version: 1.20.1-2&#43;deb12u3
+Link: [CVE-2025-24528](https://avd.aquasec.com/nvd/cve-2025-24528)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2025-3576</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libk5crypto3
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2025-3576
+Severity: MEDIUM
+Fixed Version: 1.20.1-2&#43;deb12u4
+Link: [CVE-2025-3576](https://avd.aquasec.com/nvd/cve-2025-3576)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2024-26462</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libkrb5-3
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2024-26462
+Severity: MEDIUM
+Fixed Version: 1.20.1-2&#43;deb12u3
+Link: [CVE-2024-26462](https://avd.aquasec.com/nvd/cve-2024-26462)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2025-24528</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libkrb5-3
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2025-24528
+Severity: MEDIUM
+Fixed Version: 1.20.1-2&#43;deb12u3
+Link: [CVE-2025-24528](https://avd.aquasec.com/nvd/cve-2025-24528)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2025-3576</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libkrb5-3
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2025-3576
+Severity: MEDIUM
+Fixed Version: 1.20.1-2&#43;deb12u4
+Link: [CVE-2025-3576](https://avd.aquasec.com/nvd/cve-2025-3576)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2024-26462</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libkrb5support0
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2024-26462
+Severity: MEDIUM
+Fixed Version: 1.20.1-2&#43;deb12u3
+Link: [CVE-2024-26462](https://avd.aquasec.com/nvd/cve-2024-26462)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2025-24528</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libkrb5support0
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2025-24528
+Severity: MEDIUM
+Fixed Version: 1.20.1-2&#43;deb12u3
+Link: [CVE-2025-24528](https://avd.aquasec.com/nvd/cve-2025-24528)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2025-3576</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libkrb5support0
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2025-3576
+Severity: MEDIUM
+Fixed Version: 1.20.1-2&#43;deb12u4
+Link: [CVE-2025-3576](https://avd.aquasec.com/nvd/cve-2025-3576)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-27456</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libmount1
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-27456
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-27456](https://avd.aquasec.com/nvd/cve-2026-27456)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-13757</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libp11-kit0
+Installed Version: 0.24.1-2
+Vulnerability CVE-2026-13757
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-13757](https://avd.aquasec.com/nvd/cve-2026-13757)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2024-10041</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libpam-modules
+Installed Version: 1.5.2-6&#43;deb12u1
+Vulnerability CVE-2024-10041
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2024-10041](https://avd.aquasec.com/nvd/cve-2024-10041)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2024-22365</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libpam-modules
+Installed Version: 1.5.2-6&#43;deb12u1
+Vulnerability CVE-2024-22365
+Severity: MEDIUM
+Fixed Version: 1.5.2-6&#43;deb12u2
+Link: [CVE-2024-22365](https://avd.aquasec.com/nvd/cve-2024-22365)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-54411</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libpam-modules
+Installed Version: 1.5.2-6&#43;deb12u1
+Vulnerability CVE-2026-54411
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-54411](https://avd.aquasec.com/nvd/cve-2026-54411)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2024-10041</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libpam-modules-bin
+Installed Version: 1.5.2-6&#43;deb12u1
+Vulnerability CVE-2024-10041
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2024-10041](https://avd.aquasec.com/nvd/cve-2024-10041)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2024-22365</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libpam-modules-bin
+Installed Version: 1.5.2-6&#43;deb12u1
+Vulnerability CVE-2024-22365
+Severity: MEDIUM
+Fixed Version: 1.5.2-6&#43;deb12u2
+Link: [CVE-2024-22365](https://avd.aquasec.com/nvd/cve-2024-22365)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-54411</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libpam-modules-bin
+Installed Version: 1.5.2-6&#43;deb12u1
+Vulnerability CVE-2026-54411
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-54411](https://avd.aquasec.com/nvd/cve-2026-54411)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2024-10041</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libpam-runtime
+Installed Version: 1.5.2-6&#43;deb12u1
+Vulnerability CVE-2024-10041
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2024-10041](https://avd.aquasec.com/nvd/cve-2024-10041)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2024-22365</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libpam-runtime
+Installed Version: 1.5.2-6&#43;deb12u1
+Vulnerability CVE-2024-22365
+Severity: MEDIUM
+Fixed Version: 1.5.2-6&#43;deb12u2
+Link: [CVE-2024-22365](https://avd.aquasec.com/nvd/cve-2024-22365)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-54411</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libpam-runtime
+Installed Version: 1.5.2-6&#43;deb12u1
+Vulnerability CVE-2026-54411
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-54411](https://avd.aquasec.com/nvd/cve-2026-54411)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2024-10041</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libpam0g
+Installed Version: 1.5.2-6&#43;deb12u1
+Vulnerability CVE-2024-10041
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2024-10041](https://avd.aquasec.com/nvd/cve-2024-10041)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2024-22365</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libpam0g
+Installed Version: 1.5.2-6&#43;deb12u1
+Vulnerability CVE-2024-22365
+Severity: MEDIUM
+Fixed Version: 1.5.2-6&#43;deb12u2
+Link: [CVE-2024-22365](https://avd.aquasec.com/nvd/cve-2024-22365)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-54411</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libpam0g
+Installed Version: 1.5.2-6&#43;deb12u1
+Vulnerability CVE-2026-54411
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-54411](https://avd.aquasec.com/nvd/cve-2026-54411)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-27456</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libsmartcols1
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-27456
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-27456](https://avd.aquasec.com/nvd/cve-2026-27456)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2025-7709</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libsqlite3-0
+Installed Version: 3.40.1-2
+Vulnerability CVE-2025-7709
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2025-7709](https://avd.aquasec.com/nvd/cve-2025-7709)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-11822</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libsqlite3-0
+Installed Version: 3.40.1-2
+Vulnerability CVE-2026-11822
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-11822](https://avd.aquasec.com/nvd/cve-2026-11822)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-11824</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libsqlite3-0
+Installed Version: 3.40.1-2
+Vulnerability CVE-2026-11824
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-11824](https://avd.aquasec.com/nvd/cve-2026-11824)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-50812</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libsqlite3-0
+Installed Version: 3.40.1-2
+Vulnerability CVE-2026-50812
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-50812](https://avd.aquasec.com/nvd/cve-2026-50812)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-50813</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libsqlite3-0
+Installed Version: 3.40.1-2
+Vulnerability CVE-2026-50813
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-50813](https://avd.aquasec.com/nvd/cve-2026-50813)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2025-69419</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libssl3
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2025-69419
+Severity: MEDIUM
+Fixed Version: 3.0.18-1~deb12u2
+Link: [CVE-2025-69419](https://avd.aquasec.com/nvd/cve-2025-69419)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2025-9230</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libssl3
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2025-9230
+Severity: MEDIUM
+Fixed Version: 3.0.17-1~deb12u3
+Link: [CVE-2025-9230](https://avd.aquasec.com/nvd/cve-2025-9230)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-31790</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libssl3
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-31790
+Severity: MEDIUM
+Fixed Version: 3.0.19-1~deb12u2
+Link: [CVE-2026-31790](https://avd.aquasec.com/nvd/cve-2026-31790)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-34182</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libssl3
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-34182
+Severity: MEDIUM
+Fixed Version: 3.0.20-1~deb12u2
+Link: [CVE-2026-34182](https://avd.aquasec.com/nvd/cve-2026-34182)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-45445</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libssl3
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-45445
+Severity: MEDIUM
+Fixed Version: 3.0.20-1~deb12u2
+Link: [CVE-2026-45445](https://avd.aquasec.com/nvd/cve-2026-45445)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2025-4598</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libsystemd0
+Installed Version: 252.30-1~deb12u2
+Vulnerability CVE-2025-4598
+Severity: MEDIUM
+Fixed Version: 252.38-1~deb12u1
+Link: [CVE-2025-4598](https://avd.aquasec.com/nvd/cve-2025-4598)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-29111</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libsystemd0
+Installed Version: 252.30-1~deb12u2
+Vulnerability CVE-2026-29111
+Severity: MEDIUM
+Fixed Version: 252.39-1~deb12u2
+Link: [CVE-2026-29111](https://avd.aquasec.com/nvd/cve-2026-29111)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-40225</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libsystemd0
+Installed Version: 252.30-1~deb12u2
+Vulnerability CVE-2026-40225
+Severity: MEDIUM
+Fixed Version: 252.39-1~deb12u2
+Link: [CVE-2026-40225](https://avd.aquasec.com/nvd/cve-2026-40225)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-40226</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libsystemd0
+Installed Version: 252.30-1~deb12u2
+Vulnerability CVE-2026-40226
+Severity: MEDIUM
+Fixed Version: 252.39-1~deb12u2
+Link: [CVE-2026-40226](https://avd.aquasec.com/nvd/cve-2026-40226)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-4105</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libsystemd0
+Installed Version: 252.30-1~deb12u2
+Vulnerability CVE-2026-4105
+Severity: MEDIUM
+Fixed Version: 252.39-1~deb12u2
+Link: [CVE-2026-4105](https://avd.aquasec.com/nvd/cve-2026-4105)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2024-12133</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libtasn1-6
+Installed Version: 4.19.0-2
+Vulnerability CVE-2024-12133
+Severity: MEDIUM
+Fixed Version: 4.19.0-2&#43;deb12u1
+Link: [CVE-2024-12133](https://avd.aquasec.com/nvd/cve-2024-12133)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2025-4598</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libudev1
+Installed Version: 252.30-1~deb12u2
+Vulnerability CVE-2025-4598
+Severity: MEDIUM
+Fixed Version: 252.38-1~deb12u1
+Link: [CVE-2025-4598](https://avd.aquasec.com/nvd/cve-2025-4598)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-29111</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libudev1
+Installed Version: 252.30-1~deb12u2
+Vulnerability CVE-2026-29111
+Severity: MEDIUM
+Fixed Version: 252.39-1~deb12u2
+Link: [CVE-2026-29111](https://avd.aquasec.com/nvd/cve-2026-29111)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-40225</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libudev1
+Installed Version: 252.30-1~deb12u2
+Vulnerability CVE-2026-40225
+Severity: MEDIUM
+Fixed Version: 252.39-1~deb12u2
+Link: [CVE-2026-40225](https://avd.aquasec.com/nvd/cve-2026-40225)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-40226</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libudev1
+Installed Version: 252.30-1~deb12u2
+Vulnerability CVE-2026-40226
+Severity: MEDIUM
+Fixed Version: 252.39-1~deb12u2
+Link: [CVE-2026-40226](https://avd.aquasec.com/nvd/cve-2026-40226)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-4105</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libudev1
+Installed Version: 252.30-1~deb12u2
+Vulnerability CVE-2026-4105
+Severity: MEDIUM
+Fixed Version: 252.39-1~deb12u2
+Link: [CVE-2026-4105](https://avd.aquasec.com/nvd/cve-2026-4105)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-27456</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libuuid1
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-27456
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-27456](https://avd.aquasec.com/nvd/cve-2026-27456)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2023-4641</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: login
+Installed Version: 1:4.13&#43;dfsg1-1&#43;b1
+Vulnerability CVE-2023-4641
+Severity: MEDIUM
+Fixed Version: 1:4.13&#43;dfsg1-1&#43;deb12u1
+Link: [CVE-2023-4641](https://avd.aquasec.com/nvd/cve-2023-4641)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-27456</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: mount
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-27456
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-27456](https://avd.aquasec.com/nvd/cve-2026-27456)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2025-69419</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: openssl
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2025-69419
+Severity: MEDIUM
+Fixed Version: 3.0.18-1~deb12u2
+Link: [CVE-2025-69419](https://avd.aquasec.com/nvd/cve-2025-69419)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2025-9230</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: openssl
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2025-9230
+Severity: MEDIUM
+Fixed Version: 3.0.17-1~deb12u3
+Link: [CVE-2025-9230](https://avd.aquasec.com/nvd/cve-2025-9230)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-31790</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: openssl
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-31790
+Severity: MEDIUM
+Fixed Version: 3.0.19-1~deb12u2
+Link: [CVE-2026-31790](https://avd.aquasec.com/nvd/cve-2026-31790)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-34182</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: openssl
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-34182
+Severity: MEDIUM
+Fixed Version: 3.0.20-1~deb12u2
+Link: [CVE-2026-34182](https://avd.aquasec.com/nvd/cve-2026-34182)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-45445</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: openssl
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-45445
+Severity: MEDIUM
+Fixed Version: 3.0.20-1~deb12u2
+Link: [CVE-2026-45445](https://avd.aquasec.com/nvd/cve-2026-45445)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2023-4641</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: passwd
+Installed Version: 1:4.13&#43;dfsg1-1&#43;b1
+Vulnerability CVE-2023-4641
+Severity: MEDIUM
+Fixed Version: 1:4.13&#43;dfsg1-1&#43;deb12u1
+Link: [CVE-2023-4641](https://avd.aquasec.com/nvd/cve-2023-4641)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2025-15649</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: perl-base
+Installed Version: 5.36.0-7&#43;deb12u1
+Vulnerability CVE-2025-15649
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2025-15649](https://avd.aquasec.com/nvd/cve-2025-15649)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2025-40909</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: perl-base
+Installed Version: 5.36.0-7&#43;deb12u1
+Vulnerability CVE-2025-40909
+Severity: MEDIUM
+Fixed Version: 5.36.0-7&#43;deb12u3
+Link: [CVE-2025-40909](https://avd.aquasec.com/nvd/cve-2025-40909)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-12087</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: perl-base
+Installed Version: 5.36.0-7&#43;deb12u1
+Vulnerability CVE-2026-12087
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-12087](https://avd.aquasec.com/nvd/cve-2026-12087)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-48959</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: perl-base
+Installed Version: 5.36.0-7&#43;deb12u1
+Vulnerability CVE-2026-48959
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-48959](https://avd.aquasec.com/nvd/cve-2026-48959)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-48961</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: perl-base
+Installed Version: 5.36.0-7&#43;deb12u1
+Vulnerability CVE-2026-48961
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-48961](https://avd.aquasec.com/nvd/cve-2026-48961)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-7010</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: perl-base
+Installed Version: 5.36.0-7&#43;deb12u1
+Vulnerability CVE-2026-7010
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-7010](https://avd.aquasec.com/nvd/cve-2026-7010)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-5958</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: sed
+Installed Version: 4.9-1
+Vulnerability CVE-2026-5958
+Severity: MEDIUM
+Fixed Version: 4.9-1&#43;deb12u1
+Link: [CVE-2026-5958](https://avd.aquasec.com/nvd/cve-2026-5958)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-5704</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: tar
+Installed Version: 1.34&#43;dfsg-1.2&#43;deb12u1
+Vulnerability CVE-2026-5704
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-5704](https://avd.aquasec.com/nvd/cve-2026-5704)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-27456</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: util-linux
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-27456
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-27456](https://avd.aquasec.com/nvd/cve-2026-27456)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-27456</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: util-linux-extra
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-27456
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-27456](https://avd.aquasec.com/nvd/cve-2026-27456)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-27171</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: zlib1g
+Installed Version: 1:1.2.13.dfsg-1
+Vulnerability CVE-2026-27171
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-27171](https://avd.aquasec.com/nvd/cve-2026-27171)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2023-5752</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: pip
+Installed Version: 23.0.1
+Vulnerability CVE-2023-5752
+Severity: MEDIUM
+Fixed Version: 23.3
+Link: [CVE-2023-5752](https://avd.aquasec.com/nvd/cve-2023-5752)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2025-8869</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: pip
+Installed Version: 23.0.1
+Vulnerability CVE-2025-8869
+Severity: MEDIUM
+Fixed Version: 25.3
+Link: [CVE-2025-8869](https://avd.aquasec.com/nvd/cve-2025-8869)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-3219</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: pip
+Installed Version: 23.0.1
+Vulnerability CVE-2026-3219
+Severity: MEDIUM
+Fixed Version: 26.1
+Link: [CVE-2026-3219](https://avd.aquasec.com/nvd/cve-2026-3219)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2026-6357</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: pip
+Installed Version: 23.0.1
+Vulnerability CVE-2026-6357
+Severity: MEDIUM
+Fixed Version: 26.1
+Link: [CVE-2026-6357](https://avd.aquasec.com/nvd/cve-2026-6357)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.5</td>
+  <td><code>CVE-2025-27516</code></td>
+  <td>sca</td>
+  <td>Trivy</td>
+  <td><code>app/requirements.txt:5</code></td>
+  <td>Package: Jinja2
+Installed Version: 2.10
+Vulnerability CVE-2025-27516
+Severity: MEDIUM
+Fixed Version: 3.1.6
+Link: [CVE-2025-27516](https://avd.aquasec.com/nvd/cve-2025-27516)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.4</td>
+  <td><code>CVE-2024-22195</code></td>
+  <td>sca</td>
+  <td>Trivy</td>
+  <td><code>app/requirements.txt:5</code></td>
+  <td>Package: Jinja2
+Installed Version: 2.10
+Vulnerability CVE-2024-22195
+Severity: MEDIUM
+Fixed Version: 3.1.3
+Link: [CVE-2024-22195](https://avd.aquasec.com/nvd/cve-2024-22195)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.4</td>
+  <td><code>CVE-2024-34064</code></td>
+  <td>sca</td>
+  <td>Trivy</td>
+  <td><code>app/requirements.txt:5</code></td>
+  <td>Package: Jinja2
+Installed Version: 2.10
+Vulnerability CVE-2024-34064
+Severity: MEDIUM
+Fixed Version: 3.1.4
+Link: [CVE-2024-34064](https://avd.aquasec.com/nvd/cve-2024-34064)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.3</td>
+  <td><code>CVE-2026-13595</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: bsdutils
+Installed Version: 1:2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-13595
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-13595](https://avd.aquasec.com/nvd/cve-2026-13595)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.3</td>
+  <td><code>CVE-2026-3184</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: bsdutils
+Installed Version: 1:2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-3184
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-3184](https://avd.aquasec.com/nvd/cve-2026-3184)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.3</td>
+  <td><code>CVE-2026-13595</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libblkid1
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-13595
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-13595](https://avd.aquasec.com/nvd/cve-2026-13595)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.3</td>
+  <td><code>CVE-2026-3184</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libblkid1
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-3184
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-3184](https://avd.aquasec.com/nvd/cve-2026-3184)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.3</td>
+  <td><code>CVE-2026-34743</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: liblzma5
+Installed Version: 5.4.1-0.2
+Vulnerability CVE-2026-34743
+Severity: MEDIUM
+Fixed Version: 5.4.1-1&#43;deb12u1
+Link: [CVE-2026-34743](https://avd.aquasec.com/nvd/cve-2026-34743)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.3</td>
+  <td><code>CVE-2026-13595</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libmount1
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-13595
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-13595](https://avd.aquasec.com/nvd/cve-2026-13595)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.3</td>
+  <td><code>CVE-2026-3184</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libmount1
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-3184
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-3184](https://avd.aquasec.com/nvd/cve-2026-3184)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.3</td>
+  <td><code>CVE-2026-13595</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libsmartcols1
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-13595
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-13595](https://avd.aquasec.com/nvd/cve-2026-13595)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.3</td>
+  <td><code>CVE-2026-3184</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libsmartcols1
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-3184
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-3184](https://avd.aquasec.com/nvd/cve-2026-3184)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.3</td>
+  <td><code>CVE-2026-13595</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libuuid1
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-13595
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-13595](https://avd.aquasec.com/nvd/cve-2026-13595)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.3</td>
+  <td><code>CVE-2026-3184</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libuuid1
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-3184
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-3184](https://avd.aquasec.com/nvd/cve-2026-3184)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.3</td>
+  <td><code>CVE-2026-13595</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: mount
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-13595
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-13595](https://avd.aquasec.com/nvd/cve-2026-13595)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.3</td>
+  <td><code>CVE-2026-3184</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: mount
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-3184
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-3184](https://avd.aquasec.com/nvd/cve-2026-3184)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.3</td>
+  <td><code>CVE-2026-13595</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: util-linux
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-13595
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-13595](https://avd.aquasec.com/nvd/cve-2026-13595)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.3</td>
+  <td><code>CVE-2026-3184</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: util-linux
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-3184
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-3184](https://avd.aquasec.com/nvd/cve-2026-3184)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.3</td>
+  <td><code>CVE-2026-13595</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: util-linux-extra
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-13595
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-13595](https://avd.aquasec.com/nvd/cve-2026-13595)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.3</td>
+  <td><code>CVE-2026-3184</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: util-linux-extra
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-3184
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-3184](https://avd.aquasec.com/nvd/cve-2026-3184)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.3</td>
+  <td><code>CVE-2020-28493</code></td>
+  <td>sca</td>
+  <td>Trivy</td>
+  <td><code>app/requirements.txt:5</code></td>
+  <td>Package: Jinja2
+Installed Version: 2.10
+Vulnerability CVE-2020-28493
+Severity: MEDIUM
+Fixed Version: 2.11.3
+Link: [CVE-2020-28493](https://avd.aquasec.com/nvd/cve-2020-28493)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">5.3</td>
+  <td><code>CVE-2024-47081</code></td>
+  <td>sca</td>
+  <td>Trivy</td>
+  <td><code>app/requirements.txt:3</code></td>
+  <td>Package: requests
+Installed Version: 2.19.1
+Vulnerability CVE-2024-47081
+Severity: MEDIUM
+Fixed Version: 2.32.4
+Link: [CVE-2024-47081](https://avd.aquasec.com/nvd/cve-2024-47081)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">4.7</td>
+  <td><code>CVE-2025-30258</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: gpgv
+Installed Version: 2.2.40-1.1
+Vulnerability CVE-2025-30258
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2025-30258](https://avd.aquasec.com/nvd/cve-2025-30258)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">4.7</td>
+  <td><code>CVE-2025-68972</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: gpgv
+Installed Version: 2.2.40-1.1
+Vulnerability CVE-2025-68972
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2025-68972](https://avd.aquasec.com/nvd/cve-2025-68972)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">4.7</td>
+  <td><code>CVE-2026-41991</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: gzip
+Installed Version: 1.12-1
+Vulnerability CVE-2026-41991
+Severity: MEDIUM
+Fixed Version: 
+Link: [CVE-2026-41991](https://avd.aquasec.com/nvd/cve-2026-41991)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">4.4</td>
+  <td><code>CVE-2026-25645</code></td>
+  <td>sca</td>
+  <td>Trivy</td>
+  <td><code>app/requirements.txt:3</code></td>
+  <td>Package: requests
+Installed Version: 2.19.1
+Vulnerability CVE-2026-25645
+Severity: MEDIUM
+Fixed Version: 2.33.0
+Link: [CVE-2026-25645](https://avd.aquasec.com/nvd/cve-2026-25645)</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">-</td>
+  <td><code>yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag</code></td>
+  <td>sast</td>
+  <td>Semgrep OSS</td>
+  <td><code>.github/workflows/draugr.yml:24</code></td>
+  <td>GitHub Actions step uses a mutable tag or branch reference. Tags and branch names can be silently repointed by the action owner, enabling supply-chain attacks — as seen in the trivy-action and kics-github-action compromises. Pin the reference to a full 40-character commit SHA instead, e.g. `uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608`.</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">-</td>
+  <td><code>yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag</code></td>
+  <td>sast</td>
+  <td>Semgrep OSS</td>
+  <td><code>.github/workflows/draugr.yml:33</code></td>
+  <td>GitHub Actions step uses a mutable tag or branch reference. Tags and branch names can be silently repointed by the action owner, enabling supply-chain attacks — as seen in the trivy-action and kics-github-action compromises. Pin the reference to a full 40-character commit SHA instead, e.g. `uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608`.</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">-</td>
+  <td><code>yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag</code></td>
+  <td>sast</td>
+  <td>Semgrep OSS</td>
+  <td><code>.github/workflows/draugr.yml:41</code></td>
+  <td>GitHub Actions step uses a mutable tag or branch reference. Tags and branch names can be silently repointed by the action owner, enabling supply-chain attacks — as seen in the trivy-action and kics-github-action compromises. Pin the reference to a full 40-character commit SHA instead, e.g. `uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608`.</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">-</td>
+  <td><code>python.django.security.injection.code.user-eval.user-eval</code></td>
+  <td>sast</td>
+  <td>Semgrep OSS</td>
+  <td><code>app/app.py:29</code></td>
+  <td>Found user data in a call to &#39;eval&#39;. This is extremely dangerous because it can enable an attacker to execute arbitrary remote code on the system. Instead, refactor your code to not use &#39;eval&#39; and instead use a safe library for the specific functionality you need.</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">-</td>
+  <td><code>python.lang.security.audit.eval-detected.eval-detected</code></td>
+  <td>sast</td>
+  <td>Semgrep OSS</td>
+  <td><code>app/app.py:30</code></td>
+  <td>Detected the use of eval(). eval() can be dangerous if used to evaluate dynamic content. If this content can be input from outside the program, this may be a code injection vulnerability. Ensure evaluated content is not definable by external sources.</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">-</td>
+  <td><code>python.flask.security.audit.app-run-param-config.avoid_app_run_with_bad_host</code></td>
+  <td>sast</td>
+  <td>Semgrep OSS</td>
+  <td><code>app/app.py:35</code></td>
+  <td>Running flask app with host 0.0.0.0 could expose the server publicly.</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">-</td>
+  <td><code>python.flask.security.audit.debug-enabled.debug-enabled</code></td>
+  <td>sast</td>
+  <td>Semgrep OSS</td>
+  <td><code>app/app.py:35</code></td>
+  <td>Detected Flask app with debug=True. Do not deploy to production with this flag enabled as it will leak sensitive information. Instead, consider using Flask configuration variables or setting &#39;debug&#39; using system environment variables.</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">-</td>
+  <td><code>yaml.kubernetes.security.privileged-container.privileged-container</code></td>
+  <td>sast</td>
+  <td>Semgrep OSS</td>
+  <td><code>deploy/pod.yaml:8</code></td>
+  <td>Container or pod is running in privileged mode. This grants the container the equivalent of root capabilities on the host machine. This can lead to container escapes, privilege escalation, and other security concerns. Remove the &#39;privileged&#39; key to disable this capability.</td>
+</tr><tr>
+  <td>P2</td>
+  <td class="sev-medium">medium</td>
+  <td class="num">-</td>
+  <td><code>yaml.kubernetes.security.allow-privilege-escalation-true.allow-privilege-escalation-true</code></td>
+  <td>sast</td>
+  <td>Semgrep OSS</td>
+  <td><code>deploy/pod.yaml:13</code></td>
+  <td>In Kubernetes, each pod runs in its own isolated environment with its own  set of security policies. However, certain container images may contain  `setuid` or `setgid` binaries that could allow an attacker to perform  privilege escalation and gain access to sensitive resources. To mitigate  this risk, it&#39;s recommended to add a `securityContext` to the container in  the pod, with the parameter `allowPrivilegeEscalation` set to `false`.  This will prevent the container from running any privileged processes and  limit the impact of any potential attacks.  In the container `api` this parameter is set to `true` which makes this container much more vulnerable to privelege escalation attacks.</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">3.3</td>
+  <td><code>CVE-2026-40228</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libsystemd0
+Installed Version: 252.30-1~deb12u2
+Vulnerability CVE-2026-40228
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2026-40228](https://avd.aquasec.com/nvd/cve-2026-40228)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">3.3</td>
+  <td><code>CVE-2026-40228</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libudev1
+Installed Version: 252.30-1~deb12u2
+Vulnerability CVE-2026-40228
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2026-40228](https://avd.aquasec.com/nvd/cve-2026-40228)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">3.3</td>
+  <td><code>CVE-2023-29383</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: login
+Installed Version: 1:4.13&#43;dfsg1-1&#43;b1
+Vulnerability CVE-2023-29383
+Severity: LOW
+Fixed Version: 1:4.13&#43;dfsg1-1&#43;deb12u1
+Link: [CVE-2023-29383](https://avd.aquasec.com/nvd/cve-2023-29383)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">3.3</td>
+  <td><code>CVE-2023-29383</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: passwd
+Installed Version: 1:4.13&#43;dfsg1-1&#43;b1
+Vulnerability CVE-2023-29383
+Severity: LOW
+Fixed Version: 1:4.13&#43;dfsg1-1&#43;deb12u1
+Link: [CVE-2023-29383](https://avd.aquasec.com/nvd/cve-2023-29383)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.5</td>
+  <td><code>CVE-2026-24515</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libexpat1
+Installed Version: 2.5.0-1&#43;deb12u1
+Vulnerability CVE-2026-24515
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2026-24515](https://avd.aquasec.com/nvd/cve-2026-24515)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>DS-0026</code></td>
+  <td>iac</td>
+  <td>Trivy</td>
+  <td><code>app/Dockerfile:1</code></td>
+  <td>Artifact: app/Dockerfile
+Type: dockerfile
+Vulnerability DS-0026
+Severity: LOW
+Message: Add HEALTHCHECK instruction in your Dockerfile
+Link: [DS-0026](https://avd.aquasec.com/misconfig/ds-0026)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>KSV-0003</code></td>
+  <td>iac</td>
+  <td>Trivy</td>
+  <td><code>deploy/pod.yaml:8</code></td>
+  <td>Artifact: deploy/pod.yaml
+Type: kubernetes
+Vulnerability KSV-0003
+Severity: LOW
+Message: Container &#39;api&#39; of Pod &#39;demo-api&#39; should add &#39;ALL&#39; to &#39;securityContext.capabilities.drop&#39;
+Link: [KSV-0003](https://avd.aquasec.com/misconfig/ksv-0003)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>KSV-0004</code></td>
+  <td>iac</td>
+  <td>Trivy</td>
+  <td><code>deploy/pod.yaml:8</code></td>
+  <td>Artifact: deploy/pod.yaml
+Type: kubernetes
+Vulnerability KSV-0004
+Severity: LOW
+Message: Container &#39;api&#39; of &#39;pod&#39; &#39;demo-api&#39; in &#39;default&#39; namespace should set securityContext.capabilities.drop
+Link: [KSV-0004](https://avd.aquasec.com/misconfig/ksv-0004)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>KSV-0011</code></td>
+  <td>iac</td>
+  <td>Trivy</td>
+  <td><code>deploy/pod.yaml:8</code></td>
+  <td>Artifact: deploy/pod.yaml
+Type: kubernetes
+Vulnerability KSV-0011
+Severity: LOW
+Message: Container &#39;api&#39; of Pod &#39;demo-api&#39; should set &#39;resources.limits.cpu&#39;
+Link: [KSV-0011](https://avd.aquasec.com/misconfig/ksv-0011)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>KSV-0015</code></td>
+  <td>iac</td>
+  <td>Trivy</td>
+  <td><code>deploy/pod.yaml:8</code></td>
+  <td>Artifact: deploy/pod.yaml
+Type: kubernetes
+Vulnerability KSV-0015
+Severity: LOW
+Message: Container &#39;api&#39; of Pod &#39;demo-api&#39; should set &#39;resources.requests.cpu&#39;
+Link: [KSV-0015](https://avd.aquasec.com/misconfig/ksv-0015)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>KSV-0016</code></td>
+  <td>iac</td>
+  <td>Trivy</td>
+  <td><code>deploy/pod.yaml:8</code></td>
+  <td>Artifact: deploy/pod.yaml
+Type: kubernetes
+Vulnerability KSV-0016
+Severity: LOW
+Message: Container &#39;api&#39; of Pod &#39;demo-api&#39; should set &#39;resources.requests.memory&#39;
+Link: [KSV-0016](https://avd.aquasec.com/misconfig/ksv-0016)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>KSV-0018</code></td>
+  <td>iac</td>
+  <td>Trivy</td>
+  <td><code>deploy/pod.yaml:8</code></td>
+  <td>Artifact: deploy/pod.yaml
+Type: kubernetes
+Vulnerability KSV-0018
+Severity: LOW
+Message: Container &#39;api&#39; of Pod &#39;demo-api&#39; should set &#39;resources.limits.memory&#39;
+Link: [KSV-0018](https://avd.aquasec.com/misconfig/ksv-0018)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>KSV-0020</code></td>
+  <td>iac</td>
+  <td>Trivy</td>
+  <td><code>deploy/pod.yaml:8</code></td>
+  <td>Artifact: deploy/pod.yaml
+Type: kubernetes
+Vulnerability KSV-0020
+Severity: LOW
+Message: Container &#39;api&#39; of Pod &#39;demo-api&#39; should set &#39;securityContext.runAsUser&#39; &gt; 10000
+Link: [KSV-0020](https://avd.aquasec.com/misconfig/ksv-0020)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>KSV-0021</code></td>
+  <td>iac</td>
+  <td>Trivy</td>
+  <td><code>deploy/pod.yaml:8</code></td>
+  <td>Artifact: deploy/pod.yaml
+Type: kubernetes
+Vulnerability KSV-0021
+Severity: LOW
+Message: Container &#39;api&#39; of Pod &#39;demo-api&#39; should set &#39;securityContext.runAsGroup&#39; &gt; 10000
+Link: [KSV-0021](https://avd.aquasec.com/misconfig/ksv-0021)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>KSV-0030</code></td>
+  <td>iac</td>
+  <td>Trivy</td>
+  <td><code>deploy/pod.yaml:8</code></td>
+  <td>Artifact: deploy/pod.yaml
+Type: kubernetes
+Vulnerability KSV-0030
+Severity: LOW
+Message: Either Pod or Container should set &#39;securityContext.seccompProfile.type&#39; to &#39;RuntimeDefault&#39;
+Link: [KSV-0030](https://avd.aquasec.com/misconfig/ksv-0030)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>KSV-0106</code></td>
+  <td>iac</td>
+  <td>Trivy</td>
+  <td><code>deploy/pod.yaml:8</code></td>
+  <td>Artifact: deploy/pod.yaml
+Type: kubernetes
+Vulnerability KSV-0106
+Severity: LOW
+Message: container should drop all
+Link: [KSV-0106](https://avd.aquasec.com/misconfig/ksv-0106)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>KSV-0110</code></td>
+  <td>iac</td>
+  <td>Trivy</td>
+  <td><code>deploy/pod.yaml:4</code></td>
+  <td>Artifact: deploy/pod.yaml
+Type: kubernetes
+Vulnerability KSV-0110
+Severity: LOW
+Message: pod demo-api in default namespace should set metadata.namespace to a non-default namespace
+Link: [KSV-0110](https://avd.aquasec.com/misconfig/ksv-0110)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2011-3374</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: apt
+Installed Version: 2.6.1
+Vulnerability CVE-2011-3374
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2011-3374](https://avd.aquasec.com/nvd/cve-2011-3374)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>TEMP-0841856-B18BAF</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: bash
+Installed Version: 5.2.15-2&#43;b7
+Vulnerability TEMP-0841856-B18BAF
+Severity: LOW
+Fixed Version: 
+Link: [TEMP-0841856-B18BAF](https://security-tracker.debian.org/tracker/TEMP-0841856-B18BAF)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2022-0563</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: bsdutils
+Installed Version: 1:2.38.1-5&#43;deb12u1
+Vulnerability CVE-2022-0563
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2022-0563](https://avd.aquasec.com/nvd/cve-2022-0563)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2025-14104</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: bsdutils
+Installed Version: 1:2.38.1-5&#43;deb12u1
+Vulnerability CVE-2025-14104
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2025-14104](https://avd.aquasec.com/nvd/cve-2025-14104)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2016-2781</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: coreutils
+Installed Version: 9.1-1
+Vulnerability CVE-2016-2781
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2016-2781](https://avd.aquasec.com/nvd/cve-2016-2781)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2017-18018</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: coreutils
+Installed Version: 9.1-1
+Vulnerability CVE-2017-18018
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2017-18018](https://avd.aquasec.com/nvd/cve-2017-18018)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2025-5278</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: coreutils
+Installed Version: 9.1-1
+Vulnerability CVE-2025-5278
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2025-5278](https://avd.aquasec.com/nvd/cve-2025-5278)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2026-53910</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: diffutils
+Installed Version: 1:3.8-4
+Vulnerability CVE-2026-53910
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2026-53910](https://avd.aquasec.com/nvd/cve-2026-53910)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2025-6297</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: dpkg
+Installed Version: 1.21.22
+Vulnerability CVE-2025-6297
+Severity: LOW
+Fixed Version: 1.21.23
+Link: [CVE-2025-6297](https://avd.aquasec.com/nvd/cve-2025-6297)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2022-27943</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: gcc-12-base
+Installed Version: 12.2.0-14
+Vulnerability CVE-2022-27943
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2022-27943](https://avd.aquasec.com/nvd/cve-2022-27943)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2023-4039</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: gcc-12-base
+Installed Version: 12.2.0-14
+Vulnerability CVE-2023-4039
+Severity: LOW
+Fixed Version: 12.2.0-14&#43;deb12u1
+Link: [CVE-2023-4039](https://avd.aquasec.com/nvd/cve-2023-4039)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2022-3219</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: gpgv
+Installed Version: 2.2.40-1.1
+Vulnerability CVE-2022-3219
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2022-3219](https://avd.aquasec.com/nvd/cve-2022-3219)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2026-57062</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: gpgv
+Installed Version: 2.2.40-1.1
+Vulnerability CVE-2026-57062
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2026-57062](https://avd.aquasec.com/nvd/cve-2026-57062)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2011-3374</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libapt-pkg6.0
+Installed Version: 2.6.1
+Vulnerability CVE-2011-3374
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2011-3374](https://avd.aquasec.com/nvd/cve-2011-3374)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2022-0563</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libblkid1
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2022-0563
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2022-0563](https://avd.aquasec.com/nvd/cve-2022-0563)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2025-14104</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libblkid1
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2025-14104
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2025-14104](https://avd.aquasec.com/nvd/cve-2025-14104)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2010-4756</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc-bin
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2010-4756
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2010-4756](https://avd.aquasec.com/nvd/cve-2010-4756)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2018-20796</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc-bin
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2018-20796
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2018-20796](https://avd.aquasec.com/nvd/cve-2018-20796)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2019-1010022</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc-bin
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2019-1010022
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2019-1010022](https://avd.aquasec.com/nvd/cve-2019-1010022)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2019-1010023</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc-bin
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2019-1010023
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2019-1010023](https://avd.aquasec.com/nvd/cve-2019-1010023)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2019-1010024</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc-bin
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2019-1010024
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2019-1010024](https://avd.aquasec.com/nvd/cve-2019-1010024)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2019-1010025</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc-bin
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2019-1010025
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2019-1010025](https://avd.aquasec.com/nvd/cve-2019-1010025)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2019-9192</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc-bin
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2019-9192
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2019-9192](https://avd.aquasec.com/nvd/cve-2019-9192)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2025-15281</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc-bin
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2025-15281
+Severity: LOW
+Fixed Version: 2.36-9&#43;deb12u14
+Link: [CVE-2025-15281](https://avd.aquasec.com/nvd/cve-2025-15281)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2026-0861</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc-bin
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2026-0861
+Severity: LOW
+Fixed Version: 2.36-9&#43;deb12u14
+Link: [CVE-2026-0861](https://avd.aquasec.com/nvd/cve-2026-0861)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2026-4438</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc-bin
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2026-4438
+Severity: LOW
+Fixed Version: 2.36-9&#43;deb12u14
+Link: [CVE-2026-4438](https://avd.aquasec.com/nvd/cve-2026-4438)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2010-4756</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc6
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2010-4756
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2010-4756](https://avd.aquasec.com/nvd/cve-2010-4756)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2018-20796</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc6
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2018-20796
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2018-20796](https://avd.aquasec.com/nvd/cve-2018-20796)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2019-1010022</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc6
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2019-1010022
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2019-1010022](https://avd.aquasec.com/nvd/cve-2019-1010022)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2019-1010023</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc6
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2019-1010023
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2019-1010023](https://avd.aquasec.com/nvd/cve-2019-1010023)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2019-1010024</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc6
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2019-1010024
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2019-1010024](https://avd.aquasec.com/nvd/cve-2019-1010024)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2019-1010025</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc6
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2019-1010025
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2019-1010025](https://avd.aquasec.com/nvd/cve-2019-1010025)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2019-9192</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc6
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2019-9192
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2019-9192](https://avd.aquasec.com/nvd/cve-2019-9192)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2025-15281</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc6
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2025-15281
+Severity: LOW
+Fixed Version: 2.36-9&#43;deb12u14
+Link: [CVE-2025-15281](https://avd.aquasec.com/nvd/cve-2025-15281)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2026-0861</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc6
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2026-0861
+Severity: LOW
+Fixed Version: 2.36-9&#43;deb12u14
+Link: [CVE-2026-0861](https://avd.aquasec.com/nvd/cve-2026-0861)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2026-4438</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libc6
+Installed Version: 2.36-9&#43;deb12u8
+Vulnerability CVE-2026-4438
+Severity: LOW
+Fixed Version: 2.36-9&#43;deb12u14
+Link: [CVE-2026-4438](https://avd.aquasec.com/nvd/cve-2026-4438)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2023-52426</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libexpat1
+Installed Version: 2.5.0-1&#43;deb12u1
+Vulnerability CVE-2023-52426
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2023-52426](https://avd.aquasec.com/nvd/cve-2023-52426)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2024-28757</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libexpat1
+Installed Version: 2.5.0-1&#43;deb12u1
+Vulnerability CVE-2024-28757
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2024-28757](https://avd.aquasec.com/nvd/cve-2024-28757)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2026-41080</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libexpat1
+Installed Version: 2.5.0-1&#43;deb12u1
+Vulnerability CVE-2026-41080
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2026-41080](https://avd.aquasec.com/nvd/cve-2026-41080)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2022-27943</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libgcc-s1
+Installed Version: 12.2.0-14
+Vulnerability CVE-2022-27943
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2022-27943](https://avd.aquasec.com/nvd/cve-2022-27943)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2023-4039</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libgcc-s1
+Installed Version: 12.2.0-14
+Vulnerability CVE-2023-4039
+Severity: LOW
+Fixed Version: 12.2.0-14&#43;deb12u1
+Link: [CVE-2023-4039](https://avd.aquasec.com/nvd/cve-2023-4039)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2018-6829</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libgcrypt20
+Installed Version: 1.10.1-3
+Vulnerability CVE-2018-6829
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2018-6829](https://avd.aquasec.com/nvd/cve-2018-6829)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2024-2236</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libgcrypt20
+Installed Version: 1.10.1-3
+Vulnerability CVE-2024-2236
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2024-2236](https://avd.aquasec.com/nvd/cve-2024-2236)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2011-3389</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libgnutls30
+Installed Version: 3.7.9-2&#43;deb12u3
+Vulnerability CVE-2011-3389
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2011-3389](https://avd.aquasec.com/nvd/cve-2011-3389)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2025-9820</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libgnutls30
+Installed Version: 3.7.9-2&#43;deb12u3
+Vulnerability CVE-2025-9820
+Severity: LOW
+Fixed Version: 3.7.9-2&#43;deb12u6
+Link: [CVE-2025-9820](https://avd.aquasec.com/nvd/cve-2025-9820)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2026-5419</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libgnutls30
+Installed Version: 3.7.9-2&#43;deb12u3
+Vulnerability CVE-2026-5419
+Severity: LOW
+Fixed Version: 3.7.9-2&#43;deb12u7
+Link: [CVE-2026-5419](https://avd.aquasec.com/nvd/cve-2026-5419)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2018-5709</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libgssapi-krb5-2
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2018-5709
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2018-5709](https://avd.aquasec.com/nvd/cve-2018-5709)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2024-26458</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libgssapi-krb5-2
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2024-26458
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2024-26458](https://avd.aquasec.com/nvd/cve-2024-26458)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2024-26461</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libgssapi-krb5-2
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2024-26461
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2024-26461](https://avd.aquasec.com/nvd/cve-2024-26461)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2026-11850</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libgssapi-krb5-2
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2026-11850
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2026-11850](https://avd.aquasec.com/nvd/cve-2026-11850)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2018-5709</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libk5crypto3
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2018-5709
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2018-5709](https://avd.aquasec.com/nvd/cve-2018-5709)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2024-26458</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libk5crypto3
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2024-26458
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2024-26458](https://avd.aquasec.com/nvd/cve-2024-26458)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2024-26461</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libk5crypto3
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2024-26461
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2024-26461](https://avd.aquasec.com/nvd/cve-2024-26461)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2026-11850</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libk5crypto3
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2026-11850
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2026-11850](https://avd.aquasec.com/nvd/cve-2026-11850)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2018-5709</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libkrb5-3
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2018-5709
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2018-5709](https://avd.aquasec.com/nvd/cve-2018-5709)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2024-26458</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libkrb5-3
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2024-26458
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2024-26458](https://avd.aquasec.com/nvd/cve-2024-26458)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2024-26461</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libkrb5-3
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2024-26461
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2024-26461](https://avd.aquasec.com/nvd/cve-2024-26461)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2026-11850</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libkrb5-3
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2026-11850
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2026-11850](https://avd.aquasec.com/nvd/cve-2026-11850)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2018-5709</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libkrb5support0
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2018-5709
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2018-5709](https://avd.aquasec.com/nvd/cve-2018-5709)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2024-26458</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libkrb5support0
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2024-26458
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2024-26458](https://avd.aquasec.com/nvd/cve-2024-26458)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2024-26461</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libkrb5support0
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2024-26461
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2024-26461](https://avd.aquasec.com/nvd/cve-2024-26461)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2026-11850</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libkrb5support0
+Installed Version: 1.20.1-2&#43;deb12u2
+Vulnerability CVE-2026-11850
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2026-11850](https://avd.aquasec.com/nvd/cve-2026-11850)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2022-0563</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libmount1
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2022-0563
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2022-0563](https://avd.aquasec.com/nvd/cve-2022-0563)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2025-14104</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libmount1
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2025-14104
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2025-14104](https://avd.aquasec.com/nvd/cve-2025-14104)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2025-6141</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libncursesw6
+Installed Version: 6.4-4
+Vulnerability CVE-2025-6141
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2025-6141](https://avd.aquasec.com/nvd/cve-2025-6141)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2022-0563</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libsmartcols1
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2022-0563
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2022-0563](https://avd.aquasec.com/nvd/cve-2022-0563)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2025-14104</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libsmartcols1
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2025-14104
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2025-14104](https://avd.aquasec.com/nvd/cve-2025-14104)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2021-45346</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libsqlite3-0
+Installed Version: 3.40.1-2
+Vulnerability CVE-2021-45346
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2021-45346](https://avd.aquasec.com/nvd/cve-2021-45346)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2025-29088</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libsqlite3-0
+Installed Version: 3.40.1-2
+Vulnerability CVE-2025-29088
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2025-29088](https://avd.aquasec.com/nvd/cve-2025-29088)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2025-70873</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libsqlite3-0
+Installed Version: 3.40.1-2
+Vulnerability CVE-2025-70873
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2025-70873](https://avd.aquasec.com/nvd/cve-2025-70873)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2024-13176</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libssl3
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2024-13176
+Severity: LOW
+Fixed Version: 3.0.16-1~deb12u1
+Link: [CVE-2024-13176](https://avd.aquasec.com/nvd/cve-2024-13176)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2024-5535</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libssl3
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2024-5535
+Severity: LOW
+Fixed Version: 3.0.15-1~deb12u1
+Link: [CVE-2024-5535](https://avd.aquasec.com/nvd/cve-2024-5535)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2024-9143</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libssl3
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2024-9143
+Severity: LOW
+Fixed Version: 3.0.15-1~deb12u1
+Link: [CVE-2024-9143](https://avd.aquasec.com/nvd/cve-2024-9143)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2025-27587</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libssl3
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2025-27587
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2025-27587](https://avd.aquasec.com/nvd/cve-2025-27587)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2025-68160</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libssl3
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2025-68160
+Severity: LOW
+Fixed Version: 3.0.18-1~deb12u2
+Link: [CVE-2025-68160](https://avd.aquasec.com/nvd/cve-2025-68160)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2025-69418</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libssl3
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2025-69418
+Severity: LOW
+Fixed Version: 3.0.18-1~deb12u2
+Link: [CVE-2025-69418](https://avd.aquasec.com/nvd/cve-2025-69418)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2025-69420</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libssl3
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2025-69420
+Severity: LOW
+Fixed Version: 3.0.18-1~deb12u2
+Link: [CVE-2025-69420](https://avd.aquasec.com/nvd/cve-2025-69420)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2025-9232</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libssl3
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2025-9232
+Severity: LOW
+Fixed Version: 3.0.17-1~deb12u3
+Link: [CVE-2025-9232](https://avd.aquasec.com/nvd/cve-2025-9232)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2026-22795</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libssl3
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-22795
+Severity: LOW
+Fixed Version: 3.0.18-1~deb12u2
+Link: [CVE-2026-22795](https://avd.aquasec.com/nvd/cve-2026-22795)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2026-22796</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libssl3
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-22796
+Severity: LOW
+Fixed Version: 3.0.18-1~deb12u2
+Link: [CVE-2026-22796](https://avd.aquasec.com/nvd/cve-2026-22796)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2026-34180</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libssl3
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-34180
+Severity: LOW
+Fixed Version: 3.0.20-1~deb12u2
+Link: [CVE-2026-34180](https://avd.aquasec.com/nvd/cve-2026-34180)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2026-42766</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libssl3
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-42766
+Severity: LOW
+Fixed Version: 3.0.20-1~deb12u2
+Link: [CVE-2026-42766](https://avd.aquasec.com/nvd/cve-2026-42766)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2026-42767</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libssl3
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-42767
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2026-42767](https://avd.aquasec.com/nvd/cve-2026-42767)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2026-42770</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libssl3
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-42770
+Severity: LOW
+Fixed Version: 3.0.20-1~deb12u2
+Link: [CVE-2026-42770](https://avd.aquasec.com/nvd/cve-2026-42770)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2026-45446</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libssl3
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-45446
+Severity: LOW
+Fixed Version: 3.0.20-1~deb12u2
+Link: [CVE-2026-45446](https://avd.aquasec.com/nvd/cve-2026-45446)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2026-7383</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libssl3
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-7383
+Severity: LOW
+Fixed Version: 3.0.20-1~deb12u2
+Link: [CVE-2026-7383](https://avd.aquasec.com/nvd/cve-2026-7383)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2026-9076</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libssl3
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-9076
+Severity: LOW
+Fixed Version: 3.0.20-1~deb12u2
+Link: [CVE-2026-9076](https://avd.aquasec.com/nvd/cve-2026-9076)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2022-27943</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libstdc&#43;&#43;6
+Installed Version: 12.2.0-14
+Vulnerability CVE-2022-27943
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2022-27943](https://avd.aquasec.com/nvd/cve-2022-27943)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2023-4039</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libstdc&#43;&#43;6
+Installed Version: 12.2.0-14
+Vulnerability CVE-2023-4039
+Severity: LOW
+Fixed Version: 12.2.0-14&#43;deb12u1
+Link: [CVE-2023-4039](https://avd.aquasec.com/nvd/cve-2023-4039)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2013-4392</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libsystemd0
+Installed Version: 252.30-1~deb12u2
+Vulnerability CVE-2013-4392
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2013-4392](https://avd.aquasec.com/nvd/cve-2013-4392)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2023-31437</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libsystemd0
+Installed Version: 252.30-1~deb12u2
+Vulnerability CVE-2023-31437
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2023-31437](https://avd.aquasec.com/nvd/cve-2023-31437)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2023-31438</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libsystemd0
+Installed Version: 252.30-1~deb12u2
+Vulnerability CVE-2023-31438
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2023-31438](https://avd.aquasec.com/nvd/cve-2023-31438)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2023-31439</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libsystemd0
+Installed Version: 252.30-1~deb12u2
+Vulnerability CVE-2023-31439
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2023-31439](https://avd.aquasec.com/nvd/cve-2023-31439)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2025-13151</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libtasn1-6
+Installed Version: 4.19.0-2
+Vulnerability CVE-2025-13151
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2025-13151](https://avd.aquasec.com/nvd/cve-2025-13151)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2025-6141</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libtinfo6
+Installed Version: 6.4-4
+Vulnerability CVE-2025-6141
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2025-6141](https://avd.aquasec.com/nvd/cve-2025-6141)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2013-4392</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libudev1
+Installed Version: 252.30-1~deb12u2
+Vulnerability CVE-2013-4392
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2013-4392](https://avd.aquasec.com/nvd/cve-2013-4392)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2023-31437</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libudev1
+Installed Version: 252.30-1~deb12u2
+Vulnerability CVE-2023-31437
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2023-31437](https://avd.aquasec.com/nvd/cve-2023-31437)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2023-31438</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libudev1
+Installed Version: 252.30-1~deb12u2
+Vulnerability CVE-2023-31438
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2023-31438](https://avd.aquasec.com/nvd/cve-2023-31438)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2023-31439</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libudev1
+Installed Version: 252.30-1~deb12u2
+Vulnerability CVE-2023-31439
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2023-31439](https://avd.aquasec.com/nvd/cve-2023-31439)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2022-0563</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libuuid1
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2022-0563
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2022-0563](https://avd.aquasec.com/nvd/cve-2022-0563)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2025-14104</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libuuid1
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2025-14104
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2025-14104](https://avd.aquasec.com/nvd/cve-2025-14104)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2007-5686</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: login
+Installed Version: 1:4.13&#43;dfsg1-1&#43;b1
+Vulnerability CVE-2007-5686
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2007-5686](https://avd.aquasec.com/nvd/cve-2007-5686)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2024-56433</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: login
+Installed Version: 1:4.13&#43;dfsg1-1&#43;b1
+Vulnerability CVE-2024-56433
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2024-56433](https://avd.aquasec.com/nvd/cve-2024-56433)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>TEMP-0628843-DBAD28</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: login
+Installed Version: 1:4.13&#43;dfsg1-1&#43;b1
+Vulnerability TEMP-0628843-DBAD28
+Severity: LOW
+Fixed Version: 
+Link: [TEMP-0628843-DBAD28](https://security-tracker.debian.org/tracker/TEMP-0628843-DBAD28)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2022-0563</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: mount
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2022-0563
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2022-0563](https://avd.aquasec.com/nvd/cve-2022-0563)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2025-14104</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: mount
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2025-14104
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2025-14104](https://avd.aquasec.com/nvd/cve-2025-14104)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2025-6141</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: ncurses-base
+Installed Version: 6.4-4
+Vulnerability CVE-2025-6141
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2025-6141](https://avd.aquasec.com/nvd/cve-2025-6141)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2025-6141</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: ncurses-bin
+Installed Version: 6.4-4
+Vulnerability CVE-2025-6141
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2025-6141](https://avd.aquasec.com/nvd/cve-2025-6141)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2024-13176</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: openssl
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2024-13176
+Severity: LOW
+Fixed Version: 3.0.16-1~deb12u1
+Link: [CVE-2024-13176](https://avd.aquasec.com/nvd/cve-2024-13176)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2024-5535</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: openssl
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2024-5535
+Severity: LOW
+Fixed Version: 3.0.15-1~deb12u1
+Link: [CVE-2024-5535](https://avd.aquasec.com/nvd/cve-2024-5535)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2024-9143</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: openssl
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2024-9143
+Severity: LOW
+Fixed Version: 3.0.15-1~deb12u1
+Link: [CVE-2024-9143](https://avd.aquasec.com/nvd/cve-2024-9143)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2025-27587</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: openssl
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2025-27587
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2025-27587](https://avd.aquasec.com/nvd/cve-2025-27587)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2025-68160</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: openssl
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2025-68160
+Severity: LOW
+Fixed Version: 3.0.18-1~deb12u2
+Link: [CVE-2025-68160](https://avd.aquasec.com/nvd/cve-2025-68160)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2025-69418</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: openssl
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2025-69418
+Severity: LOW
+Fixed Version: 3.0.18-1~deb12u2
+Link: [CVE-2025-69418](https://avd.aquasec.com/nvd/cve-2025-69418)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2025-69420</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: openssl
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2025-69420
+Severity: LOW
+Fixed Version: 3.0.18-1~deb12u2
+Link: [CVE-2025-69420](https://avd.aquasec.com/nvd/cve-2025-69420)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2025-9232</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: openssl
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2025-9232
+Severity: LOW
+Fixed Version: 3.0.17-1~deb12u3
+Link: [CVE-2025-9232](https://avd.aquasec.com/nvd/cve-2025-9232)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2026-22795</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: openssl
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-22795
+Severity: LOW
+Fixed Version: 3.0.18-1~deb12u2
+Link: [CVE-2026-22795](https://avd.aquasec.com/nvd/cve-2026-22795)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2026-22796</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: openssl
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-22796
+Severity: LOW
+Fixed Version: 3.0.18-1~deb12u2
+Link: [CVE-2026-22796](https://avd.aquasec.com/nvd/cve-2026-22796)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2026-34180</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: openssl
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-34180
+Severity: LOW
+Fixed Version: 3.0.20-1~deb12u2
+Link: [CVE-2026-34180](https://avd.aquasec.com/nvd/cve-2026-34180)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2026-42766</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: openssl
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-42766
+Severity: LOW
+Fixed Version: 3.0.20-1~deb12u2
+Link: [CVE-2026-42766](https://avd.aquasec.com/nvd/cve-2026-42766)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2026-42767</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: openssl
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-42767
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2026-42767](https://avd.aquasec.com/nvd/cve-2026-42767)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2026-42770</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: openssl
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-42770
+Severity: LOW
+Fixed Version: 3.0.20-1~deb12u2
+Link: [CVE-2026-42770](https://avd.aquasec.com/nvd/cve-2026-42770)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2026-45446</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: openssl
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-45446
+Severity: LOW
+Fixed Version: 3.0.20-1~deb12u2
+Link: [CVE-2026-45446](https://avd.aquasec.com/nvd/cve-2026-45446)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2026-7383</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: openssl
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-7383
+Severity: LOW
+Fixed Version: 3.0.20-1~deb12u2
+Link: [CVE-2026-7383](https://avd.aquasec.com/nvd/cve-2026-7383)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2026-9076</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: openssl
+Installed Version: 3.0.14-1~deb12u2
+Vulnerability CVE-2026-9076
+Severity: LOW
+Fixed Version: 3.0.20-1~deb12u2
+Link: [CVE-2026-9076](https://avd.aquasec.com/nvd/cve-2026-9076)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2007-5686</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: passwd
+Installed Version: 1:4.13&#43;dfsg1-1&#43;b1
+Vulnerability CVE-2007-5686
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2007-5686](https://avd.aquasec.com/nvd/cve-2007-5686)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2024-56433</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: passwd
+Installed Version: 1:4.13&#43;dfsg1-1&#43;b1
+Vulnerability CVE-2024-56433
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2024-56433](https://avd.aquasec.com/nvd/cve-2024-56433)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>TEMP-0628843-DBAD28</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: passwd
+Installed Version: 1:4.13&#43;dfsg1-1&#43;b1
+Vulnerability TEMP-0628843-DBAD28
+Severity: LOW
+Fixed Version: 
+Link: [TEMP-0628843-DBAD28](https://security-tracker.debian.org/tracker/TEMP-0628843-DBAD28)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2011-4116</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: perl-base
+Installed Version: 5.36.0-7&#43;deb12u1
+Vulnerability CVE-2011-4116
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2011-4116](https://avd.aquasec.com/nvd/cve-2011-4116)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2023-31486</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: perl-base
+Installed Version: 5.36.0-7&#43;deb12u1
+Vulnerability CVE-2023-31486
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2023-31486](https://avd.aquasec.com/nvd/cve-2023-31486)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>TEMP-0517018-A83CE6</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: sysvinit-utils
+Installed Version: 3.06-4
+Vulnerability TEMP-0517018-A83CE6
+Severity: LOW
+Fixed Version: 
+Link: [TEMP-0517018-A83CE6](https://security-tracker.debian.org/tracker/TEMP-0517018-A83CE6)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2005-2541</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: tar
+Installed Version: 1.34&#43;dfsg-1.2&#43;deb12u1
+Vulnerability CVE-2005-2541
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2005-2541](https://avd.aquasec.com/nvd/cve-2005-2541)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>TEMP-0290435-0B57B5</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: tar
+Installed Version: 1.34&#43;dfsg-1.2&#43;deb12u1
+Vulnerability TEMP-0290435-0B57B5
+Severity: LOW
+Fixed Version: 
+Link: [TEMP-0290435-0B57B5](https://security-tracker.debian.org/tracker/TEMP-0290435-0B57B5)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2022-0563</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: util-linux
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2022-0563
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2022-0563](https://avd.aquasec.com/nvd/cve-2022-0563)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2025-14104</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: util-linux
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2025-14104
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2025-14104](https://avd.aquasec.com/nvd/cve-2025-14104)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2022-0563</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: util-linux-extra
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2022-0563
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2022-0563](https://avd.aquasec.com/nvd/cve-2022-0563)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2025-14104</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: util-linux-extra
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2025-14104
+Severity: LOW
+Fixed Version: 
+Link: [CVE-2025-14104](https://avd.aquasec.com/nvd/cve-2025-14104)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2026-1703</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: pip
+Installed Version: 23.0.1
+Vulnerability CVE-2026-1703
+Severity: LOW
+Fixed Version: 26.0
+Link: [CVE-2026-1703](https://avd.aquasec.com/nvd/cve-2026-1703)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">2.0</td>
+  <td><code>CVE-2026-27205</code></td>
+  <td>sca</td>
+  <td>Trivy</td>
+  <td><code>app/requirements.txt:2</code></td>
+  <td>Package: Flask
+Installed Version: 0.12.2
+Vulnerability CVE-2026-27205
+Severity: LOW
+Fixed Version: 3.1.3
+Link: [CVE-2026-27205](https://avd.aquasec.com/nvd/cve-2026-27205)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">0.0</td>
+  <td><code>CVE-2026-53613</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: bsdutils
+Installed Version: 1:2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-53613
+Severity: UNKNOWN
+Fixed Version: 
+Link: [CVE-2026-53613](https://avd.aquasec.com/nvd/cve-2026-53613)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">0.0</td>
+  <td><code>CVE-2026-56391</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: coreutils
+Installed Version: 9.1-1
+Vulnerability CVE-2026-56391
+Severity: UNKNOWN
+Fixed Version: 
+Link: [CVE-2026-56391](https://avd.aquasec.com/nvd/cve-2026-56391)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">0.0</td>
+  <td><code>CVE-2026-53613</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libblkid1
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-53613
+Severity: UNKNOWN
+Fixed Version: 
+Link: [CVE-2026-53613](https://avd.aquasec.com/nvd/cve-2026-53613)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">0.0</td>
+  <td><code>CVE-2026-53613</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libmount1
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-53613
+Severity: UNKNOWN
+Fixed Version: 
+Link: [CVE-2026-53613](https://avd.aquasec.com/nvd/cve-2026-53613)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">0.0</td>
+  <td><code>CVE-2026-53613</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libsmartcols1
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-53613
+Severity: UNKNOWN
+Fixed Version: 
+Link: [CVE-2026-53613](https://avd.aquasec.com/nvd/cve-2026-53613)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">0.0</td>
+  <td><code>CVE-2026-53613</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: libuuid1
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-53613
+Severity: UNKNOWN
+Fixed Version: 
+Link: [CVE-2026-53613](https://avd.aquasec.com/nvd/cve-2026-53613)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">0.0</td>
+  <td><code>CVE-2026-53613</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: mount
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-53613
+Severity: UNKNOWN
+Fixed Version: 
+Link: [CVE-2026-53613](https://avd.aquasec.com/nvd/cve-2026-53613)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">0.0</td>
+  <td><code>CVE-2026-7017</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: perl-base
+Installed Version: 5.36.0-7&#43;deb12u1
+Vulnerability CVE-2026-7017
+Severity: UNKNOWN
+Fixed Version: 
+Link: [CVE-2026-7017](https://avd.aquasec.com/nvd/cve-2026-7017)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">0.0</td>
+  <td><code>CVE-2026-53613</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: util-linux
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-53613
+Severity: UNKNOWN
+Fixed Version: 
+Link: [CVE-2026-53613](https://avd.aquasec.com/nvd/cve-2026-53613)</td>
+</tr><tr>
+  <td>P3</td>
+  <td class="sev-low">low</td>
+  <td class="num">0.0</td>
+  <td><code>CVE-2026-53613</code></td>
+  <td>images</td>
+  <td>Trivy</td>
+  <td><code>python:3.8-slim</code></td>
+  <td>Package: util-linux-extra
+Installed Version: 2.38.1-5&#43;deb12u1
+Vulnerability CVE-2026-53613
+Severity: UNKNOWN
+Fixed Version: 
+Link: [CVE-2026-53613](https://avd.aquasec.com/nvd/cve-2026-53613)</td>
+</tr>
+</tbody>
+</table>
+
+
+<footer>Generated by Draugr.</footer>
+</body>
+</html>
