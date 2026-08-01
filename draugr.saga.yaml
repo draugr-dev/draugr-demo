@@ -28,6 +28,13 @@ config:
       dir: ./draugr-out
     - kind: github # no-ops locally; uploads to the Security tab in GitHub Actions
 
+# Two components, not one, because one is not what anyone's project looks like — and because
+# the parts of an application are not equally exposed or equally important. `paths` scopes each
+# to its own subtree of this repository; files at the repository root come with both, since that
+# is where the manifests and the scanners' own configuration live.
+#
+# The pay-off is in the report: a per-component verdict, and P1–P4 that differ between them for
+# the same severity, because exposure and criticality differ.
 components:
   - name: api
     # exposure/criticality feed prioritization (P1–P4). Run `draugr classify` to change them.
@@ -35,5 +42,17 @@ components:
     criticality: important
     repositories:
       - url: . # scan this repository's checkout
+        paths:
+          - app # the service itself: dependencies, code, secrets, its Dockerfile
     images:
       - image: python:3.8-slim # images: old base with known CVEs (Trivy)
+
+  - name: platform
+    # The same findings would rank lower here: nothing external reaches it, and an outage is
+    # inconvenient rather than lost revenue.
+    exposure: internal
+    criticality: supporting
+    repositories:
+      - url: .
+        paths:
+          - deploy # the Kubernetes manifests (Trivy config → deploy/pod.yaml)
