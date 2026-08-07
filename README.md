@@ -1,8 +1,22 @@
-# draugr-demo
+# draugr-demo — an intentionally-vulnerable app for testing security scanners
 
-A tiny, **intentionally-vulnerable** sample app for exercising [Draugr](https://github.com/draugr-dev/draugr)
-end to end — every control, every report format, the publishers, and `draugr diff`. Use it to
-evaluate Draugr's features and developer experience without touching a real codebase.
+A small Python app with **planted, reproducible vulnerabilities** across every layer a scanner
+looks at: injection and unsafe `eval` in the source, known-vulnerable dependencies, a fake
+private key, a root-running Dockerfile, and a privileged Kubernetes pod.
+
+It exists to exercise [Draugr](https://github.com/draugr-dev/draugr) end to end — every control,
+every report format, the publishers, and `draugr diff`. **It is equally useful for evaluating any
+scanner**: the findings are the point, they are stable, and each one is documented below with the
+class of tool that should catch it. If you are comparing SAST or SCA tools and want a fixture
+where you already know the answer, this is one.
+
+Point Draugr at it and you get a verdict in two commands:
+
+```bash
+git clone https://github.com/draugr-dev/draugr-demo && cd draugr-demo
+curl -fsSL https://draugr.dev/install.sh | sh
+draugr scan .
+```
 
 > ⚠️ **This repo is deliberately insecure.** The vulnerabilities, misconfigurations, and the
 > "secret" are planted and fake. Do **not** use any of this as a template or deploy it.
