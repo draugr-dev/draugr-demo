@@ -17,12 +17,42 @@ config:
       enabled: true # Trivy config → app/Dockerfile, deploy/pod.yaml
     images:
       enabled: true # Trivy → the component's container image
+    licenses:
+      enabled: true # Trivy → the licence of every dependency, against the policy below
+
+  # An inventory of everything this release contains, as one document rather than one per
+  # repository and image — which is the unit an SBOM is actually asked for.
+  sbom:
+    enabled: true
+    scope: project
+
+  # Who is making the claims in the VEX document, and what they are about. Without these it still
+  # produces a valid document, named after the release; a real one would name a party and the
+  # identifier a consumer's own SBOM uses.
+  vex:
+    author: "Draugr demo <demo@example.com>"
+    product: "pkg:oci/draugr-dev/draugr-demo"
+
+  # One accepted risk, carrying everything the report and the VEX document need: why, who, when it
+  # lapses, and — separately, because it is a machine-readable claim rather than prose — what it
+  # means to somebody consuming this product.
+  exclude:
+    - rules: ["CVE-2018-1000656"]
+      reason: >-
+        The vulnerable certificate-verification path is never taken: this service pins its
+        upstream host and does not accept user-supplied URLs.
+      acceptedBy: "demo@example.com"
+      expires: "2027-01-01"
+      vex:
+        status: not_affected
+        justification: vulnerable_code_not_in_execute_path
 
   # Render several formats and deliver them: files locally, plus GitHub code scanning in CI.
   reports:
     - format: sarif
     - format: markdown
     - format: html
+    - format: vex # which of the CVEs above actually affect this product
   publishers:
     - kind: file
       dir: ./draugr-out
@@ -40,10 +70,17 @@ components:
     # exposure/criticality feed prioritization (P1–P4). Run `draugr classify` to change them.
     exposure: public
     criticality: important
+    # Two repositories, because a component is rarely one. Draugr plans a job per repository and
+    # runs them concurrently, so this is the shape that exercises per-repository checkout,
+    # provenance and caching. In a real project these would be two separate URLs; here they are
+    # two subtrees of this one, which produces the same two jobs.
     repositories:
-      - url: . # scan this repository's checkout
+      - url: . # the service itself: dependencies, code, secrets, its Dockerfile
         paths:
-          - app # the service itself: dependencies, code, secrets, its Dockerfile
+          - app
+      - url: . # its deployment surface, owned by the same team
+        paths:
+          - deploy
     images:
       - image: python:3.8-slim # images: old base with known CVEs (Trivy)
 
