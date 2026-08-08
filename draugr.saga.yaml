@@ -11,10 +11,20 @@ config:
       enabled: true # Trivy fs → app/requirements.txt (old, vulnerable deps)
     secrets:
       enabled: true # Gitleaks → app/config.example.pem (planted fake key)
+      # A scanner is configured under its own key. Gitleaks takes two options, both commented
+      # here so the demo keeps scanning what its README describes:
+      # gitleaks:
+      #   history: true                    # also walk commit history — a secret removed from the
+      #                                    # tip is still fetchable, so it is still compromised
+      #   config: security/gitleaks.toml   # a ruleset shared across repositories; a
+      #                                    # .gitleaks.toml committed here is already used
     sast:
       enabled: true # Semgrep → app/app.py (command injection, eval, …)
     iac:
       enabled: true # Trivy config → app/Dockerfile, deploy/pod.yaml
+      # trivyConfig:
+      #   checks: [security/checks]  # your own Rego, alongside Trivy's built-in checks
+      #   namespaces: [user]         # the namespaces those checks declare
     images:
       enabled: true # Trivy → the component's container image
     licenses:
