@@ -30,6 +30,15 @@ def calc():
     return str(eval(expr))  # noqa: S307
 
 
+@app.route("/download")
+def download():
+    # sast (NEW in this PR): path traversal — untrusted filename joined onto a base path
+    # and opened directly, so `?file=../../etc/passwd` escapes the intended directory.
+    name = request.args.get("file", "")
+    with open("/var/data/" + name) as fh:
+        return fh.read()
+
+
 if __name__ == "__main__":
     # sast: binding to all interfaces with debug enabled.
     app.run(host="0.0.0.0", debug=True)
