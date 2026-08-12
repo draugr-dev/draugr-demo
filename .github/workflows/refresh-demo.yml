@@ -35,7 +35,8 @@ jobs:
   refresh:
     runs-on: ubuntu-latest
     env:
-      GH_TOKEN: ${{ github.token }}
+      GH_TOKEN: ${{ github.token }} # the gh CLI
+      GITHUB_TOKEN: ${{ github.token }} # draugr's pull-request comment publisher
       REPO: ${{ github.repository }}
     steps:
       - uses: actions/checkout@v4
