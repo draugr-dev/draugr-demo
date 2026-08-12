@@ -1,7 +1,19 @@
-# Keep the demo clean and predictable. On a weekly schedule — and on demand — re-run the main
-# scan and the curated example PRs against the *latest* stable Draugr release, so the Security tab
-# and each PR's sticky diff comment always reflect the newest release. Nothing new is ever opened:
-# the Draugr workflow pins `version: latest`, so a plain re-run picks up whatever released last.
+# Keep the demo showing what Draugr does *now*.
+#
+# Two things drift, and they drift independently. The **release** moves — the Draugr workflow pins
+# `version: latest`, so any re-run picks that up. The **repository** moves too: a new control in the
+# Saga, a changed workflow, a different app baseline. The example PR branches were cut before those
+# changes and do not carry them.
+#
+# The obvious fix does not work. Re-running an old check (`gh run rerun`) replays the commit it ran
+# on, so it re-runs the *old* content by definition; and updating the PR branch from here cannot
+# help either, because an event caused by GITHUB_TOKEN does not start a workflow run. Either way
+# the demo would keep showcasing whatever the branches happened to contain when they were cut.
+#
+# So this job does the diff itself, against `refs/pull/N/merge` — what the pull request would be if
+# merged into main as it stands today. That is current by construction: the Saga, the workflow and
+# the app baseline all come from main, and only the pull request's own change is layered on top.
+# It is also the plain CLI a reader would run, which is the thing being demonstrated.
 name: Refresh demo
 
 on:
@@ -11,8 +23,9 @@ on:
 
 permissions:
   contents: read
-  actions: write # dispatch the main scan + re-run the example PRs' checks
-  pull-requests: read
+  actions: write # dispatch the main scan
+  pull-requests: write # the sticky diff comment on each example PR
+  security-events: write # upload each PR's new findings to code scanning
 
 concurrency:
   group: refresh-demo
@@ -23,28 +36,97 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GH_TOKEN: ${{ github.token }}
+      REPO: ${{ github.repository }}
     steps:
-      - name: Show the release being showcased
-        run: |
-          latest=$(gh release view --repo draugr-dev/draugr --json tagName --jq .tagName)
-          echo "Refreshing the demo against Draugr $latest" | tee -a "$GITHUB_STEP_SUMMARY"
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # the merge refs are fetched by hand below
 
-      - name: Refresh the main scan (code scanning)
-        run: gh workflow run Draugr --repo "$GITHUB_REPOSITORY" --ref main
-
-      - name: Re-run each open example PR's diff
+      - name: Install the release being showcased
         run: |
           set -euo pipefail
-          gh pr list --repo "$GITHUB_REPOSITORY" --state open --json number,headRefName \
-            | jq -c '.[]' | while read -r pr; do
-            num=$(echo "$pr" | jq -r .number)
-            branch=$(echo "$pr" | jq -r .headRefName)
-            run_id=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow=Draugr --branch "$branch" \
-              --event pull_request --limit 1 --json databaseId --jq '.[0].databaseId // empty')
-            if [ -n "$run_id" ]; then
-              echo "PR #$num ($branch): re-running Draugr run $run_id"
-              gh run rerun "$run_id" --repo "$GITHUB_REPOSITORY"
-            else
-              echo "PR #$num ($branch): no prior pull_request run to re-run; skipping"
+          latest=$(gh release view --repo draugr-dev/draugr --json tagName --jq .tagName)
+          echo "Refreshing the demo against Draugr $latest" | tee -a "$GITHUB_STEP_SUMMARY"
+          curl -fsSL "https://raw.githubusercontent.com/draugr-dev/draugr/${latest}/install.sh" | sh
+          echo "$HOME/.draugr/bin" >>"$GITHUB_PATH"
+
+      - name: Provision the scanners the Saga needs
+        run: draugr tools install
+
+      # The demo is only worth showing if it still works. A release that renames a Saga field, or
+      # retires a scanner this descriptor names, would otherwise be discovered by a visitor.
+      - name: The descriptor still describes something Draugr can run
+        run: draugr validate draugr.saga.yaml
+
+      # Code scanning on main: the complete picture, which is what a default branch should carry.
+      # A dispatch is an explicit API call rather than an event, so it is not subject to the
+      # GITHUB_TOKEN rule that stops this job from triggering the pull-request runs.
+      - name: Refresh the main scan (code scanning)
+        run: gh workflow run Draugr --repo "$REPO" --ref main
+
+      - name: Baseline main
+        run: draugr scan draugr.saga.yaml -o base --no-publish --no-gate
+
+      - name: Refresh every open example PR
+        run: |
+          set -uo pipefail
+          failed=0
+          seen=0
+          echo "| PR | new | fixed | unchanged |" >>"$GITHUB_STEP_SUMMARY"
+          echo "|---|---|---|---|" >>"$GITHUB_STEP_SUMMARY"
+
+          for num in $(gh pr list --repo "$REPO" --state open --json number --jq '.[].number'); do
+            seen=$((seen + 1))
+            echo "::group::PR #$num"
+
+            # The merge ref is main-as-it-stands with this pull request applied. Scanning it is what
+            # makes the refresh current: nothing here reads the branch as it was cut.
+            if ! git fetch --no-tags --force origin "refs/pull/$num/merge:refs/remotes/pr/$num"; then
+              echo "::error::PR #$num has no merge ref — it may have conflicts with main"
+              failed=1; echo "::endgroup::"; continue
             fi
+            sha=$(git rev-parse "refs/remotes/pr/$num")
+
+            rm -rf head pr-src
+            git worktree add --detach pr-src "$sha" >/dev/null
+            ( cd pr-src && draugr scan draugr.saga.yaml -o "$GITHUB_WORKSPACE/head" --no-publish --no-gate ) || true
+            git worktree remove --force pr-src
+
+            if [ ! -f head/results.sarif ]; then
+              echo "::error::PR #$num produced no results.sarif; the scan did not complete"
+              failed=1; echo "::endgroup::"; continue
+            fi
+
+            # The publisher reads the pull request from GITHUB_REF, which is this job's branch —
+            # so it is told which pull request it is commenting on.
+            if ! GITHUB_REF="refs/pull/$num/merge" draugr diff base/results.sarif head/results.sarif --publish; then
+              echo "::error::PR #$num: posting the diff comment failed"
+              failed=1
+            fi
+
+            # The findings this pull request introduces, and only those. Uploaded against the pull
+            # request's own ref, so it is what that PR shows and main keeps every alert it had.
+            draugr diff base/results.sarif head/results.sarif --format sarif > "new-$num.sarif"
+            if ! gh api -X POST "repos/$REPO/code-scanning/sarifs" \
+                 -f "commit_sha=$sha" -f "ref=refs/pull/$num/merge" \
+                 -f "sarif=$(gzip -c "new-$num.sarif" | base64 -w0)" >/dev/null; then
+              echo "::error::PR #$num: uploading the new findings failed"
+              failed=1
+            fi
+
+            # From `summary`, which counts all three. The top-level arrays carry only new and
+            # fixed — reading `unchanged` from them yields 0 on every run, and a table of zeroes
+            # looks like an answer.
+            read -r n f u < <(draugr diff base/results.sarif head/results.sarif --format json \
+                     | jq -r '.summary | "\(.new) \(.fixed) \(.unchanged)"')
+            echo "| #$num | $n | $f | $u |" >>"$GITHUB_STEP_SUMMARY"
+            echo "::endgroup::"
           done
+
+          # A refresh that found nothing to refresh is a broken refresh, not a quiet success: the
+          # three example pull requests are the demo's whole pull-request story.
+          if [ "$seen" -eq 0 ]; then
+            echo "::error::no open pull requests found — the curated examples are the point of this repo"
+            exit 1
+          fi
+          exit "$failed"
