@@ -90,8 +90,8 @@ Change `exposure`/`criticality` in the Saga and watch the P1–P4 banding shift.
 ### Diff — the PR story
 
 **Three example pull requests are permanently open on this repo, on purpose.** They aren't
-neglected work — each one carries a live Draugr diff comment, which is the only place you can
-see the pull-request gate without setting it up yourself:
+neglected work — each one shows the pull-request gate on a real change, in the two places it
+appears, without your having to set it up:
 
 | PR | What it shows |
 |---|---|
@@ -99,7 +99,16 @@ see the pull-request gate without setting it up yourself:
 | [#2 Bump vulnerable dependencies](https://github.com/draugr-dev/draugr-demo/pull/2) | Findings reported as **fixed** |
 | [#1 Harden the API](https://github.com/draugr-dev/draugr-demo/pull/1) | Source fixes clearing `sast` findings |
 
-Their checks are re-run against each new Draugr release, so the comments stay current.
+Open one and you get both surfaces:
+
+- **A sticky comment** — new, fixed and unchanged counts, updated in place on every push rather
+  than added to.
+- **Annotations on the Files changed tab** — and only for the findings *that pull request
+  introduced*. This repository is deliberately full of vulnerabilities, so an upload of everything
+  would bury a reviewer under hundreds they did not cause; the workflow sets `code-scanning: new`,
+  so the diff is what reaches the Security tab. A push to `main` still uploads the complete scan.
+
+Their checks are re-run against each new Draugr release, so both stay current.
 
 To do the same locally — compare two scans and gate only on *new* findings:
 ```bash
@@ -110,6 +119,7 @@ draugr scan draugr.saga.yaml -o base/
 draugr scan draugr.saga.yaml -o head/
 draugr diff base/results.sarif head/results.sarif                    # new / fixed / unchanged
 draugr diff base/results.sarif head/results.sarif --fail-on-new-priority P1
+draugr diff base/results.sarif head/results.sarif --format sarif     # just the new findings, for code scanning
 draugr diff base/results.sarif head/results.sarif --format markdown  # ready-made PR comment
 ```
 
