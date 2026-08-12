@@ -1,8 +1,22 @@
-# draugr-demo
+# draugr-demo — an intentionally-vulnerable app for testing security scanners
 
-A tiny, **intentionally-vulnerable** sample app for exercising [Draugr](https://github.com/draugr-dev/draugr)
-end to end — every control, every report format, the publishers, and `draugr diff`. Use it to
-evaluate Draugr's features and developer experience without touching a real codebase.
+A small Python app with **planted, reproducible vulnerabilities** across every layer a scanner
+looks at: injection and unsafe `eval` in the source, known-vulnerable dependencies, a fake
+private key, a root-running Dockerfile, and a privileged Kubernetes pod.
+
+It exists to exercise [Draugr](https://github.com/draugr-dev/draugr) end to end — every control,
+every report format, the publishers, and `draugr diff`. **It is equally useful for evaluating any
+scanner**: the findings are the point, they are stable, and each one is documented below with the
+class of tool that should catch it. If you are comparing SAST or SCA tools and want a fixture
+where you already know the answer, this is one.
+
+Point Draugr at it and you get a verdict in two commands:
+
+```bash
+git clone https://github.com/draugr-dev/draugr-demo && cd draugr-demo
+curl -fsSL https://draugr.dev/install.sh | sh
+draugr scan .
+```
 
 > ⚠️ **This repo is deliberately insecure.** The vulnerabilities, misconfigurations, and the
 > "secret" are planted and fake. Do **not** use any of this as a template or deploy it.
@@ -74,7 +88,30 @@ draugr scan draugr.saga.yaml --min-priority P2   # focus on what matters now
 Change `exposure`/`criticality` in the Saga and watch the P1–P4 banding shift.
 
 ### Diff — the PR story
-Compare two scans to see what a change introduced, and gate only on *new* findings:
+
+**Three example pull requests are permanently open on this repo, on purpose.** They aren't
+neglected work — each one shows the pull-request gate on a real change, in the two places it
+appears, without your having to set it up:
+
+| PR | What it shows |
+|---|---|
+| [#3 Add /download endpoint](https://github.com/draugr-dev/draugr-demo/pull/3) | A change that **introduces** a new finding — what the gate is for |
+| [#2 Bump vulnerable dependencies](https://github.com/draugr-dev/draugr-demo/pull/2) | Findings reported as **fixed** |
+| [#1 Harden the API](https://github.com/draugr-dev/draugr-demo/pull/1) | Source fixes clearing `sast` findings |
+
+Open one and you get both surfaces:
+
+- **A sticky comment** — new, fixed and unchanged counts, updated in place on every push rather
+  than added to.
+- **Annotations on the Files changed tab** — and only for the findings *that pull request
+  introduced*. This repository is deliberately full of vulnerabilities, so an upload of everything
+  would bury a reviewer under hundreds they did not cause; the workflow sets `code-scanning: new`,
+  so the diff is what reaches the Security tab. `main` is unaffected — code scanning scopes an
+  upload to the ref it was made against — and a push to `main` uploads the complete scan.
+
+Their checks are re-run against each new Draugr release, so both stay current.
+
+To do the same locally — compare two scans and gate only on *new* findings:
 ```bash
 # Baseline the current state.
 draugr scan draugr.saga.yaml -o base/
@@ -83,6 +120,7 @@ draugr scan draugr.saga.yaml -o base/
 draugr scan draugr.saga.yaml -o head/
 draugr diff base/results.sarif head/results.sarif                    # new / fixed / unchanged
 draugr diff base/results.sarif head/results.sarif --fail-on-new-priority P1
+draugr diff base/results.sarif head/results.sarif --format sarif     # just the new findings, for code scanning
 draugr diff base/results.sarif head/results.sarif --format markdown  # ready-made PR comment
 ```
 
