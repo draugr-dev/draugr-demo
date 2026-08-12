@@ -106,7 +106,8 @@ Open one and you get both surfaces:
 - **Annotations on the Files changed tab** — and only for the findings *that pull request
   introduced*. This repository is deliberately full of vulnerabilities, so an upload of everything
   would bury a reviewer under hundreds they did not cause; the workflow sets `code-scanning: new`,
-  so the diff is what reaches the Security tab. A push to `main` still uploads the complete scan.
+  so the diff is what reaches the Security tab. `main` is unaffected — code scanning scopes an
+  upload to the ref it was made against — and a push to `main` uploads the complete scan.
 
 Their checks are re-run against each new Draugr release, so both stay current.
 

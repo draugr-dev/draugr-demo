@@ -9,10 +9,9 @@
 # added. Open one of this repo's example PRs and the Files-changed tab carries the finding that PR
 # introduces, and nothing else.
 #
-# Note what that means for the alert list: code scanning resolves an alert missing from an upload
-# as fixed, so a PR run closes the alerts for pre-existing findings. They come back with the next
-# push to main, which uploads the complete scan. That is the trade, and it is the right way round —
-# a reviewer is asked about their own change; the default branch keeps the whole picture.
+# This costs nothing on main. Code scanning scopes an upload to the ref it was made against, and a
+# pull-request run uploads against the pull request's own ref — so main keeps every alert it had,
+# and the narrowing is visible only where the review is happening.
 #
 # One workflow, one Saga.
 name: Draugr
