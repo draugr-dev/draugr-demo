@@ -1,8 +1,19 @@
 # One event-aware Draugr workflow. With the action's default `mode: auto`:
-#   - push to main  → full scan, findings uploaded to code scanning (the Security tab);
-#   - pull request  → scan the base + head and post one sticky new/fixed comment.
-# Keeping code-scanning upload on push (not PRs) is what avoids a second, overlapping
-# "GitHub Advanced Security" comment next to Draugr's own. One workflow, one Saga.
+#   - push to main  → full scan, every finding uploaded to code scanning (the Security tab);
+#   - pull request  → scan the base + head, post one sticky new/fixed comment, and upload the
+#                     findings this pull request introduced.
+#
+# The pull-request upload is the part worth looking at. Uploading the whole repository on a PR
+# annotates a reviewer with hundreds of findings the branch did not cause, and the ones it did are
+# indistinguishable among them — so the action's `code-scanning: new` uploads only what the diff
+# added. Open one of this repo's example PRs and the Files-changed tab carries the finding that PR
+# introduces, and nothing else.
+#
+# This costs nothing on main. Code scanning scopes an upload to the ref it was made against, and a
+# pull-request run uploads against the pull request's own ref — so main keeps every alert it had,
+# and the narrowing is visible only where the review is happening.
+#
+# One workflow, one Saga.
 name: Draugr
 
 on:
@@ -26,17 +37,29 @@ jobs:
           fetch-depth: 0 # diff mode needs the PR's base commit
 
       - name: Draugr
+        id: draugr
         # This repo is intentionally vulnerable, so a full scan "fails" by design — keep the push
         # scan non-blocking so findings still upload. In a real repo, drop this and gate with
         # fail-on (push) / fail-on-new (PR).
         continue-on-error: true
-        uses: draugr-dev/draugr@v0.27.0 # Dependabot keeps this current; binary tracks latest below
+        uses: draugr-dev/draugr@v0 # moving major tag: always the latest v0.x (binary also tracks latest via version: latest below)
         with:
           saga: draugr.saga.yaml
           version: latest # always scan with the newest Draugr release
           tools: true # provision the scanners the Saga needs (Trivy, Gitleaks, Semgrep)
+          code-scanning: new # the default, spelled out: on a PR, upload only what it introduced
+          # code-scanning-min-priority: P1   # narrow further, to what is urgent
           # fail-on: error       # (push) gate the build
           # fail-on-new: error   # (PR)   gate only on findings this PR introduces
+
+      # On a pull request, `outputs.sarif` is the diff: the findings this branch added. The push
+      # path uploads through the Saga's `github` publisher instead, which is why this step is
+      # PR-only — two uploads of the same run would fight over the same alerts.
+      - name: Upload the new findings to code scanning
+        if: ${{ always() && github.event_name == 'pull_request' && steps.draugr.outputs.sarif != '' }}
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: ${{ steps.draugr.outputs.sarif }}
 
       - uses: actions/upload-artifact@v4
         if: ${{ always() && github.event_name == 'push' }}
