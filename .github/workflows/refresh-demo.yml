@@ -50,8 +50,18 @@ jobs:
           curl -fsSL "https://raw.githubusercontent.com/draugr-dev/draugr/${latest}/install.sh" | sh
           echo "$HOME/.draugr/bin" >>"$GITHUB_PATH"
 
+      # The same two steps the action takes for `tools: true`. Semgrep is a Python package rather
+      # than a binary Draugr distributes, so `tools install` cannot fetch it — and without it the
+      # sast control cannot run, which fails the scan rather than quietly producing a baseline
+      # missing every sast finding. A diff against that baseline would report each of them as new.
       - name: Provision the scanners the Saga needs
-        run: draugr tools install
+        run: |
+          set -euo pipefail
+          draugr tools install -y
+          if ! command -v semgrep >/dev/null 2>&1; then
+            pipx install semgrep
+            echo "$HOME/.local/bin" >>"$GITHUB_PATH"
+          fi
 
       # The demo is only worth showing if it still works. A release that renames a Saga field, or
       # retires a scanner this descriptor names, would otherwise be discovered by a visitor.
