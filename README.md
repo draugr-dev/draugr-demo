@@ -80,6 +80,32 @@ draugr scan draugr.saga.yaml --fail-on-priority P1   # block only on P1s
 echo $?
 ```
 
+### Accepted risk — in a file of its own
+
+One CVE here is accepted rather than fixed, and the acceptance does not live in `draugr.saga.yaml`:
+
+```
+draugr.saga.yaml
+  fragments:
+    - path: ".draugr/exclusions/*.saga-fragment.yaml"
+
+.draugr/exclusions/cve-2018-1000656.saga-fragment.yaml   ← the reason, who gave it, when it lapses
+```
+
+A descriptor that has been running a while is two things at once: a structural account of the
+system, and a log of dated decisions about findings somebody accepted. They change at different
+times and are reviewed by different people, so `fragments:` lets them live apart — and a fragment
+can come from another repository entirely, which is how several teams contribute to one descriptor.
+
+The finding is **not deleted**. It stays in the report marked suppressed:
+
+```
+1 finding suppressed by config.exclude — 1 accepted by demo@example.com
+```
+
+The question an auditor asks is never "did the scanner run" — it is who decided this was
+acceptable, and when. Delete the fragment and re-scan: the finding comes back, which is the point.
+
 ### Prioritization
 ```bash
 draugr classify draugr.saga.yaml     # set component exposure/criticality via a wizard

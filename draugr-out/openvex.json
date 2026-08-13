@@ -1,8 +1,8 @@
 {
   "@context": "https://openvex.dev/ns/v0.2.0",
-  "@id": "https://openvex.dev/docs/draugr/8343284e93d0b1aaab400554ad180445dc84de10cf9ada274312bf5c6644944d",
+  "@id": "https://openvex.dev/docs/draugr/70e657743aa520eec89b49d7dec1b8df6136b0d35b3bfc655af89e762d11926b",
   "author": "Draugr demo <demo@example.com>",
-  "timestamp": "2026-08-07T03:15:00Z",
+  "timestamp": "2026-08-12T04:25:31Z",
   "version": 1,
   "tooling": "draugr/(development build)",
   "statements": [
@@ -1363,6 +1363,17 @@
     },
     {
       "vulnerability": {
+        "name": "CVE-2026-15534"
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/draugr-dev/draugr-demo@1.0"
+        }
+      ],
+      "status": "under_investigation"
+    },
+    {
+      "vulnerability": {
         "name": "CVE-2026-1703"
       },
       "products": [
@@ -1386,6 +1397,17 @@
     {
       "vulnerability": {
         "name": "CVE-2026-18508"
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/draugr-dev/draugr-demo@1.0"
+        }
+      ],
+      "status": "under_investigation"
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-18938"
       },
       "products": [
         {
@@ -2485,6 +2507,28 @@
     },
     {
       "vulnerability": {
+        "name": "CVE-2026-6368"
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/draugr-dev/draugr-demo@1.0"
+        }
+      ],
+      "status": "under_investigation"
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-6791"
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/draugr-dev/draugr-demo@1.0"
+        }
+      ],
+      "status": "under_investigation"
+    },
+    {
+      "vulnerability": {
         "name": "CVE-2026-7010"
       },
       "products": [
@@ -2497,6 +2541,17 @@
     {
       "vulnerability": {
         "name": "CVE-2026-7017"
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/draugr-dev/draugr-demo@1.0"
+        }
+      ],
+      "status": "under_investigation"
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-72522"
       },
       "products": [
         {

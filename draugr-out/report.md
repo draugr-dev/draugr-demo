@@ -4,14 +4,14 @@
 
 | Priority | P1 | P2 | P3 | P4 |
 |---|---|---|---|---|
-| Findings | 69 | 111 | 93 | 18 |
+| Findings | 69 | 112 | 98 | 18 |
 
 ### Controls
 
 | Control | Verdict | Critical | High | Medium | Low |
 |---|---|---:|---:|---:|---:|
 | iac | **FAIL** | 0 | 7 | 10 | 23 |
-| images | **FAIL** | 9 | 40 | 92 | 77 |
+| images | **FAIL** | 9 | 40 | 93 | 82 |
 | licenses | pass | 0 | 0 | 0 | 0 |
 | sast | **FAIL** | 0 | 7 | 8 | 0 |
 | sca | **FAIL** | 3 | 5 | 8 | 1 |
@@ -19,13 +19,13 @@
 
 **Scanned**
 
-- `https://github.com/draugr-dev/draugr-demo.git` at `d96052ec` — 6 uncommitted files not included
+- `https://github.com/draugr-dev/draugr-demo.git` at `773b23f4`
 
 ### Components
 
 | Component | Verdict | P1 | P2 | P3 | P4 | Failing controls |
 |---|---|---:|---:|---:|---:|---|
-| api | **FAIL** | 69 | 111 | 90 | 0 | iac, images, sast, sca, secrets |
+| api | **FAIL** | 69 | 112 | 95 | 0 | iac, images, sast, sca, secrets |
 | platform | **FAIL** | 0 | 0 | 3 | 18 | iac |
 
 **1 finding suppressed by config.exclude — 1 accepted by demo@example.com**
@@ -62,4 +62,4 @@ _SBOM: 1 document (cyclonedx-json)._
 | P1 | high | 8.0 | `CVE-2026-53615` | images | Trivy | api | python:3.8-slim |
 | P1 | high | 8.0 | `CVE-2026-54369` | images | Trivy | api | python:3.8-slim |
 
-_…and 266 more finding(s)._
+_…and 272 more finding(s)._

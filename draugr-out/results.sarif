@@ -578,6 +578,24 @@
               }
             },
             {
+              "id": "DLA-4726-1",
+              "name": "OsPackageVulnerability",
+              "shortDescription": {
+                "text": "ca-certificates - CA certificates update"
+              },
+              "fullDescription": {
+                "text": "ca-certificates - CA certificates update"
+              },
+              "help": {
+                "text": "Vulnerability DLA-4726-1\nSeverity: UNKNOWN\nPackage: ca-certificates\nFixed Version: 20250419~deb12u1\nLink: [DLA-4726-1]()\n"
+              },
+              "properties": {
+                "tags": [
+                  "scanner:Trivy"
+                ]
+              }
+            },
+            {
               "id": "CVE-2016-2781",
               "name": "OsPackageVulnerability",
               "shortDescription": {
@@ -942,7 +960,7 @@
               "id": "CVE-2026-54371",
               "name": "OsPackageVulnerability",
               "shortDescription": {
-                "text": "attr: Symlink Traversal Privilege Escalation via getfattr and setfattr"
+                "text": "attr: attr: Symlink Traversal Privilege Escalation via getfattr and setfattr"
               },
               "fullDescription": {
                 "text": "attr before version 2.6.0 contains a symlink traversal vulnerability in the getfattr and setfattr utilities that allows local attackers to escalate privileges by replacing a pathname component with a symbolic link during directory hierarchy traversal. Attackers who control a pathname component can redirect getfattr and setfattr operations to arbitrary files by substituting a symlink, leading to local privilege escalation when getfattr or setfattr is invoked by a privileged process over an attacker-controlled path."
@@ -1350,6 +1368,44 @@
                 "text": "Vulnerability CVE-2026-4438\nSeverity: LOW\nPackage: libc6\nFixed Version: 2.36-9+deb12u14\nLink: [CVE-2026-4438](https://avd.aquasec.com/nvd/cve-2026-4438)\nCalling gethostbyaddr or gethostbyaddr_r with a configured nsswitch.conf that specifies the library's DNS backend in the GNU C library version 2.34 to version 2.43 could result in an invalid DNS hostname being returned to the caller in violation of the DNS specification."
               },
               "helpUri": "https://avd.aquasec.com/nvd/cve-2026-4438",
+              "properties": {
+                "tags": [
+                  "scanner:Trivy"
+                ]
+              }
+            },
+            {
+              "id": "CVE-2026-6368",
+              "name": "OsPackageVulnerability",
+              "shortDescription": {
+                "text": "Calling wordexp with WRDE_APPEND in the GNU C Library version 2.0 to v ..."
+              },
+              "fullDescription": {
+                "text": "Calling wordexp with WRDE_APPEND in the GNU C Library version 2.0 to version 2.43 can cause the interface to return invalid memory in the we_wordv member, which on subsequent calls to wordfree may abort the process."
+              },
+              "help": {
+                "text": "Vulnerability CVE-2026-6368\nSeverity: UNKNOWN\nPackage: libc6\nFixed Version: \nLink: [CVE-2026-6368](https://avd.aquasec.com/nvd/cve-2026-6368)\nCalling wordexp with WRDE_APPEND in the GNU C Library version 2.0 to version 2.43 can cause the interface to return invalid memory in the we_wordv member, which on subsequent calls to wordfree may abort the process."
+              },
+              "helpUri": "https://avd.aquasec.com/nvd/cve-2026-6368",
+              "properties": {
+                "tags": [
+                  "scanner:Trivy"
+                ]
+              }
+            },
+            {
+              "id": "CVE-2026-6791",
+              "name": "OsPackageVulnerability",
+              "shortDescription": {
+                "text": "When expanding paths that begin with a tilde (~) followed by a usernam ..."
+              },
+              "fullDescription": {
+                "text": "When expanding paths that begin with a tilde (~) followed by a username, the internal parse_tilde function extracts the username to determine the user's home directory.  The implementation allocates memory for this username directly on the stack using the strndupa macro. Because the size of this allocation was determined by the length of the user-supplied input without any bounds checks, passing an excessively long username e.g. thousands of characters, forces the thread to exhaust its stack space. Thus if an application passes untrusted, attacker-controlled input to the wordexp function, an attacker can trigger a stack clash."
+              },
+              "help": {
+                "text": "Vulnerability CVE-2026-6791\nSeverity: UNKNOWN\nPackage: libc6\nFixed Version: \nLink: [CVE-2026-6791](https://avd.aquasec.com/nvd/cve-2026-6791)\nWhen expanding paths that begin with a tilde (~) followed by a username, the internal parse_tilde function extracts the username to determine the user's home directory.  The implementation allocates memory for this username directly on the stack using the strndupa macro. Because the size of this allocation was determined by the length of the user-supplied input without any bounds checks, passing an excessively long username e.g. thousands of characters, forces the thread to exhaust its stack space. Thus if an application passes untrusted, attacker-controlled input to the wordexp function, an attacker can trigger a stack clash."
+              },
+              "helpUri": "https://avd.aquasec.com/nvd/cve-2026-6791",
               "properties": {
                 "tags": [
                   "scanner:Trivy"
@@ -1901,6 +1957,25 @@
                 "text": "Vulnerability CVE-2026-41080\nSeverity: LOW\nPackage: libexpat1\nFixed Version: \nLink: [CVE-2026-41080](https://avd.aquasec.com/nvd/cve-2026-41080)\nlibexpat before 2.8.0 uses insufficient entropy, and thus hash flooding can occur via a crafted XML document."
               },
               "helpUri": "https://avd.aquasec.com/nvd/cve-2026-41080",
+              "properties": {
+                "tags": [
+                  "scanner:Trivy"
+                ]
+              }
+            },
+            {
+              "id": "CVE-2026-72522",
+              "name": "OsPackageVulnerability",
+              "shortDescription": {
+                "text": "libexpat before 2.8.3 has an out-of-bounds read and resultant infinite ..."
+              },
+              "fullDescription": {
+                "text": "libexpat before 2.8.3 has an out-of-bounds read and resultant infinite loop because low surrogates are treated the same as high surrogates during Unicode processing in the *_toUtf16 functions."
+              },
+              "help": {
+                "text": "Vulnerability CVE-2026-72522\nSeverity: UNKNOWN\nPackage: libexpat1\nFixed Version: \nLink: [CVE-2026-72522](https://avd.aquasec.com/nvd/cve-2026-72522)\nlibexpat before 2.8.3 has an out-of-bounds read and resultant infinite loop because low surrogates are treated the same as high surrogates during Unicode processing in the *_toUtf16 functions."
+              },
+              "helpUri": "https://avd.aquasec.com/nvd/cve-2026-72522",
               "properties": {
                 "tags": [
                   "scanner:Trivy"
@@ -2630,6 +2705,25 @@
               }
             },
             {
+              "id": "CVE-2026-18938",
+              "name": "OsPackageVulnerability",
+              "shortDescription": {
+                "text": "p11-kit: Integer overflow in RPC attribute-array length calculation can under-allocate nested attribute storage on 32 bit systems"
+              },
+              "fullDescription": {
+                "text": "A flaw was found in p11-kit. A local attacker, or one with equivalent access to a reachable RPC channel, could exploit an integer overflow vulnerability. By sending specially crafted messages, the attacker can cause the system to miscalculate memory allocation for nested attributes. This leads to a memory corruption issue, specifically a heap out-of-bounds write, which can crash the p11-kit RPC parsing process, resulting in a Denial of Service (DoS). This vulnerability is only exploitable on 32 bit systems."
+              },
+              "help": {
+                "text": "Vulnerability CVE-2026-18938\nSeverity: MEDIUM\nPackage: libp11-kit0\nFixed Version: \nLink: [CVE-2026-18938](https://avd.aquasec.com/nvd/cve-2026-18938)\nA flaw was found in p11-kit. A local attacker, or one with equivalent access to a reachable RPC channel, could exploit an integer overflow vulnerability. By sending specially crafted messages, the attacker can cause the system to miscalculate memory allocation for nested attributes. This leads to a memory corruption issue, specifically a heap out-of-bounds write, which can crash the p11-kit RPC parsing process, resulting in a Denial of Service (DoS). This vulnerability is only exploitable on 32 bit systems."
+              },
+              "helpUri": "https://avd.aquasec.com/nvd/cve-2026-18938",
+              "properties": {
+                "tags": [
+                  "scanner:Trivy"
+                ]
+              }
+            },
+            {
               "id": "CVE-2025-6020",
               "name": "OsPackageVulnerability",
               "shortDescription": {
@@ -2693,10 +2787,10 @@
                 "text": "linux-pam: Plaintext password recovery via timing discrepancy in pam_userdb module"
               },
               "fullDescription": {
-                "text": "Linux-PAM through 1.7.2 contains an observable timing discrepancy (CWE-208) in the pam_userdb module's plaintext-password comparison path in modules/pam_userdb/pam_userdb.c that allows a local or network-adjacent attacker able to repeatedly drive authentication through a calling service to recover the plaintext password of a target account by measuring response-timing differences. The comparison uses strncmp() (or strncasecmp() when PAM_ICASE_ARG is set) preceded by a length-equality check, so the time to reject a candidate depends on the index of the first differing byte and on whether the candidate's length matches the stored password, leaking the password length and individual prefix bytes. The vulnerable path is reached when the administrator configures pam_userdb with crypt=none, with an unrecognized crypt method, or without a crypt= argument, causing the module to store and compare credentials in plaintext."
+                "text": "Linux-PAM through 1.7.2 contains an observable timing discrepancy (CWE-208) in the pam_userdb module's plaintext-password comparison path in modules/pam_userdb/pam_userdb.c that allows a local or network-adjacent attacker able to repeatedly drive authentication through a calling service to recover the plaintext password of a target account by measuring response-timing differences."
               },
               "help": {
-                "text": "Vulnerability CVE-2026-54411\nSeverity: MEDIUM\nPackage: libpam0g\nFixed Version: \nLink: [CVE-2026-54411](https://avd.aquasec.com/nvd/cve-2026-54411)\nLinux-PAM through 1.7.2 contains an observable timing discrepancy (CWE-208) in the pam_userdb module's plaintext-password comparison path in modules/pam_userdb/pam_userdb.c that allows a local or network-adjacent attacker able to repeatedly drive authentication through a calling service to recover the plaintext password of a target account by measuring response-timing differences. The comparison uses strncmp() (or strncasecmp() when PAM_ICASE_ARG is set) preceded by a length-equality check, so the time to reject a candidate depends on the index of the first differing byte and on whether the candidate's length matches the stored password, leaking the password length and individual prefix bytes. The vulnerable path is reached when the administrator configures pam_userdb with crypt=none, with an unrecognized crypt method, or without a crypt= argument, causing the module to store and compare credentials in plaintext."
+                "text": "Vulnerability CVE-2026-54411\nSeverity: MEDIUM\nPackage: libpam0g\nFixed Version: \nLink: [CVE-2026-54411](https://avd.aquasec.com/nvd/cve-2026-54411)\nLinux-PAM through 1.7.2 contains an observable timing discrepancy (CWE-208) in the pam_userdb module's plaintext-password comparison path in modules/pam_userdb/pam_userdb.c that allows a local or network-adjacent attacker able to repeatedly drive authentication through a calling service to recover the plaintext password of a target account by measuring response-timing differences."
               },
               "helpUri": "https://avd.aquasec.com/nvd/cve-2026-54411",
               "properties": {
@@ -4150,6 +4244,25 @@
               }
             },
             {
+              "id": "CVE-2026-15534",
+              "name": "OsPackageVulnerability",
+              "shortDescription": {
+                "text": "Perl versions through 5.45.1 have out-of-bounds heap reads and writes  ..."
+              },
+              "fullDescription": {
+                "text": "Perl versions through 5.45.1 have out-of-bounds heap reads and writes during regular expression matching via an undersized superlinear cache in S_regmatch.\n\nThe regex engine's superlinear cache holds one bit per subject position for each participating WHILEM node, so the bit count is the subject length plus one times the number of nodes. Nothing checks that product for positive overflow of the signed 32-bit count: a 286331153 byte subject matched against a pattern with 15 participating nodes stores the count as 14, leaving a two byte cache. The cache is then indexed from the real match position and node number, so reads go past the end of the allocation, and on failure CACHEsayNO sets a bit past it.\n\nA caller that matches an attacker controlled subject of this size against a pattern of this shape can crash the process or corrupt heap memory."
+              },
+              "help": {
+                "text": "Vulnerability CVE-2026-15534\nSeverity: UNKNOWN\nPackage: perl-base\nFixed Version: \nLink: [CVE-2026-15534](https://avd.aquasec.com/nvd/cve-2026-15534)\nPerl versions through 5.45.1 have out-of-bounds heap reads and writes during regular expression matching via an undersized superlinear cache in S_regmatch.\n\nThe regex engine's superlinear cache holds one bit per subject position for each participating WHILEM node, so the bit count is the subject length plus one times the number of nodes. Nothing checks that product for positive overflow of the signed 32-bit count: a 286331153 byte subject matched against a pattern with 15 participating nodes stores the count as 14, leaving a two byte cache. The cache is then indexed from the real match position and node number, so reads go past the end of the allocation, and on failure CACHEsayNO sets a bit past it.\n\nA caller that matches an attacker controlled subject of this size against a pattern of this shape can crash the process or corrupt heap memory."
+              },
+              "helpUri": "https://avd.aquasec.com/nvd/cve-2026-15534",
+              "properties": {
+                "tags": [
+                  "scanner:Trivy"
+                ]
+              }
+            },
+            {
               "id": "CVE-2026-7017",
               "name": "OsPackageVulnerability",
               "shortDescription": {
@@ -5173,9 +5286,10 @@
           ],
           "properties": {
             "security-severity": "5.5",
-            "priority": "P2",
+            "priority": "P4",
             "tool": "Trivy",
-            "component": "api"
+            "component": "platform",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -5199,9 +5313,10 @@
           ],
           "properties": {
             "security-severity": "2",
-            "priority": "P3",
+            "priority": "P4",
             "tool": "Trivy",
-            "component": "api"
+            "component": "platform",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -5225,9 +5340,10 @@
           ],
           "properties": {
             "security-severity": "2",
-            "priority": "P3",
+            "priority": "P4",
             "tool": "Trivy",
-            "component": "api"
+            "component": "platform",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -5251,9 +5367,10 @@
           ],
           "properties": {
             "security-severity": "2",
-            "priority": "P3",
+            "priority": "P4",
             "tool": "Trivy",
-            "component": "api"
+            "component": "platform",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -5277,9 +5394,10 @@
           ],
           "properties": {
             "security-severity": "5.5",
-            "priority": "P2",
+            "priority": "P4",
             "tool": "Trivy",
-            "component": "api"
+            "component": "platform",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -5303,9 +5421,10 @@
           ],
           "properties": {
             "security-severity": "5.5",
-            "priority": "P2",
+            "priority": "P4",
             "tool": "Trivy",
-            "component": "api"
+            "component": "platform",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -5329,9 +5448,10 @@
           ],
           "properties": {
             "security-severity": "8",
-            "priority": "P1",
+            "priority": "P3",
             "tool": "Trivy",
-            "component": "api"
+            "component": "platform",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -5355,9 +5475,10 @@
           ],
           "properties": {
             "security-severity": "2",
-            "priority": "P3",
+            "priority": "P4",
             "tool": "Trivy",
-            "component": "api"
+            "component": "platform",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -5381,9 +5502,10 @@
           ],
           "properties": {
             "security-severity": "2",
-            "priority": "P3",
+            "priority": "P4",
             "tool": "Trivy",
-            "component": "api"
+            "component": "platform",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -5407,9 +5529,10 @@
           ],
           "properties": {
             "security-severity": "8",
-            "priority": "P1",
+            "priority": "P3",
             "tool": "Trivy",
-            "component": "api"
+            "component": "platform",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -5433,9 +5556,10 @@
           ],
           "properties": {
             "security-severity": "2",
-            "priority": "P3",
+            "priority": "P4",
             "tool": "Trivy",
-            "component": "api"
+            "component": "platform",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -5459,9 +5583,10 @@
           ],
           "properties": {
             "security-severity": "2",
-            "priority": "P3",
+            "priority": "P4",
             "tool": "Trivy",
-            "component": "api"
+            "component": "platform",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -5485,9 +5610,10 @@
           ],
           "properties": {
             "security-severity": "2",
-            "priority": "P3",
+            "priority": "P4",
             "tool": "Trivy",
-            "component": "api"
+            "component": "platform",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -5511,9 +5637,10 @@
           ],
           "properties": {
             "security-severity": "2",
-            "priority": "P3",
+            "priority": "P4",
             "tool": "Trivy",
-            "component": "api"
+            "component": "platform",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -5537,9 +5664,10 @@
           ],
           "properties": {
             "security-severity": "5.5",
-            "priority": "P2",
+            "priority": "P4",
             "tool": "Trivy",
-            "component": "api"
+            "component": "platform",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -5563,9 +5691,10 @@
           ],
           "properties": {
             "security-severity": "2",
-            "priority": "P3",
+            "priority": "P4",
             "tool": "Trivy",
-            "component": "api"
+            "component": "platform",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -5589,9 +5718,10 @@
           ],
           "properties": {
             "security-severity": "2",
-            "priority": "P3",
+            "priority": "P4",
             "tool": "Trivy",
-            "component": "api"
+            "component": "platform",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -5615,9 +5745,10 @@
           ],
           "properties": {
             "security-severity": "8",
-            "priority": "P1",
+            "priority": "P3",
             "tool": "Trivy",
-            "component": "api"
+            "component": "platform",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -5641,9 +5772,10 @@
           ],
           "properties": {
             "security-severity": "5.5",
-            "priority": "P2",
+            "priority": "P4",
             "tool": "Trivy",
-            "component": "api"
+            "component": "platform",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -5667,9 +5799,10 @@
           ],
           "properties": {
             "security-severity": "5.5",
-            "priority": "P4",
+            "priority": "P2",
             "tool": "Trivy",
-            "component": "platform"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -5693,9 +5826,10 @@
           ],
           "properties": {
             "security-severity": "2",
-            "priority": "P4",
+            "priority": "P3",
             "tool": "Trivy",
-            "component": "platform"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -5719,9 +5853,10 @@
           ],
           "properties": {
             "security-severity": "2",
-            "priority": "P4",
+            "priority": "P3",
             "tool": "Trivy",
-            "component": "platform"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -5745,9 +5880,10 @@
           ],
           "properties": {
             "security-severity": "2",
-            "priority": "P4",
+            "priority": "P3",
             "tool": "Trivy",
-            "component": "platform"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -5771,9 +5907,10 @@
           ],
           "properties": {
             "security-severity": "5.5",
-            "priority": "P4",
+            "priority": "P2",
             "tool": "Trivy",
-            "component": "platform"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -5797,9 +5934,10 @@
           ],
           "properties": {
             "security-severity": "5.5",
-            "priority": "P4",
+            "priority": "P2",
             "tool": "Trivy",
-            "component": "platform"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -5823,9 +5961,10 @@
           ],
           "properties": {
             "security-severity": "8",
-            "priority": "P3",
+            "priority": "P1",
             "tool": "Trivy",
-            "component": "platform"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -5849,9 +5988,10 @@
           ],
           "properties": {
             "security-severity": "2",
-            "priority": "P4",
+            "priority": "P3",
             "tool": "Trivy",
-            "component": "platform"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -5875,9 +6015,10 @@
           ],
           "properties": {
             "security-severity": "2",
-            "priority": "P4",
+            "priority": "P3",
             "tool": "Trivy",
-            "component": "platform"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -5901,9 +6042,10 @@
           ],
           "properties": {
             "security-severity": "8",
-            "priority": "P3",
+            "priority": "P1",
             "tool": "Trivy",
-            "component": "platform"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -5927,9 +6069,10 @@
           ],
           "properties": {
             "security-severity": "2",
-            "priority": "P4",
+            "priority": "P3",
             "tool": "Trivy",
-            "component": "platform"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -5953,9 +6096,10 @@
           ],
           "properties": {
             "security-severity": "2",
-            "priority": "P4",
+            "priority": "P3",
             "tool": "Trivy",
-            "component": "platform"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -5979,9 +6123,10 @@
           ],
           "properties": {
             "security-severity": "2",
-            "priority": "P4",
+            "priority": "P3",
             "tool": "Trivy",
-            "component": "platform"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -6005,9 +6150,10 @@
           ],
           "properties": {
             "security-severity": "2",
-            "priority": "P4",
+            "priority": "P3",
             "tool": "Trivy",
-            "component": "platform"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -6031,9 +6177,10 @@
           ],
           "properties": {
             "security-severity": "5.5",
-            "priority": "P4",
+            "priority": "P2",
             "tool": "Trivy",
-            "component": "platform"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -6057,9 +6204,10 @@
           ],
           "properties": {
             "security-severity": "2",
-            "priority": "P4",
+            "priority": "P3",
             "tool": "Trivy",
-            "component": "platform"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -6083,9 +6231,10 @@
           ],
           "properties": {
             "security-severity": "2",
-            "priority": "P4",
+            "priority": "P3",
             "tool": "Trivy",
-            "component": "platform"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -6109,9 +6258,10 @@
           ],
           "properties": {
             "security-severity": "8",
-            "priority": "P3",
+            "priority": "P1",
             "tool": "Trivy",
-            "component": "platform"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -6135,9 +6285,10 @@
           ],
           "properties": {
             "security-severity": "5.5",
-            "priority": "P4",
+            "priority": "P2",
             "tool": "Trivy",
-            "component": "platform"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -6163,7 +6314,8 @@
             "security-severity": "8",
             "priority": "P1",
             "tool": "Trivy",
-            "component": "api"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -6189,7 +6341,8 @@
             "security-severity": "2",
             "priority": "P3",
             "tool": "Trivy",
-            "component": "api"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -6373,6 +6526,28 @@
           "level": "note",
           "message": {
             "text": "[Local Privilege Escalation via TOCTOU in mount(8) - Target Path Redirection]"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "python:3.8-slim"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "security-severity": "0",
+            "priority": "P3",
+            "tool": "Trivy",
+            "component": "api"
+          }
+        },
+        {
+          "ruleId": "DLA-4726-1",
+          "level": "note",
+          "message": {
+            "text": "ca-certificates - CA certificates update"
           },
           "locations": [
             {
@@ -6812,7 +6987,7 @@
           "ruleId": "CVE-2026-54371",
           "level": "warning",
           "message": {
-            "text": "attr: Symlink Traversal Privilege Escalation via getfattr and setfattr"
+            "text": "attr: attr: Symlink Traversal Privilege Escalation via getfattr and setfattr"
           },
           "locations": [
             {
@@ -7287,6 +7462,50 @@
           ],
           "properties": {
             "security-severity": "2",
+            "priority": "P3",
+            "tool": "Trivy",
+            "component": "api"
+          }
+        },
+        {
+          "ruleId": "CVE-2026-6368",
+          "level": "note",
+          "message": {
+            "text": "Calling wordexp with WRDE_APPEND in the GNU C Library version 2.0 to v ..."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "python:3.8-slim"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "security-severity": "0",
+            "priority": "P3",
+            "tool": "Trivy",
+            "component": "api"
+          }
+        },
+        {
+          "ruleId": "CVE-2026-6791",
+          "level": "note",
+          "message": {
+            "text": "When expanding paths that begin with a tilde (~) followed by a usernam ..."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "python:3.8-slim"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "security-severity": "0",
             "priority": "P3",
             "tool": "Trivy",
             "component": "api"
@@ -7925,6 +8144,28 @@
           ],
           "properties": {
             "security-severity": "2",
+            "priority": "P3",
+            "tool": "Trivy",
+            "component": "api"
+          }
+        },
+        {
+          "ruleId": "CVE-2026-72522",
+          "level": "note",
+          "message": {
+            "text": "libexpat before 2.8.3 has an out-of-bounds read and resultant infinite ..."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "python:3.8-slim"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "security-severity": "0",
             "priority": "P3",
             "tool": "Trivy",
             "component": "api"
@@ -8749,6 +8990,28 @@
           "level": "warning",
           "message": {
             "text": "p11-kit: Stack exhaustion via unbounded recursion in RPC attribute parsing"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "python:3.8-slim"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "security-severity": "5.5",
+            "priority": "P2",
+            "tool": "Trivy",
+            "component": "api"
+          }
+        },
+        {
+          "ruleId": "CVE-2026-18938",
+          "level": "warning",
+          "message": {
+            "text": "p11-kit: Integer overflow in RPC attribute-array length calculation can under-allocate nested attribute storage on 32 bit systems"
           },
           "locations": [
             {
@@ -10527,6 +10790,28 @@
           }
         },
         {
+          "ruleId": "CVE-2026-15534",
+          "level": "note",
+          "message": {
+            "text": "Perl versions through 5.45.1 have out-of-bounds heap reads and writes  ..."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "python:3.8-slim"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "security-severity": "0",
+            "priority": "P3",
+            "tool": "Trivy",
+            "component": "api"
+          }
+        },
+        {
           "ruleId": "CVE-2026-7017",
           "level": "note",
           "message": {
@@ -11010,7 +11295,8 @@
           "properties": {
             "priority": "P4",
             "tool": "Semgrep OSS",
-            "component": "platform"
+            "component": "platform",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -11035,7 +11321,8 @@
           "properties": {
             "priority": "P4",
             "tool": "Semgrep OSS",
-            "component": "platform"
+            "component": "platform",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -11060,7 +11347,8 @@
           "properties": {
             "priority": "P2",
             "tool": "Semgrep OSS",
-            "component": "api"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -11085,7 +11373,8 @@
           "properties": {
             "priority": "P2",
             "tool": "Semgrep OSS",
-            "component": "api"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -11110,7 +11399,8 @@
           "properties": {
             "priority": "P1",
             "tool": "Semgrep OSS",
-            "component": "api"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -11135,7 +11425,8 @@
           "properties": {
             "priority": "P1",
             "tool": "Semgrep OSS",
-            "component": "api"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -11160,7 +11451,8 @@
           "properties": {
             "priority": "P1",
             "tool": "Semgrep OSS",
-            "component": "api"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -11185,7 +11477,8 @@
           "properties": {
             "priority": "P1",
             "tool": "Semgrep OSS",
-            "component": "api"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -11210,7 +11503,8 @@
           "properties": {
             "priority": "P1",
             "tool": "Semgrep OSS",
-            "component": "api"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -11235,7 +11529,8 @@
           "properties": {
             "priority": "P2",
             "tool": "Semgrep OSS",
-            "component": "api"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -11260,7 +11555,8 @@
           "properties": {
             "priority": "P1",
             "tool": "Semgrep OSS",
-            "component": "api"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -11285,7 +11581,8 @@
           "properties": {
             "priority": "P2",
             "tool": "Semgrep OSS",
-            "component": "api"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -11310,7 +11607,8 @@
           "properties": {
             "priority": "P2",
             "tool": "Semgrep OSS",
-            "component": "api"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -11335,7 +11633,8 @@
           "properties": {
             "priority": "P2",
             "tool": "Semgrep OSS",
-            "component": "api"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -11360,7 +11659,8 @@
           "properties": {
             "priority": "P1",
             "tool": "Semgrep OSS",
-            "component": "api"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -11396,7 +11696,8 @@
             "security-severity": "7.5",
             "priority": "P1",
             "tool": "Trivy",
-            "component": "api"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -11422,7 +11723,8 @@
             "security-severity": "7.5",
             "priority": "P1",
             "tool": "Trivy",
-            "component": "api"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -11448,7 +11750,8 @@
             "security-severity": "7.5",
             "priority": "P1",
             "tool": "Trivy",
-            "component": "api"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -11474,7 +11777,8 @@
             "security-severity": "2",
             "priority": "P3",
             "tool": "Trivy",
-            "component": "api"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -11500,7 +11804,8 @@
             "security-severity": "8.6",
             "priority": "P1",
             "tool": "Trivy",
-            "component": "api"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -11526,7 +11831,8 @@
             "security-severity": "5.3",
             "priority": "P2",
             "tool": "Trivy",
-            "component": "api"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -11552,7 +11858,8 @@
             "security-severity": "5.4",
             "priority": "P2",
             "tool": "Trivy",
-            "component": "api"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -11578,7 +11885,8 @@
             "security-severity": "5.4",
             "priority": "P2",
             "tool": "Trivy",
-            "component": "api"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -11604,7 +11912,8 @@
             "security-severity": "7.8",
             "priority": "P1",
             "tool": "Trivy",
-            "component": "api"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -11630,7 +11939,8 @@
             "security-severity": "5.5",
             "priority": "P2",
             "tool": "Trivy",
-            "component": "api"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -11656,7 +11966,8 @@
             "security-severity": "9.8",
             "priority": "P1",
             "tool": "Trivy",
-            "component": "api"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -11682,7 +11993,8 @@
             "security-severity": "9.8",
             "priority": "P1",
             "tool": "Trivy",
-            "component": "api"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -11708,7 +12020,8 @@
             "security-severity": "9.8",
             "priority": "P1",
             "tool": "Trivy",
-            "component": "api"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -11734,7 +12047,8 @@
             "security-severity": "7.5",
             "priority": "P1",
             "tool": "Trivy",
-            "component": "api"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -11760,7 +12074,8 @@
             "security-severity": "6.1",
             "priority": "P2",
             "tool": "Trivy",
-            "component": "api"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -11786,7 +12101,8 @@
             "security-severity": "5.6",
             "priority": "P2",
             "tool": "Trivy",
-            "component": "api"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -11812,7 +12128,8 @@
             "security-severity": "5.3",
             "priority": "P2",
             "tool": "Trivy",
-            "component": "api"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -11838,7 +12155,8 @@
             "security-severity": "4.4",
             "priority": "P2",
             "tool": "Trivy",
-            "component": "api"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         },
         {
@@ -11863,7 +12181,8 @@
           "properties": {
             "priority": "P1",
             "tool": "gitleaks",
-            "component": "api"
+            "component": "api",
+            "repository": "https://github.com/draugr-dev/draugr-demo.git"
           }
         }
       ],
@@ -11880,40 +12199,35 @@
             "tool": "trivy-config",
             "fields": {
               "repository": "https://github.com/draugr-dev/draugr-demo.git",
-              "revision": "d96052ecaefaf48e206391874ddda5d38728e071",
-              "uncommitted": "6"
+              "revision": "773b23f428e8b3b2c41a7e8b082f5fc3fcd71361"
             }
           },
           {
             "tool": "trivy-license",
             "fields": {
               "repository": "https://github.com/draugr-dev/draugr-demo.git",
-              "revision": "d96052ecaefaf48e206391874ddda5d38728e071",
-              "uncommitted": "6"
+              "revision": "773b23f428e8b3b2c41a7e8b082f5fc3fcd71361"
             }
           },
           {
             "tool": "semgrep",
             "fields": {
               "repository": "https://github.com/draugr-dev/draugr-demo.git",
-              "revision": "d96052ecaefaf48e206391874ddda5d38728e071",
-              "uncommitted": "6"
+              "revision": "773b23f428e8b3b2c41a7e8b082f5fc3fcd71361"
             }
           },
           {
             "tool": "trivy-fs",
             "fields": {
               "repository": "https://github.com/draugr-dev/draugr-demo.git",
-              "revision": "d96052ecaefaf48e206391874ddda5d38728e071",
-              "uncommitted": "6"
+              "revision": "773b23f428e8b3b2c41a7e8b082f5fc3fcd71361"
             }
           },
           {
             "tool": "gitleaks",
             "fields": {
               "repository": "https://github.com/draugr-dev/draugr-demo.git",
-              "revision": "d96052ecaefaf48e206391874ddda5d38728e071",
-              "uncommitted": "6"
+              "revision": "773b23f428e8b3b2c41a7e8b082f5fc3fcd71361"
             }
           }
         ]
