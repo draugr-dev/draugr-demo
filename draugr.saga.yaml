@@ -59,11 +59,17 @@ config:
 # why it is not in this file.
 fragments:
   - path: ".draugr/exclusions/*.saga-fragment.yaml"
+  # And a component described by the team that owns it, rather than by whoever owns this file.
+  # A `url:` here would pull it from another repository entirely.
+  - path: ".draugr/components/*.saga-fragment.yaml"
 
 # Two components, not one, because one is not what anyone's project looks like — and because
 # the parts of an application are not equally exposed or equally important. `paths` scopes each
 # to its own subtree of this repository; files at the repository root come with both, since that
 # is where the manifests and the scanners' own configuration live.
+#
+# Only one of the two is here. The other is contributed by a fragment above, which is how a
+# descriptor stops being one person's account of a whole system.
 #
 # The pay-off is in the report: a per-component verdict, and P1–P4 that differ between them for
 # the same severity, because exposure and criticality differ.
@@ -85,13 +91,3 @@ components:
           - deploy
     images:
       - image: python:3.8-slim # images: old base with known CVEs (Trivy)
-
-  - name: platform
-    # The same findings would rank lower here: nothing external reaches it, and an outage is
-    # inconvenient rather than lost revenue.
-    exposure: internal
-    criticality: supporting
-    repositories:
-      - url: .
-        paths:
-          - deploy # the Kubernetes manifests (Trivy config → deploy/pod.yaml)
