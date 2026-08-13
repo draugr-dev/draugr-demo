@@ -1,0 +1,23 @@
+# A component described by the team that owns it.
+#
+# The other use of `fragments:`, and the one that scales past a single repository: a descriptor
+# does not have to be written by one person who knows the whole system. The platform team knows
+# what the platform team runs, and says so here; the service team's own component stays in
+# draugr.saga.yaml. They are merged at load, and the report shows both.
+#
+# A fragment can also be pulled from another repository entirely — `fragments:` takes a `url` as
+# well as a `path` — which is how several teams contribute to one product's descriptor without
+# sharing a checkout. That shape is worth knowing about before you need it: a component may hold
+# repositories from anywhere, and a finding records which one it came from, so two projects with
+# the same file are two findings rather than one.
+components:
+  - name: platform
+    # The same findings rank lower here than on the service: nothing external reaches it, and an
+    # outage is inconvenient rather than lost revenue. Exposure and criticality are the team's
+    # own claim about what it runs — which is the argument for the team writing this file.
+    exposure: internal
+    criticality: supporting
+    repositories:
+      - url: .
+        paths:
+          - deploy # the Kubernetes manifests (Trivy config → deploy/pod.yaml)

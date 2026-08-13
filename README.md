@@ -80,22 +80,39 @@ draugr scan draugr.saga.yaml --fail-on-priority P1   # block only on P1s
 echo $?
 ```
 
-### Accepted risk — in a file of its own
+### Fragments — the descriptor is not one file
 
-One CVE here is accepted rather than fixed, and the acceptance does not live in `draugr.saga.yaml`:
+This descriptor is assembled from three:
 
 ```
-draugr.saga.yaml
+draugr.saga.yaml                                         ← the service, and what to run
   fragments:
     - path: ".draugr/exclusions/*.saga-fragment.yaml"
+    - path: ".draugr/components/*.saga-fragment.yaml"
 
-.draugr/exclusions/cve-2018-1000656.saga-fragment.yaml   ← the reason, who gave it, when it lapses
+.draugr/exclusions/cve-2018-1000656.saga-fragment.yaml   ← an accepted risk: why, who, when it lapses
+.draugr/components/platform.saga-fragment.yaml           ← a component, described by the team that owns it
 ```
 
-A descriptor that has been running a while is two things at once: a structural account of the
-system, and a log of dated decisions about findings somebody accepted. They change at different
-times and are reviewed by different people, so `fragments:` lets them live apart — and a fragment
-can come from another repository entirely, which is how several teams contribute to one descriptor.
+Two different reasons to split, and both are about **who reviews what**.
+
+A descriptor that has been running a while is a structural account of a system *and* a log of dated
+decisions about findings somebody accepted. Those change at different times: a developer adding a
+repository and a security owner accepting a CVE should not be the same review.
+
+And a descriptor does not have to be written by one person who knows the whole system. The platform
+team knows what the platform team runs, so `platform` is described in its own file — with its own
+`exposure` and `criticality`, which are that team's claim about what it runs.
+
+```bash
+draugr validate draugr.saga.yaml --resolved   # the three files merged into one, as Draugr sees it
+```
+
+A fragment can be pulled from **another repository** too — `fragments:` takes a `url` as well as a
+`path` — which is how several teams contribute to one product's descriptor without sharing a
+checkout. Worth knowing before you need it: a component may then hold repositories from anywhere,
+and every finding records which one it came from, so the same file in two projects is two findings
+rather than one.
 
 The finding is **not deleted**. It stays in the report marked suppressed:
 
