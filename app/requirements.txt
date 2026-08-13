@@ -1,5 +1,5 @@
-# sca: intentionally old, known-vulnerable versions for Draugr's `sca` control (Trivy fs).
-Flask==0.12.2
-requests==2.19.1
-PyYAML==5.1
-Jinja2==2.10
+# Dependencies bumped to current versions — clears the SCA (Trivy fs) findings.
+Flask==3.0.3
+requests==2.32.3
+PyYAML==6.0.2
+Jinja2==3.1.4
