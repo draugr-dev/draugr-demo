@@ -43,20 +43,6 @@ config:
     author: "Draugr demo <demo@example.com>"
     product: "pkg:oci/draugr-dev/draugr-demo"
 
-  # One accepted risk, carrying everything the report and the VEX document need: why, who, when it
-  # lapses, and — separately, because it is a machine-readable claim rather than prose — what it
-  # means to somebody consuming this product.
-  exclude:
-    - rules: ["CVE-2018-1000656"]
-      reason: >-
-        The vulnerable certificate-verification path is never taken: this service pins its
-        upstream host and does not accept user-supplied URLs.
-      acceptedBy: "demo@example.com"
-      expires: "2027-01-01"
-      vex:
-        status: not_affected
-        justification: vulnerable_code_not_in_execute_path
-
   # Render several formats and deliver them: files locally, plus GitHub code scanning in CI.
   reports:
     - format: sarif
@@ -67,6 +53,12 @@ config:
     - kind: file
       dir: ./draugr-out
     - kind: github # no-ops locally; uploads to the Security tab in GitHub Actions
+
+# Accepted risks live in their own files, merged in at load. One accepted risk here, carrying why,
+# who, when it lapses, and what it means to somebody consuming this product — see the fragment for
+# why it is not in this file.
+fragments:
+  - path: ".draugr/exclusions/*.saga-fragment.yaml"
 
 # Two components, not one, because one is not what anyone's project looks like — and because
 # the parts of an application are not equally exposed or equally important. `paths` scopes each

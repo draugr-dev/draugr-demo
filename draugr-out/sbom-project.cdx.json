@@ -215,6 +215,68 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:github/github/codeql-action@v3#upload-sarif",
+      "name": "github/codeql-action/upload-sarif",
+      "version": "v3",
+      "purl": "pkg:github/github/codeql-action@v3#upload-sarif",
+      "cpe": "cpe:2.3:a:github\\/codeql-action\\/upload-sarif:github\\/codeql-action\\/upload-sarif:v3:*:*:*:*:*:*:*",
+      "properties": [
+        {
+          "name": "syft:package:foundBy",
+          "value": "github-actions-usage-cataloger"
+        },
+        {
+          "name": "syft:package:type",
+          "value": "github-action"
+        },
+        {
+          "name": "syft:package:metadataType",
+          "value": "github-actions-use-statement"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:github\\/codeql-action\\/upload-sarif:github\\/codeql_action\\/upload_sarif:v3:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:github\\/codeql_action\\/upload_sarif:github\\/codeql-action\\/upload-sarif:v3:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:github\\/codeql_action\\/upload_sarif:github\\/codeql_action\\/upload_sarif:v3:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:github\\/codeql-action\\/upload:github\\/codeql-action\\/upload-sarif:v3:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:github\\/codeql-action\\/upload:github\\/codeql_action\\/upload_sarif:v3:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:github\\/codeql_action\\/upload:github\\/codeql-action\\/upload-sarif:v3:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:github\\/codeql_action\\/upload:github\\/codeql_action\\/upload_sarif:v3:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:github\\/codeql:github\\/codeql-action\\/upload-sarif:v3:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:github\\/codeql:github\\/codeql_action\\/upload_sarif:v3:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:location:0:path",
+          "value": "/.github/workflows/draugr.yml"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:pypi/jinja2@2.10",
       "name": "jinja2",
       "version": "2.10",
@@ -398,11 +460,26 @@
       "hashes": [
         {
           "alg": "SHA-1",
-          "content": "82e8f5a85630431242eeae550db662d6faa6d48e"
+          "content": "c153edc39ccf78acb0158ff0870f72782b0a98b2"
         },
         {
           "alg": "SHA-256",
-          "content": "9f0c448c22ee68b6897c1de65b74ceae2216554507e8ad026d5da06b433c742f"
+          "content": "365fdad6c2369d7ffbe1aa75c6b2e1467f073c11ca038031a0b91acad25b2507"
+        }
+      ]
+    },
+    {
+      "type": "file",
+      "bom-ref": "draugr:pkg/1ae402ade2f2d7881cb1142d",
+      "name": ".github/workflows/refresh-demo.yml",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "ab5a37769195e922c865b4cdef21c9fef66518d1"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "def84526bea3fee9547ef53230dc6c74f50bcd56a5306304482d85a75f80cd57"
         }
       ]
     },
@@ -61014,10 +61091,13 @@
       "ref": "draugr:target/api/.",
       "dependsOn": [
         "draugr:pkg/16776772036940d0ace05408",
+        "draugr:pkg/1ae402ade2f2d7881cb1142d",
         "draugr:pkg/c7c1e1ef722c9b424602d3ca",
+        "pkg:github/actions/checkout@v4",
         "pkg:github/actions/checkout@v4",
         "pkg:github/actions/upload-artifact@v4",
         "pkg:github/draugr-dev/draugr@v0",
+        "pkg:github/github/codeql-action@v3#upload-sarif",
         "pkg:pypi/flask@0.12.2",
         "pkg:pypi/jinja2@2.10",
         "pkg:pypi/pyyaml@5.1",
