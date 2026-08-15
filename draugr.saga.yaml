@@ -9,6 +9,11 @@ config:
   controllers:
     sca:
       enabled: true # Trivy fs → app/requirements.txt (old, vulnerable deps)
+      # A second scanner on the same control, opt-in. Trivy reads the lockfile; retire.js
+      # fingerprints the JavaScript file itself, which is how it finds a library that was
+      # never installed by a package manager — here, a jQuery copied into static/.
+      retirejs:
+        enabled: true # retire.js → app/static/js/jquery.min.js (vendored, not in any manifest)
     secrets:
       enabled: true # Gitleaks → app/config.example.pem (planted fake key)
       # A scanner is configured under its own key. Gitleaks takes two options, both commented
