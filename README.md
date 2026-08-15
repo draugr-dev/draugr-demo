@@ -27,6 +27,7 @@ draugr scan .
 |------|---------------|---------|---------|
 | `app/app.py` | command injection, `eval`, `shell=True`, debug bind | `sast` | Semgrep |
 | `app/requirements.txt` | old, vulnerable dependencies | `sca` | Trivy fs |
+| `app/static/js/jquery.min.js` | a vendored library in no lockfile | `sca` | retire.js |
 | `app/config.example.pem` | a fake private key | `secrets` | Gitleaks |
 | `app/Dockerfile` | runs as root, old base image | `iac` / `images` | Trivy |
 | `deploy/pod.yaml` | privileged pod, `latest` tag, no limits | `iac` | Trivy config |
