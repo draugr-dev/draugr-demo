@@ -64,10 +64,11 @@ draugr scan draugr.saga.yaml --format template \
 
 ### Publishers — declarative, in the Saga
 The Saga already declares a `file` publisher and a `github` publisher. A plain scan writes all
-formats to `./draugr-out/`:
+formats to `./.draugr/out/`, where everything a run writes belongs — reports beside the
+fragments, one directory to gitignore or to keep:
 ```bash
 draugr scan draugr.saga.yaml
-ls draugr-out/            # results.sarif, report.md, report.html
+ls .draugr/out/           # results.sarif, report.md, report.html, openvex.json
 ```
 The `github` publisher **no-ops locally** and **uploads to code scanning in CI** — see the
 [Draugr workflow](.github/workflows/draugr.yml). After a run on GitHub, open the repo's
@@ -130,6 +131,58 @@ draugr classify draugr.saga.yaml     # set component exposure/criticality via a 
 draugr scan draugr.saga.yaml --min-priority P2   # focus on what matters now
 ```
 Change `exposure`/`criticality` in the Saga and watch the P1–P4 banding shift.
+
+### Fix list — actions, not just findings
+
+```bash
+draugr scan draugr.saga.yaml --group action   # one row per thing to do
+draugr scan draugr.saga.yaml                  # the default: one row per finding
+```
+
+Grouped, this sandbox's 474 findings become ten things to do:
+
+```
+Fix first — 10 actions clear 419 findings:
+  P1  Update python:3.8-slim  images · 394 findings · upstream
+      CVE-2026-42010 +393
+  P1  Upgrade Jinja2 2.10  sca · 6 findings
+      app/requirements.txt · CVE-2019-10906 +5
+```
+
+A library carrying six CVEs is one upgrade, not six rows, and each row says what it clears.
+Ungrouped is the default because grouping is only right once a descriptor says which images you
+build and which infrastructure you operate; without that it can state a fix nobody can apply.
+
+This descriptor says. `python:3.8-slim` is declared `builtBy: upstream`, which is why 394 findings
+collapse into one action — *take a newer image* — rather than a list of libraries nobody here can
+upgrade. Delete that line and run it again: the same 394 findings come back as packages, and the
+tip at the foot of the report tells you why.
+
+### Explain — what a finding means and how to fix it
+
+```bash
+draugr scan draugr.saga.yaml
+draugr explain CVE-2019-20477
+```
+
+Prints the description and the remediation the scanner published, so understanding a finding does
+not mean searching for its identifier. It reads the report the scan just wrote — no path needed —
+and takes the part of an id that is unambiguous, so `4.3.1` finds `kube-bench/cis/4.3.1`.
+
+### Evidence — what stands behind the verdict
+
+```bash
+draugr scan draugr.saga.yaml --evidence                   # on the console
+draugr scan draugr.saga.yaml --report evidence            # as a document
+```
+
+Which build of which tool produced each finding, the revision each repository was scanned at, and
+what the run cost. Out of the default view because a developer is asking what to fix; an auditor
+is a real reader, just not the default one — and both render from the same code, so they cannot
+disagree about what the run did.
+
+What a control was **measured against** stays in the default view either way. It says what a scan
+did *not* cover, and a partial scan reading as a complete one is worse than a verbose one.
 
 ### Diff — the PR story
 
