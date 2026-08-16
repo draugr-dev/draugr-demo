@@ -65,4 +65,4 @@ jobs:
         if: ${{ always() && github.event_name == 'push' }}
         with:
           name: draugr-reports
-          path: draugr-out/
+          path: .draugr/out/

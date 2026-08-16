@@ -56,7 +56,7 @@ config:
     - format: vex # which of the CVEs above actually affect this product
   publishers:
     - kind: file
-      dir: ./draugr-out
+      dir: ./.draugr/out
     - kind: github # no-ops locally; uploads to the Security tab in GitHub Actions
 
 # Accepted risks live in their own files, merged in at load. One accepted risk here, carrying why,
@@ -95,4 +95,13 @@ components:
         paths:
           - deploy
     images:
+      # builtBy says who publishes an image, and it changes what the report tells you to do about
+      # a vulnerable package inside it. Nobody here can upgrade a library inside python:3.8-slim —
+      # it is published by somebody else, and the fix is a newer image or a wait for one. Left at
+      # the default `self`, the fix list would say "upgrade openssl", which is advice this team
+      # cannot take.
+      #
+      # Try it both ways: `draugr scan draugr.saga.yaml --group action --controls images`, then
+      # delete the line below and run it again.
       - image: python:3.8-slim # images: old base with known CVEs (Trivy)
+        builtBy: upstream
