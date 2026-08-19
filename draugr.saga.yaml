@@ -105,3 +105,20 @@ components:
       # delete the line below and run it again.
       - image: python:3.8-slim # images: old base with known CVEs (Trivy)
         builtBy: upstream
+    # The other half of VEX. `config.vex` above describes the document Draugr *writes* about this
+    # product; this reads one somebody else wrote about theirs.
+    #
+    # The base image is published by somebody else — that is what `builtBy: upstream` says — so its
+    # publisher is the party who knows whether a CVE in it is reachable. Pointing at their document
+    # applies their analysis here, and the report says it was theirs: the author, the document and
+    # the date they asserted it. Retyping the same claim into `config.exclude` would make it
+    # indistinguishable from a decision this team made and is answerable for.
+    #
+    # Two statements, deliberately different. One is `not_affected` and excuses a finding; the other
+    # is `affected` and excuses nothing — a supplier telling you that you *are* exposed must never
+    # be the reason something stops counting.
+    #
+    # `path` is resolved relative to where Draugr runs, like every other path in a descriptor. A
+    # real supplier document would more often be a `url:` or a `repository:`.
+    vex:
+      - path: vendor/base-image.openvex.json
