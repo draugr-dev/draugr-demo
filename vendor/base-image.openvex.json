@@ -1,0 +1,36 @@
+{
+  "@context": "https://openvex.dev/ns/v0.2.0",
+  "@id": "https://example.com/vex/base-image-2026-08",
+  "author": "Example Base Images <security@example.com>",
+  "timestamp": "2026-08-01T09:00:00Z",
+  "version": 1,
+  "statements": [
+    {
+      "vulnerability": { "name": "CVE-2016-2781" },
+      "products": [
+        {
+          "@id": "pkg:oci/example/base-python",
+          "subcomponents": [
+            { "@id": "pkg:deb/debian/coreutils@9.1-1" }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "impact_statement": "chroot(1) is only exploitable when invoked by a privileged process that then drops privileges. Nothing in this image runs it, and the image runs as an unprivileged user."
+    },
+    {
+      "vulnerability": { "name": "CVE-2011-3374" },
+      "products": [
+        {
+          "@id": "pkg:oci/example/base-python",
+          "subcomponents": [
+            { "@id": "pkg:deb/debian/apt@2.6.1" }
+          ]
+        }
+      ],
+      "status": "affected",
+      "action_statement": "No fix is available from Debian. The image does not install packages at runtime, so the exposure is limited to build time."
+    }
+  ]
+}
