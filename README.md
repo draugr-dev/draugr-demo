@@ -31,6 +31,7 @@ draugr scan .
 | `app/config.example.pem` | a fake private key | `secrets` | Gitleaks |
 | `app/Dockerfile` | runs as root, old base image | `iac` / `images` | Trivy |
 | `deploy/pod.yaml` | privileged pod, `latest` tag, no limits | `iac` | Trivy config |
+| `checkout/go.mod` | a Go library with four CVEs — two the code calls, two it does not | `sca` | Trivy fs + govulncheck |
 
 The scan is driven by [`draugr.saga.yaml`](draugr.saga.yaml).
 
@@ -131,6 +132,48 @@ draugr classify draugr.saga.yaml     # set component exposure/criticality via a 
 draugr scan draugr.saga.yaml --min-priority P2   # focus on what matters now
 ```
 Change `exposure`/`criticality` in the Saga and watch the P1–P4 banding shift.
+
+### Reachability — which vulnerabilities this code can actually reach
+
+`checkout/` is a small Go service pinned to a library carrying four known vulnerabilities. It calls
+a function two of them are about, and never touches the parts the other two are in. A manifest
+scanner reports all four identically; `govulncheck` says which two matter here.
+
+```bash
+draugr scan draugr.saga.yaml --top 0 | grep -A1 'checkout/go.mod'
+```
+
+```console
+P1  high  7.5  CVE-2022-32149  sca  trivy  api  checkout/go.mod
+    → reachable: main → ListenAndServe → Serve → serve → ServeHTTP → handler → preferred → ParseAcceptLanguage
+P2  high  7.5  CVE-2020-14040  sca  trivy  api  checkout/go.mod
+    ↓ ranked as medium — the vulnerable code is never called
+```
+
+Two things to notice. The **severity is unchanged** on all four — reachability feeds the priority
+band and never rewrites what the scanner reported. And the two nothing calls are **still in the
+report**, one band lower, not removed: a call graph does not see reflection or dynamic dispatch, so
+an unreachable finding is ranked down rather than excused. Excusing one is
+[`config.exclude`](draugr.saga.yaml) or a VEX document, both of which carry an author.
+
+The run summary says how it went, including how much it could not determine:
+
+```console
+Reachability:
+  govulncheck  2 reachable, 2 unreachable
+  Unreachable findings are ranked down in priority, not removed from the report.
+```
+
+The other two repositories in this component are Python and YAML, and the report says so rather
+than leaving them looking unexamined:
+
+```console
+Measured against:
+  sca  govulncheck — coverage this repository has no go.mod, so its findings carry no verdict
+```
+
+Go only, today. Needs `govulncheck` on your PATH —
+`go install golang.org/x/vuln/cmd/govulncheck@latest`; `draugr doctor` will tell you.
 
 ### Fix list — actions, not just findings
 

@@ -6,9 +6,22 @@ release:
   version: "1.0"
 
 config:
+  # Which of the Go vulnerabilities Trivy finds can this code actually reach?
+  #
+  # Beside exploitability rather than in the sca scanner block, and the placement is deliberate:
+  # every entry in a scanner block adds findings, while an analyzer named here adds none and ranks
+  # findings already found *downward*. Enabling it can turn a failing gate green, so it belongs
+  # where whoever owns the gate reviews it.
+  #
+  # checkout/ pins a library with four known vulnerabilities and calls a function two of them are
+  # about. The report ranks those two above the two nothing here touches — and says so on the
+  # findings themselves. Go only; the Python and JavaScript findings keep no verdict.
+  reachability:
+    analyzers: [govulncheck]
+
   controllers:
     sca:
-      enabled: true # Trivy fs → app/requirements.txt (old, vulnerable deps)
+      enabled: true # Trivy fs → app/requirements.txt (old, vulnerable deps) + checkout/go.mod
       # A second scanner on the same control, opt-in. Trivy reads the lockfile; retire.js
       # fingerprints the JavaScript file itself, which is how it finds a library that was
       # never installed by a package manager — here, a jQuery copied into static/.
@@ -83,10 +96,14 @@ components:
     # exposure/criticality feed prioritization (P1–P4). Run `draugr classify` to change them.
     exposure: public
     criticality: important
-    # Two repositories, because a component is rarely one. Draugr plans a job per repository and
+    # Three repositories, because a component is rarely one. Draugr plans a job per repository and
     # runs them concurrently, so this is the shape that exercises per-repository checkout,
-    # provenance and caching. In a real project these would be two separate URLs; here they are
-    # two subtrees of this one, which produces the same two jobs.
+    # provenance and caching. In a real project these would be three separate URLs; here they are
+    # three subtrees of this one, which produces the same three jobs.
+    #
+    # It is also what makes reachability legible: a verdict is a fact about a repository, not
+    # about the component that holds it. Only the Go one gets verdicts — the analyzer says so of
+    # the other two rather than leaving them looking unexamined.
     repositories:
       - url: . # the service itself: dependencies, code, secrets, its Dockerfile
         paths:
@@ -94,6 +111,9 @@ components:
       - url: . # its deployment surface, owned by the same team
         paths:
           - deploy
+      - url: . # the Go service, whose dependency has vulnerabilities it calls and ones it does not
+        paths:
+          - checkout
     images:
       # builtBy says who publishes an image, and it changes what the report tells you to do about
       # a vulnerable package inside it. Nobody here can upgrade a library inside python:3.8-slim —
