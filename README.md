@@ -231,11 +231,14 @@ did *not* cover, and a partial scan reading as a complete one is worse than a ve
 
 **Three example pull requests are permanently open on this repo, on purpose.** They aren't
 neglected work — each one shows the pull-request gate on a real change, in the two places it
-appears, without your having to set it up:
+appears, without your having to set it up.
+
+They are **drafts**, and stay that way. Two of them fix findings and one adds a new one, so
+merging any of them would quietly change the sandbox everything else here is measured against:
 
 | PR | What it shows |
 |---|---|
-| [#3 Add /download endpoint](https://github.com/draugr-dev/draugr-demo/pull/3) | A change that **introduces** a new finding — what the gate is for |
+| [#3 Add /download endpoint](https://github.com/draugr-dev/draugr-demo/pull/3) | A change that **introduces** a new finding — what the gate is for. **Its check fails, and that is the exhibit** |
 | [#2 Bump vulnerable dependencies](https://github.com/draugr-dev/draugr-demo/pull/2) | Findings reported as **fixed** |
 | [#1 Harden the API](https://github.com/draugr-dev/draugr-demo/pull/1) | Source fixes clearing `sast` findings |
 
