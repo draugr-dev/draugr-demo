@@ -94,8 +94,22 @@ fragments:
 components:
   - name: api
     # exposure/criticality feed prioritization (P1–P4). Run `draugr classify` to change them.
-    exposure: public
-    criticality: important
+    #
+    # A rule is a value with a place for the argument somebody made for it. The reason is
+    # optional and changes nothing about the scan — what it changes is that whoever reads the
+    # report can see why this component's findings outrank the same severity elsewhere. A comment
+    # cannot do that: a descriptor is merged and re-serialized before it is published, and
+    # comments do not survive it.
+    exposure:
+      value: public
+      reason: >-
+        Reachable from the internet with no sign-in, and it reads request bodies from anyone who
+        sends one.
+    criticality:
+      value: important
+      reason: >-
+        It holds the checkout path. An outage costs orders; a breach reaches customer records but
+        not payment credentials, which live with the processor.
     # Three repositories, because a component is rarely one. Draugr plans a job per repository and
     # runs them concurrently, so this is the shape that exercises per-repository checkout,
     # provenance and caching. In a real project these would be three separate URLs; here they are
