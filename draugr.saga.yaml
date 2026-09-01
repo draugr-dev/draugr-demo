@@ -1,8 +1,8 @@
 # The Saga for the Draugr demo/UAT app. It enables every implemented control against this
 # repo (the checkout) plus one intentionally-old container image, and renders + publishes
 # reports. See README.md for the guided UAT walkthrough.
+project: draugr-demo
 release:
-  name: draugr-demo
   version: "1.0"
 
 config:
