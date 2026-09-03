@@ -43,6 +43,13 @@ jobs:
         with:
           fetch-depth: 0 # the merge refs are fetched by hand below
 
+      # Declared rather than inherited. A hosted image happens to carry Go, and govulncheck below
+      # is installed with it; naming the toolchain here is what makes this workflow true on any
+      # runner rather than on the one it was written against.
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.26"
+
       - name: Install the release being showcased
         run: |
           set -euo pipefail
@@ -62,6 +69,14 @@ jobs:
           if ! command -v semgrep >/dev/null 2>&1; then
             pipx install semgrep
             echo "$HOME/.local/bin" >>"$GITHUB_PATH"
+          fi
+          # govulncheck is the same case as semgrep: published by the Go team rather than
+          # distributed by Draugr, so `tools install` cannot fetch it. The Saga asks for it as a
+          # reachability analyzer, and a missing analyzer stops the sca control rather than
+          # letting it report a baseline with reachability silently absent.
+          if ! command -v govulncheck >/dev/null 2>&1; then
+            go install golang.org/x/vuln/cmd/govulncheck@latest
+            echo "$(go env GOPATH)/bin" >>"$GITHUB_PATH"
           fi
 
       # The demo is only worth showing if it still works. A release that renames a Saga field, or
