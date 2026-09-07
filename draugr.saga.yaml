@@ -14,7 +14,7 @@ config:
   # where whoever owns the gate reviews it.
   #
   # checkout/ pins a library with four known vulnerabilities and calls a function two of them are
-  # about. The report ranks those two above the two nothing here touches — and says so on the
+  # about. The report ranks those two above the two nothing here touches, and says so on the
   # findings themselves. Go only; the Python and JavaScript findings keep no verdict.
   reachability:
     analyzers: [govulncheck]
@@ -24,7 +24,7 @@ config:
       enabled: true # Trivy fs → app/requirements.txt (old, vulnerable deps) + checkout/go.mod
       # A second scanner on the same control, opt-in. Trivy reads the lockfile; retire.js
       # fingerprints the JavaScript file itself, which is how it finds a library that was
-      # never installed by a package manager — here, a jQuery copied into static/.
+      # never installed by a package manager, here, a jQuery copied into static/.
       retirejs:
         enabled: true # retire.js → app/static/js/jquery.min.js (vendored, not in any manifest)
     secrets:
@@ -32,7 +32,7 @@ config:
       # A scanner is configured under its own key. Gitleaks takes two options, both commented
       # here so the demo keeps scanning what its README describes:
       # gitleaks:
-      #   history: true                    # also walk commit history — a secret removed from the
+      #   history: true                    # also walk commit history, a secret removed from the
       #                                    # tip is still fetchable, so it is still compromised
       #   config: security/gitleaks.toml   # a ruleset shared across repositories; a
       #                                    # .gitleaks.toml committed here is already used
@@ -49,7 +49,7 @@ config:
       enabled: true # Trivy → the licence of every dependency, against the policy below
 
   # An inventory of everything this release contains, as one document rather than one per
-  # repository and image — which is the unit an SBOM is actually asked for.
+  # repository and image, which is the unit an SBOM is actually asked for.
   sbom:
     enabled: true
     scope: project
@@ -73,7 +73,7 @@ config:
     - kind: github # no-ops locally; uploads to the Security tab in GitHub Actions
 
 # Accepted risks live in their own files, merged in at load. One accepted risk here, carrying why,
-# who, when it lapses, and what it means to somebody consuming this product — see the fragment for
+# who, when it lapses, and what it means to somebody consuming this product. See the fragment for
 # why it is not in this file.
 fragments:
   - path: ".draugr/exclusions/*.saga-fragment.yaml"
@@ -81,7 +81,7 @@ fragments:
   # A `url:` here would pull it from another repository entirely.
   - path: ".draugr/components/*.saga-fragment.yaml"
 
-# Two components, not one, because one is not what anyone's project looks like — and because
+# Two components, not one, because one is not what anyone's project looks like, and because
 # the parts of an application are not equally exposed or equally important. `paths` scopes each
 # to its own subtree of this repository; files at the repository root come with both, since that
 # is where the manifests and the scanners' own configuration live.
@@ -102,7 +102,7 @@ components:
     # three subtrees of this one, which produces the same three jobs.
     #
     # It is also what makes reachability legible: a verdict is a fact about a repository, not
-    # about the component that holds it. Only the Go one gets verdicts — the analyzer says so of
+    # about the component that holds it. Only the Go one gets verdicts. The analyzer says so of
     # the other two rather than leaving them looking unexamined.
     repositories:
       - url: . # the service itself: dependencies, code, secrets, its Dockerfile
@@ -116,7 +116,7 @@ components:
           - checkout
     images:
       # builtBy says who publishes an image, and it changes what the report tells you to do about
-      # a vulnerable package inside it. Nobody here can upgrade a library inside python:3.8-slim —
+      # a vulnerable package inside it. Nobody here can upgrade a library inside python:3.8-slim,
       # it is published by somebody else, and the fix is a newer image or a wait for one. Left at
       # the default `self`, the fix list would say "upgrade openssl", which is advice this team
       # cannot take.
@@ -128,14 +128,14 @@ components:
     # The other half of VEX. `config.vex` above describes the document Draugr *writes* about this
     # product; this reads one somebody else wrote about theirs.
     #
-    # The base image is published by somebody else — that is what `builtBy: upstream` says — so its
+    # The base image is published by somebody else. That is what `builtBy: upstream` says, so its
     # publisher is the party who knows whether a CVE in it is reachable. Pointing at their document
     # applies their analysis here, and the report says it was theirs: the author, the document and
     # the date they asserted it. Retyping the same claim into `config.exclude` would make it
     # indistinguishable from a decision this team made and is answerable for.
     #
     # Two statements, deliberately different. One is `not_affected` and excuses a finding; the other
-    # is `affected` and excuses nothing — a supplier telling you that you *are* exposed must never
+    # is `affected` and excuses nothing, a supplier telling you that you *are* exposed must never
     # be the reason something stops counting.
     #
     # `path` is resolved relative to where Draugr runs, like every other path in a descriptor. A

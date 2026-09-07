@@ -1,5 +1,5 @@
 """
-Intentionally insecure sample service — for exercising Draugr's `sast` control.
+Intentionally insecure sample service, for exercising Draugr's `sast` control.
 DO NOT copy these patterns into real code.
 """
 import os
@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 @app.route("/ping")
 def ping():
-    # sast: OS command injection — user input flows into a shell command.
+    # sast: OS command injection, user input flows into a shell command.
     host = request.args.get("host", "")
     return os.popen("ping -c1 " + host).read()
 
