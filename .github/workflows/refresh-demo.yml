@@ -10,8 +10,8 @@
 # help either, because an event caused by GITHUB_TOKEN does not start a workflow run. Either way
 # the demo would keep showcasing whatever the branches happened to contain when they were cut.
 #
-# So this job does the diff itself, against `refs/pull/N/merge`. What the pull request would be if
-# merged into main as it stands today. That is current by construction: the Saga, the workflow and
+# So this job does the diff itself, against `refs/pull/N/merge`, which is what the pull request
+# would be if merged into main as it stands today. That is current by construction: the Saga, the workflow and
 # the app baseline all come from main, and only the pull request's own change is layered on top.
 # It is also the plain CLI a reader would run, which is the thing being demonstrated.
 name: Refresh demo
@@ -64,6 +64,13 @@ jobs:
       # retires a scanner this descriptor names, would otherwise be discovered by a visitor.
       - name: The descriptor still describes something Draugr can run
         run: draugr validate draugr.saga.yaml
+
+      # This repository is what somebody evaluating Draugr reads before they read anything else,
+      # so its prose is held to the standard the product's own is. Narrow on purpose: the split
+      # sentence and the em dash are the two tells a machine can judge, and the rest needs a
+      # reader.
+      - name: The prose does not read as generated
+        run: python3 scripts/check-slop.py
 
       # Code scanning on main: the complete picture, which is what a default branch should carry.
       # A dispatch is an explicit API call rather than an event, so it is not subject to the

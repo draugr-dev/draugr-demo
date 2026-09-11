@@ -78,12 +78,13 @@ scanning** tab: each alert is tagged with the originating scanner (`scanner:semg
 
 ### Gating
 ```bash
-draugr scan draugr.saga.yaml --fail-on warning       # exit non-zero on warnings+
-draugr scan draugr.saga.yaml --fail-on-priority P1   # block only on P1s
+draugr scan draugr.saga.yaml                 # the default gate: block on any P1
+draugr scan draugr.saga.yaml --fail-on P2    # widen it to P2 as well
+draugr scan draugr.saga.yaml --fail-on high  # or judge severity instead of the band
 echo $?
 ```
 
-### Fragments. The descriptor is not one file
+### Fragments, and why the descriptor is not one file
 
 This descriptor is assembled from three:
 
@@ -197,11 +198,11 @@ Ungrouped is the default because grouping is only right once a descriptor says w
 build and which infrastructure you operate; without that it can state a fix nobody can apply.
 
 This descriptor says. `python:3.8-slim` is declared `builtBy: upstream`, which is why 394 findings
-collapse into one action. *take a newer image*, rather than a list of libraries nobody here can
+collapse into one action, *take a newer image*, rather than a list of libraries nobody here can
 upgrade. Delete that line and run it again: the same 394 findings come back as packages, and the tip
 at the foot of the report tells you why.
 
-### Explain. What a finding means and how to fix it
+### Explain, what a finding means and how to fix it
 
 ```bash
 draugr scan draugr.saga.yaml
@@ -238,7 +239,7 @@ merging any of them would quietly change the sandbox everything else here is mea
 
 | PR | What it shows |
 |---|---|
-| [#3 Add /download endpoint](https://github.com/draugr-dev/draugr-demo/pull/3) | A change that **introduces** a new finding. What the gate is for. **Its check fails, and that is the exhibit** |
+| [#3 Add /download endpoint](https://github.com/draugr-dev/draugr-demo/pull/3) | A change that **introduces** a new finding, which is what the gate is for. **Its check fails, and that is the exhibit** |
 | [#2 Bump vulnerable dependencies](https://github.com/draugr-dev/draugr-demo/pull/2) | Findings reported as **fixed** |
 | [#1 Harden the API](https://github.com/draugr-dev/draugr-demo/pull/1) | Source fixes clearing `sast` findings |
 
@@ -254,7 +255,7 @@ Open one and you get both surfaces:
 
 Their checks are re-run against each new Draugr release, so both stay current.
 
-To do the same locally. Compare two scans and gate only on *new* findings:
+To do the same locally, compare two scans and gate only on *new* findings:
 ```bash
 # Baseline the current state.
 draugr scan draugr.saga.yaml -o base/
