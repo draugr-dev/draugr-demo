@@ -19,6 +19,21 @@ config:
   reachability:
     analyzers: [govulncheck]
 
+  # What fails the build, in either vocabulary.
+  #
+  # `P1` is the band a finding lands in for the component it was found in, which folds in the
+  # exposure and criticality declared further down — context no scanner can compute, because it is
+  # not in the code. A severity (`critical`, `high`, `medium`, `low`) asks the other question
+  # instead: what the scanner called the flaw on its own terms.
+  #
+  # One field, so a run asks one question. Writing both is refused, because a verdict with two
+  # possible reasons cannot be read back to the rule that produced it.
+  #
+  # P1 is also the default, so this line changes nothing about how this descriptor is judged. It is
+  # here because a capability nobody has seen written is one people do not know they have.
+  gate:
+    failOn: P1
+
   controllers:
     sca:
       enabled: true # Trivy fs → app/requirements.txt (old, vulnerable deps) + checkout/go.mod

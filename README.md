@@ -78,8 +78,9 @@ The `github` publisher **no-ops locally** and **uploads to code scanning in CI**
 
 ### Gating
 ```bash
-draugr scan draugr.saga.yaml --fail-on warning       # exit non-zero on warnings+
-draugr scan draugr.saga.yaml --fail-on-priority P1   # block only on P1s
+draugr scan draugr.saga.yaml                 # the default gate: block on any P1
+draugr scan draugr.saga.yaml --fail-on P2    # widen it to P2 as well
+draugr scan draugr.saga.yaml --fail-on high  # or judge severity instead of the band
 echo $?
 ```
 
