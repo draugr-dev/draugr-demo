@@ -117,26 +117,29 @@ config:
   # vexSources:
   #   - url: https://example.com/vex/platform.openvex.json
 
-  # Render several formats and deliver them: files locally, plus GitHub code scanning in CI.
-  reports:
-    - format: sarif
-    - format: markdown
-      # What a pull-request comment should carry. The artifact on disk stays complete, because a
-      # file that silently omits findings is read by the next tool as a scan that did not find
-      # them; this narrows what a person is asked to read.
-      minPriority: P2
-    - format: html
-      filename: report.html # what to call it, where the default is not what a pipeline expects
-    - format: vex # which of the CVEs above actually affect this product
-    # Whatever shape a system downstream needs, without waiting for Draugr to grow a format for it.
-    # `template` is inline and `templateFile` points at a file; exactly one of the two.
-    # - format: template
-    #   filename: summary.txt
-    #   template: "{{.Verdict}}: P1={{.Priorities.P1}} P2={{.Priorities.P2}}\n"
+  # Where results go, and what each destination takes. A destination that can deliver only one
+  # thing renders it for itself, which is why `github` below names nothing.
   publishers:
     - kind: file
       dir: ./.draugr/out
+      reports:
+        - format: sarif
+        - format: markdown
+          # What a pull-request comment should carry. The artifact on disk stays complete, because
+          # a file that silently omits findings is read by the next tool as a scan that did not
+          # find them; this narrows what a person is asked to read.
+          minPriority: P2
+        - format: html
+          filename: report.html # what to call it, where the default is not what a pipeline expects
+        - format: vex # which of the CVEs above actually affect this product
+        # Whatever shape a system downstream needs, without waiting for Draugr to grow a format for
+        # it. `template` is inline and `templateFile` points at a file; exactly one of the two.
+        # - format: template
+        #   filename: summary.txt
+        #   template: "{{.Verdict}}: P1={{.Priorities.P1}} P2={{.Priorities.P2}}\n"
     - kind: github # no-ops locally; uploads to the Security tab in GitHub Actions
+      reports:
+        - format: sarif
     # A sticky comment on the pull request, which is where a reviewer already is. Every field
     # below defaults from the CI environment, so a workflow needs none of them; they are here for
     # the case that has no environment to read, such as a runner outside the forge it reports to.
