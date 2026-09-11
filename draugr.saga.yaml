@@ -5,6 +5,13 @@ project: draugr-demo
 release:
   version: "1.0"
 
+# Where the thinking behind this release lives. A finding argued about six months from now is
+# argued about by somebody who was not in the room, and a descriptor that names the threat model is
+# one they can follow out of. `type` is the author's own word for the kind of document.
+references:
+  - type: ThreatModel
+    link: https://example.com/threat-models/draugr-demo
+
 config:
   # Which of the Go vulnerabilities Trivy finds can this code actually reach?
   #
@@ -14,7 +21,7 @@ config:
   # where whoever owns the gate reviews it.
   #
   # checkout/ pins a library with four known vulnerabilities and calls a function two of them are
-  # about. The report ranks those two above the two nothing here touches — and says so on the
+  # about. The report ranks those two above the two nothing here touches, and says so on the
   # findings themselves. Go only; the Python and JavaScript findings keep no verdict.
   reachability:
     analyzers: [govulncheck]
@@ -22,7 +29,7 @@ config:
   # What fails the build, in either vocabulary.
   #
   # `P1` is the band a finding lands in for the component it was found in, which folds in the
-  # exposure and criticality declared further down — context no scanner can compute, because it is
+  # exposure and criticality declared further down, context no scanner can compute, because it is
   # not in the code. A severity (`critical`, `high`, `medium`, `low`) asks the other question
   # instead: what the scanner called the flaw on its own terms.
   #
@@ -33,13 +40,39 @@ config:
   # here because a capability nobody has seen written is one people do not know they have.
   gate:
     failOn: P1
+    # One control judged on a stricter band than the rest. A denied license is a legal exposure
+    # rather than a technical one, so where it sits in the estate does not soften it, and this says
+    # so without moving the gate for everything else.
+    #
+    # The same vocabulary as `failOn` above, because a run asks one question. Writing a severity
+    # here under a band gate is refused rather than ignored.
+    controls:
+      licenses: P2
+
+  # What a scanner may do to a target beyond reading it. Nothing this descriptor enables needs it,
+  # which is why it is commented: kube-bench runs a Job in a cluster and deletes it, and the Mend
+  # connectors create a project in your account. Both are refused until the effect is listed.
+  # allowEffects: [mutate, privilege]
+
+  # Whether a flaw is being exploited in the world, as opposed to how bad it could be in theory.
+  # Commented because both datasets are fetched, and a demo that needs the network to produce its
+  # own README's output is one that fails on a train.
+  #
+  # Turn them on and the ranking moves: a finding on CISA's catalogue is raised a band because
+  # somebody is using it, and the report says which dataset said so and on what date, so the band
+  # can be argued with rather than taken on trust.
+  # exploitability:
+  #   kev: auto            # a file path, "cache" to read ~/.draugr/feeds, or "auto" to fetch
+  #   epss: auto           # the same three choices
+  #   epssThreshold: 0.5   # the probability at or above which a finding is raised
+  #   maxAge: 168h         # refuse a copy older than this rather than ranking on stale data
 
   controllers:
     sca:
       enabled: true # Trivy fs → app/requirements.txt (old, vulnerable deps) + checkout/go.mod
       # A second scanner on the same control, opt-in. Trivy reads the lockfile; retire.js
       # fingerprints the JavaScript file itself, which is how it finds a library that was
-      # never installed by a package manager — here, a jQuery copied into static/.
+      # never installed by a package manager, here, a jQuery copied into static/.
       retirejs:
         enabled: true # retire.js → app/static/js/jquery.min.js (vendored, not in any manifest)
     secrets:
@@ -47,7 +80,7 @@ config:
       # A scanner is configured under its own key. Gitleaks takes two options, both commented
       # here so the demo keeps scanning what its README describes:
       # gitleaks:
-      #   history: true                    # also walk commit history — a secret removed from the
+      #   history: true                    # also walk commit history, a secret removed from the
       #                                    # tip is still fetchable, so it is still compromised
       #   config: security/gitleaks.toml   # a ruleset shared across repositories; a
       #                                    # .gitleaks.toml committed here is already used
@@ -64,7 +97,7 @@ config:
       enabled: true # Trivy → the licence of every dependency, against the policy below
 
   # An inventory of everything this release contains, as one document rather than one per
-  # repository and image — which is the unit an SBOM is actually asked for.
+  # repository and image, which is the unit an SBOM is actually asked for.
   sbom:
     enabled: true
     scope: project
@@ -76,19 +109,48 @@ config:
     author: "Draugr demo <demo@example.com>"
     product: "pkg:oci/draugr-dev/draugr-demo"
 
+  # A supplier's analysis applied to every component, rather than to the one that carries the
+  # dependency. The component-level `vex:` further down is the same mechanism scoped to one
+  # component, which is the right place when the document is about that component's base image.
+  # This is for a claim that holds across the project, such as a platform team's assertion about a
+  # library every service pulls in.
+  # vexSources:
+  #   - url: https://example.com/vex/platform.openvex.json
+
   # Render several formats and deliver them: files locally, plus GitHub code scanning in CI.
   reports:
     - format: sarif
     - format: markdown
+      # What a pull-request comment should carry. The artifact on disk stays complete, because a
+      # file that silently omits findings is read by the next tool as a scan that did not find
+      # them; this narrows what a person is asked to read.
+      minPriority: P2
     - format: html
+      filename: report.html # what to call it, where the default is not what a pipeline expects
     - format: vex # which of the CVEs above actually affect this product
+    # Whatever shape a system downstream needs, without waiting for Draugr to grow a format for it.
+    # `template` is inline and `templateFile` points at a file; exactly one of the two.
+    # - format: template
+    #   filename: summary.txt
+    #   template: "{{.Verdict}}: P1={{.Priorities.P1}} P2={{.Priorities.P2}}\n"
   publishers:
     - kind: file
       dir: ./.draugr/out
     - kind: github # no-ops locally; uploads to the Security tab in GitHub Actions
+    # A sticky comment on the pull request, which is where a reviewer already is. Every field
+    # below defaults from the CI environment, so a workflow needs none of them; they are here for
+    # the case that has no environment to read, such as a runner outside the forge it reports to.
+    # `marker` is how Draugr finds its own previous comment to edit rather than posting a second.
+    # - kind: github-pr-comment
+    #   org: draugr-dev
+    #   repo: draugr-demo
+    #   pr: 42
+    #   commit: 0f05145
+    #   marker: "<!-- draugr -->"
+    #   tokenEnv: GITHUB_TOKEN
 
 # Accepted risks live in their own files, merged in at load. One accepted risk here, carrying why,
-# who, when it lapses, and what it means to somebody consuming this product — see the fragment for
+# who, when it lapses, and what it means to somebody consuming this product, see the fragment for
 # why it is not in this file.
 fragments:
   - path: ".draugr/exclusions/*.saga-fragment.yaml"
@@ -96,7 +158,7 @@ fragments:
   # A `url:` here would pull it from another repository entirely.
   - path: ".draugr/components/*.saga-fragment.yaml"
 
-# Two components, not one, because one is not what anyone's project looks like — and because
+# Two components, not one, because one is not what anyone's project looks like, and because
 # the parts of an application are not equally exposed or equally important. `paths` scopes each
 # to its own subtree of this repository; files at the repository root come with both, since that
 # is where the manifests and the scanners' own configuration live.
@@ -111,18 +173,30 @@ components:
     # exposure/criticality feed prioritization (P1–P4). Run `draugr classify` to change them.
     exposure: public
     criticality: important
+    # The organization's own vocabulary, not Draugr's. Labels do not change a verdict; they are
+    # what a fleet is sliced by when there are two hundred components and the question is which
+    # team's, which environment, which regime.
+    labels:
+      team: platform
+      data-class: pii
     # Three repositories, because a component is rarely one. Draugr plans a job per repository and
     # runs them concurrently, so this is the shape that exercises per-repository checkout,
     # provenance and caching. In a real project these would be three separate URLs; here they are
     # three subtrees of this one, which produces the same three jobs.
     #
     # It is also what makes reachability legible: a verdict is a fact about a repository, not
-    # about the component that holds it. Only the Go one gets verdicts — the analyzer says so of
+    # about the component that holds it. Only the Go one gets verdicts, the analyzer says so of
     # the other two rather than leaving them looking unexamined.
     repositories:
       - url: . # the service itself: dependencies, code, secrets, its Dockerfile
         paths:
           - app
+        # A real remote pins what was scanned, so a report describes a commit rather than whatever
+        # the branch happened to be, and `ignore` keeps a vendored tree out of the counts without
+        # pretending it is not there.
+        # revision: v1.4.2
+        # ignore:
+        #   - app/vendor
       - url: . # its deployment surface, owned by the same team
         paths:
           - deploy
@@ -131,7 +205,7 @@ components:
           - checkout
     images:
       # builtBy says who publishes an image, and it changes what the report tells you to do about
-      # a vulnerable package inside it. Nobody here can upgrade a library inside python:3.8-slim —
+      # a vulnerable package inside it. Nobody here can upgrade a library inside python:3.8-slim,
       # it is published by somebody else, and the fix is a newer image or a wait for one. Left at
       # the default `self`, the fix list would say "upgrade openssl", which is advice this team
       # cannot take.
@@ -140,20 +214,51 @@ components:
       # delete the line below and run it again.
       - image: python:3.8-slim # images: old base with known CVEs (Trivy)
         builtBy: upstream
+        # A tag moves and a digest does not. Pinning one makes two runs comparable, and makes a
+        # cache hit a statement about the same bytes rather than about the same name. Left off
+        # here so this file keeps working when the tag is rebuilt.
+        # digest: sha256:...
     # The other half of VEX. `config.vex` above describes the document Draugr *writes* about this
     # product; this reads one somebody else wrote about theirs.
     #
-    # The base image is published by somebody else — that is what `builtBy: upstream` says — so its
+    # The base image is published by somebody else, which is what `builtBy: upstream` says, so its
     # publisher is the party who knows whether a CVE in it is reachable. Pointing at their document
     # applies their analysis here, and the report says it was theirs: the author, the document and
     # the date they asserted it. Retyping the same claim into `config.exclude` would make it
     # indistinguishable from a decision this team made and is answerable for.
     #
     # Two statements, deliberately different. One is `not_affected` and excuses a finding; the other
-    # is `affected` and excuses nothing — a supplier telling you that you *are* exposed must never
+    # is `affected` and excuses nothing, a supplier telling you that you *are* exposed must never
     # be the reason something stops counting.
     #
     # `path` is resolved relative to where Draugr runs, like every other path in a descriptor. A
     # real supplier document would more often be a `url:` or a `repository:`.
     vex:
       - path: vendor/base-image.openvex.json
+
+    # The surfaces a repository sandbox has nowhere to point at. Shown rather than left out,
+    # because a capability absent from the file people copy is one they do not know they have.
+    #
+    # `hosts` is a running endpoint: the headers and tls controls read it over the network, and
+    # dast probes it. `auth` names the environment variable holding a credential and never the
+    # credential, because a descriptor is committed. `spec` points at an OpenAPI document, and
+    # `methods` says which verbs a scan may send, so a read-only scan stays read-only.
+    # hosts:
+    #   - name: api
+    #     url: https://api.example.com
+    #     type: api                       # or browser, which tunes the header checks
+    #     auth:
+    #       type: bearer                  # or header
+    #       header: X-API-Key             # required with type: header
+    #       tokenEnv: API_TOKEN
+    #     spec:
+    #       path: openapi.yaml
+    #       methods: [GET, HEAD]
+    #
+    # `infrastructure` is a cluster. `operatedBy: provider` says a managed control plane is not
+    # this team's to fix, which changes what the report tells them to do rather than what it finds.
+    # infrastructure:
+    #   - kind: kubernetes
+    #     ref: prod-cluster
+    #     namespaces: [api, api-jobs]
+    #     operatedBy: provider
