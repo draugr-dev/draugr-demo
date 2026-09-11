@@ -49,7 +49,7 @@ jobs:
 
       - name: Draugr
         id: draugr
-        # This repo is intentionally vulnerable, so a full scan "fails" by design, keep the push
+        # This repo is intentionally vulnerable, so a full scan "fails" by design. Keep the push
         # scan non-blocking so findings still upload. In a real repo, drop this and gate with
         # fail-on (push) / fail-on-new (PR).
         continue-on-error: true

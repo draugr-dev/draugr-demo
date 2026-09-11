@@ -10,8 +10,8 @@
 # help either, because an event caused by GITHUB_TOKEN does not start a workflow run. Either way
 # the demo would keep showcasing whatever the branches happened to contain when they were cut.
 #
-# So this job does the diff itself, against `refs/pull/N/merge`, what the pull request would be if
-# merged into main as it stands today. That is current by construction: the Saga, the workflow and
+# So this job does the diff itself, against `refs/pull/N/merge`, which is what the pull request
+# would be if merged into main as it stands today. That is current by construction: the Saga, the workflow and
 # the app baseline all come from main, and only the pull request's own change is layered on top.
 # It is also the plain CLI a reader would run, which is the thing being demonstrated.
 name: Refresh demo
@@ -96,7 +96,7 @@ jobs:
             # The merge ref is main-as-it-stands with this pull request applied. Scanning it is what
             # makes the refresh current: nothing here reads the branch as it was cut.
             if ! git fetch --no-tags --force origin "refs/pull/$num/merge:refs/remotes/pr/$num"; then
-              echo "::error::PR #$num has no merge ref, it may have conflicts with main"
+              echo "::error::PR #$num has no merge ref. It may have conflicts with main"
               failed=1; echo "::endgroup::"; continue
             fi
             sha=$(git rev-parse "refs/remotes/pr/$num")
@@ -140,7 +140,7 @@ jobs:
           # A refresh that found nothing to refresh is a broken refresh, not a quiet success: the
           # three example pull requests are the demo's whole pull-request story.
           if [ "$seen" -eq 0 ]; then
-            echo "::error::no open pull requests found, the curated examples are the point of this repo"
+            echo "::error::no open pull requests found. The curated examples are the point of this repo"
             exit 1
           fi
           exit "$failed"

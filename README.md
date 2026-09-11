@@ -7,8 +7,8 @@ private key, a root-running Dockerfile, and a privileged Kubernetes pod.
 It exists to exercise [Draugr](https://github.com/draugr-dev/draugr) end to end, every control,
 every report format, the publishers, and `draugr diff`. **It is equally useful for evaluating any
 scanner**: the findings are the point, they are stable, and each one is documented below with the
-class of tool that should catch it. If you are comparing SAST or SCA tools and want a fixture
-where you already know the answer, this is one.
+class of tool that should catch it. If you are comparing SAST or SCA tools and want a fixture where
+you already know the answer, this is one.
 
 Point Draugr at it and you get a verdict in two commands:
 
@@ -65,16 +65,16 @@ draugr scan draugr.saga.yaml --format template \
 
 ### Publishers, declarative, in the Saga
 The Saga already declares a `file` publisher and a `github` publisher. A plain scan writes all
-formats to `./.draugr/out/`, where everything a run writes belongs, reports beside the
-fragments, one directory to gitignore or to keep:
+formats to `./.draugr/out/`, where everything a run writes belongs, reports beside the fragments,
+one directory to gitignore or to keep:
 ```bash
 draugr scan draugr.saga.yaml
 ls .draugr/out/           # results.sarif, report.md, report.html, openvex.json
 ```
-The `github` publisher **no-ops locally** and **uploads to code scanning in CI**, see the
-[Draugr workflow](.github/workflows/draugr.yml). After a run on GitHub, open the repo's
-**Security → Code scanning** tab: each alert is tagged with the originating scanner
-(`scanner:semgrep`, `scanner:trivy`, …).
+The `github` publisher **no-ops locally** and **uploads to code scanning in CI**. See the [Draugr
+workflow](.github/workflows/draugr.yml). After a run on GitHub, open the repo's **Security → Code
+scanning** tab: each alert is tagged with the originating scanner (`scanner:semgrep`,
+`scanner:trivy`, …).
 
 ### Gating
 ```bash
@@ -84,7 +84,7 @@ draugr scan draugr.saga.yaml --fail-on high  # or judge severity instead of the 
 echo $?
 ```
 
-### Fragments, the descriptor is not one file
+### Fragments, and why the descriptor is not one file
 
 This descriptor is assembled from three:
 
@@ -112,7 +112,7 @@ team knows what the platform team runs, so `platform` is described in its own fi
 draugr validate draugr.saga.yaml --resolved   # the three files merged into one, as Draugr sees it
 ```
 
-A fragment can be pulled from **another repository** too, `fragments:` takes a `url` as well as a
+A fragment can be pulled from **another repository** too. `fragments:` takes a `url` as well as a
 `path`, which is how several teams contribute to one product's descriptor without sharing a
 checkout. Worth knowing before you need it: a component may then hold repositories from anywhere,
 and every finding records which one it came from, so the same file in two projects is two findings
@@ -121,11 +121,11 @@ rather than one.
 The finding is **not deleted**. It stays in the report marked suppressed:
 
 ```
-1 finding suppressed by config.exclude, 1 accepted by demo@example.com
+1 finding suppressed by config.exclude · 1 accepted by demo@example.com
 ```
 
-The question an auditor asks is never "did the scanner run". It is who decided this was
-acceptable, and when. Delete the fragment and re-scan: the finding comes back, which is the point.
+The question an auditor asks is never "did the scanner run". It is who decided this was acceptable,
+and when. Delete the fragment and re-scan: the finding comes back, which is the point.
 
 ### Prioritization
 ```bash
@@ -148,7 +148,7 @@ draugr scan draugr.saga.yaml --top 0 | grep -A1 'checkout/go.mod'
 P1  high  7.5  CVE-2022-32149  sca  trivy  api  checkout/go.mod
     → reachable: main → ListenAndServe → Serve → serve → ServeHTTP → handler → preferred → ParseAcceptLanguage
 P2  high  7.5  CVE-2020-14040  sca  trivy  api  checkout/go.mod
-    ↓ ranked as medium, the vulnerable code is never called
+    ↓ ranked as medium · the vulnerable code is never called
 ```
 
 Two things to notice. The **severity is unchanged** on all four, reachability feeds the priority
@@ -170,11 +170,11 @@ than leaving them looking unexamined:
 
 ```console
 Measured against:
-  sca  govulncheck, coverage this repository has no go.mod, so its findings carry no verdict
+  sca  govulncheck · coverage this repository has no go.mod, so its findings carry no verdict
 ```
 
-Go only, today. Needs `govulncheck` on your PATH,
-`go install golang.org/x/vuln/cmd/govulncheck@latest`; `draugr doctor` will tell you.
+Go only, today. Needs `govulncheck` on your PATH, `go install
+golang.org/x/vuln/cmd/govulncheck@latest`; `draugr doctor` will tell you.
 
 ### Fix list, actions, not just findings
 
@@ -186,7 +186,7 @@ draugr scan draugr.saga.yaml                  # the default: one row per finding
 Grouped, this sandbox's 474 findings become ten things to do:
 
 ```
-Fix first, 10 actions clear 419 findings:
+Fix first · 10 actions clear 419 findings:
   P1  Update python:3.8-slim  images · 394 findings · upstream
       CVE-2026-42010 +393
   P1  Upgrade Jinja2 2.10  sca · 6 findings
@@ -199,8 +199,8 @@ build and which infrastructure you operate; without that it can state a fix nobo
 
 This descriptor says. `python:3.8-slim` is declared `builtBy: upstream`, which is why 394 findings
 collapse into one action, *take a newer image*, rather than a list of libraries nobody here can
-upgrade. Delete that line and run it again: the same 394 findings come back as packages, and the
-tip at the foot of the report tells you why.
+upgrade. Delete that line and run it again: the same 394 findings come back as packages, and the tip
+at the foot of the report tells you why.
 
 ### Explain, what a finding means and how to fix it
 
@@ -210,8 +210,8 @@ draugr explain CVE-2019-20477
 ```
 
 Prints the description and the remediation the scanner published, so understanding a finding does
-not mean searching for its identifier. It reads the report the scan just wrote, no path needed,
-and takes the part of an id that is unambiguous, so `4.3.1` finds `kube-bench/cis/4.3.1`.
+not mean searching for its identifier. It reads the report the scan just wrote, no path needed, and
+takes the part of an id that is unambiguous, so `4.3.1` finds `kube-bench/cis/4.3.1`.
 
 ### Evidence, what stands behind the verdict
 
@@ -221,25 +221,25 @@ draugr scan draugr.saga.yaml --report evidence            # as a document
 ```
 
 Which build of which tool produced each finding, the revision each repository was scanned at, and
-what the run cost. Out of the default view because a developer is asking what to fix; an auditor
-is a real reader, just not the default one, and both render from the same code, so they cannot
-disagree about what the run did.
+what the run cost. Out of the default view because a developer is asking what to fix; an auditor is
+a real reader, just not the default one, and both render from the same code, so they cannot disagree
+about what the run did.
 
 What a control was **measured against** stays in the default view either way. It says what a scan
 did *not* cover, and a partial scan reading as a complete one is worse than a verbose one.
 
 ### Diff, the PR story
 
-**Three example pull requests are permanently open on this repo, on purpose.** They aren't
-neglected work, each one shows the pull-request gate on a real change, in the two places it
-appears, without your having to set it up.
+**Three example pull requests are permanently open on this repo, on purpose.** They aren't neglected
+work. Each one shows the pull-request gate on a real change, in the two places it appears, without
+your having to set it up.
 
 They are **drafts**, and stay that way. Two of them fix findings and one adds a new one, so
 merging any of them would quietly change the sandbox everything else here is measured against:
 
 | PR | What it shows |
 |---|---|
-| [#3 Add /download endpoint](https://github.com/draugr-dev/draugr-demo/pull/3) | A change that **introduces** a new finding, what the gate is for. **Its check fails, and that is the exhibit** |
+| [#3 Add /download endpoint](https://github.com/draugr-dev/draugr-demo/pull/3) | A change that **introduces** a new finding, which is what the gate is for. **Its check fails, and that is the exhibit** |
 | [#2 Bump vulnerable dependencies](https://github.com/draugr-dev/draugr-demo/pull/2) | Findings reported as **fixed** |
 | [#1 Harden the API](https://github.com/draugr-dev/draugr-demo/pull/1) | Source fixes clearing `sast` findings |
 

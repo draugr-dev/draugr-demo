@@ -150,7 +150,7 @@ config:
     #   tokenEnv: GITHUB_TOKEN
 
 # Accepted risks live in their own files, merged in at load. One accepted risk here, carrying why,
-# who, when it lapses, and what it means to somebody consuming this product, see the fragment for
+# who, when it lapses, and what it means to somebody consuming this product. See the fragment for
 # why it is not in this file.
 fragments:
   - path: ".draugr/exclusions/*.saga-fragment.yaml"
@@ -185,7 +185,7 @@ components:
     # three subtrees of this one, which produces the same three jobs.
     #
     # It is also what makes reachability legible: a verdict is a fact about a repository, not
-    # about the component that holds it. Only the Go one gets verdicts, the analyzer says so of
+    # about the component that holds it. Only the Go one gets verdicts. The analyzer says so of
     # the other two rather than leaving them looking unexamined.
     repositories:
       - url: . # the service itself: dependencies, code, secrets, its Dockerfile
@@ -221,7 +221,7 @@ components:
     # The other half of VEX. `config.vex` above describes the document Draugr *writes* about this
     # product; this reads one somebody else wrote about theirs.
     #
-    # The base image is published by somebody else, which is what `builtBy: upstream` says, so its
+    # The base image is published by somebody else. That is what `builtBy: upstream` says, so its
     # publisher is the party who knows whether a CVE in it is reachable. Pointing at their document
     # applies their analysis here, and the report says it was theirs: the author, the document and
     # the date they asserted it. Retyping the same claim into `config.exclude` would make it

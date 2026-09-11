@@ -3,7 +3,7 @@
 //
 // Its dependency is pinned to a version carrying four known vulnerabilities. Two of them are in
 // the function this code calls; two are in parts of the library it never touches. That split is
-// the point: it is what reachability analysis reports, and what a manifest scanner alone cannot
+// the point. It is what reachability analysis reports, and what a manifest scanner alone cannot
 // tell you.
 package main
 

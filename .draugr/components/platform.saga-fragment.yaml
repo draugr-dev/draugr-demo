@@ -5,7 +5,7 @@
 # what the platform team runs, and says so here; the service team's own component stays in
 # draugr.saga.yaml. They are merged at load, and the report shows both.
 #
-# A fragment can also be pulled from another repository entirely, `fragments:` takes a `url` as
+# A fragment can also be pulled from another repository entirely. `fragments:` takes a `url` as
 # well as a `path`, which is how several teams contribute to one product's descriptor without
 # sharing a checkout. That shape is worth knowing about before you need it: a component may hold
 # repositories from anywhere, and a finding records which one it came from, so two projects with
