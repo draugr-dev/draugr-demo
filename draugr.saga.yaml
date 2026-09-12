@@ -55,17 +55,21 @@ config:
   # allowEffects: [mutate, privilege]
 
   # Whether a flaw is being exploited in the world, as opposed to how bad it could be in theory.
-  # Commented because both datasets are fetched, and a demo that needs the network to produce its
-  # own README's output is one that fails on a train.
   #
-  # Turn them on and the ranking moves: a finding on CISA's catalogue is raised a band because
-  # somebody is using it, and the report says which dataset said so and on what date, so the band
-  # can be argued with rather than taken on trust.
-  # exploitability:
-  #   kev: auto            # a file path, "cache" to read ~/.draugr/feeds, or "auto" to fetch
-  #   epss: auto           # the same three choices
-  #   epssThreshold: 0.5   # the probability at or above which a finding is raised
-  #   maxAge: 168h         # refuse a copy older than this rather than ranking on stale data
+  # It moves the ranking, and that is the point: the vendored jQuery in app/static is on CISA's
+  # catalog, so it is raised to critical and lands beside the library flaws a scanner already
+  # called critical. The report says which dataset decided and on what date, so the band can be
+  # argued with rather than taken on trust.
+  #
+  # `cache` reads ~/.draugr/feeds and never touches the network during a scan, so this file still
+  # works on a train. `draugr feeds update` fills the cache, and a pipeline runs it as its own step
+  # before scanning, so a feed outage fails where it happened instead of quietly ranking everything
+  # as though nothing were exploited.
+  exploitability:
+    kev: cache # a file path, "cache" to read ~/.draugr/feeds, or "auto" to fetch
+    epss: cache # the same three choices
+    epssThreshold: 0.5 # the probability at or above which a finding is raised
+    maxAge: 168h # refuse a copy older than this rather than ranking on stale data
 
   controllers:
     sca:

@@ -58,6 +58,7 @@ jobs:
           saga: draugr.saga.yaml
           version: latest # always scan with the newest Draugr release
           tools: true # provision the scanners the Saga needs (Trivy, Gitleaks, Semgrep)
+          feeds: true # fill ~/.draugr/feeds before scanning, which config.exploitability reads
           code-scanning: new # the default, spelled out: on a PR, upload only what it introduced
           # code-scanning-min-priority: P1   # narrow further, to what is urgent
           # fail-on: error       # (push) gate the build
