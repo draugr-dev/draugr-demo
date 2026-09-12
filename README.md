@@ -228,24 +228,25 @@ did *not* cover, and a partial scan reading as a complete one is worse than a ve
 
 ### Diff, the PR story
 
-**Three example pull requests are permanently open on this repo, on purpose.** They aren't neglected
+**Four example pull requests are permanently open on this repo, on purpose.** They aren't neglected
 work. Each one shows the pull-request gate on a real change, in the two places it appears, without
 your having to set it up.
 
-They are **drafts**, and stay that way. Two of them fix findings and one adds a new one, so
-merging any of them would quietly change the sandbox everything else here is measured against:
+They are **drafts**, and stay that way. They fix findings, add them, or both, so merging any of
+them would quietly change the sandbox everything else here is measured against:
 
-| PR | What it shows | Comment |
-|---|---|---|
-| [#3 Add /download endpoint](https://github.com/draugr-dev/draugr-demo/pull/3) | A change that **introduces** a new finding, which is what the gate is for. **Its check fails, and that is the exhibit** | `--view actions` |
-| [#2 Bump vulnerable dependencies](https://github.com/draugr-dev/draugr-demo/pull/2) | Findings reported as **fixed** | `--view findings` |
-| [#1 Harden the API](https://github.com/draugr-dev/draugr-demo/pull/1) | Source fixes clearing `sast` findings | `--view findings` |
+| PR | What it shows |
+|---|---|
+| [#37 Add a dependency carrying several advisories](https://github.com/draugr-dev/draugr-demo/pull/37) | The other shape a comment comes in: six findings, one thing to do |
+| [#3 Add /download endpoint](https://github.com/draugr-dev/draugr-demo/pull/3) | A change that **introduces** a new finding, which is what the gate is for. **Its check fails, and that is the exhibit** |
+| [#2 Bump vulnerable dependencies](https://github.com/draugr-dev/draugr-demo/pull/2) | Findings reported as **fixed** |
+| [#1 Harden the API](https://github.com/draugr-dev/draugr-demo/pull/1) | Source fixes clearing `sast` findings |
 
-**The comment comes in two shapes and both are on show.** `--view findings` is a row per finding,
-which is what #1 and #2 carry. `--view actions` groups a change into the things somebody would do,
-so six advisories in one library are one upgrade, and #3 carries that because it is the one with
-work in it. The workflow picks from a label so this sandbox can exhibit both; a real repository
-writes one value in its template and leaves it.
+**The comment comes in two shapes.** `--view findings` is a row per finding and is what #1, #2 and
+#3 carry. `--view actions` groups a change into the things somebody would do, so six advisories in
+one library are one upgrade, and #37 exists to show it rather than asking another exhibit to
+demonstrate two things at once. The workflow picks from a label; a real repository writes one value
+in its template and leaves it.
 
 Open one and you get both surfaces:
 
