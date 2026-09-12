@@ -3,3 +3,7 @@ Flask==0.12.2
 requests==2.19.1
 PyYAML==5.1
 Jinja2==2.10
+# Pinned old on purpose, like everything else here. One package carrying several advisories is what
+# makes `draugr diff --view actions` worth looking at: the findings are many and the thing to do is
+# one upgrade.
+urllib3==2.0.7
