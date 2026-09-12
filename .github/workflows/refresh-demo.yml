@@ -60,6 +60,13 @@ jobs:
           set -euo pipefail
           draugr tools install -y
 
+      # The exploitability datasets, as their own step. The descriptor reads them from the cache and
+      # never fetches during a scan, so this is where a feed outage has to fail: without it the
+      # feeds are simply absent, every finding is silently un-escalated, and a run that ranked
+      # nothing as exploited looks exactly like one that found nothing being exploited.
+      - name: Fetch what is being exploited
+        run: draugr feeds update
+
       # The demo is only worth showing if it still works. A release that renames a Saga field, or
       # retires a scanner this descriptor names, would otherwise be discovered by a visitor.
       - name: The descriptor still describes something Draugr can run
