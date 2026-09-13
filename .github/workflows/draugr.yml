@@ -60,6 +60,14 @@ jobs:
           tools: true # provision the scanners the Saga needs (Trivy, Gitleaks, Semgrep)
           feeds: true # fill ~/.draugr/feeds before scanning, which config.exploitability reads
           code-scanning: new # the default, spelled out: on a PR, upload only what it introduced
+          # What the sticky comment says. `findings` is a row per finding; `actions` groups them
+          # into the things somebody would do, so six advisories in one library are one upgrade.
+          #
+          # Read from a label here so one exhibit can show the grouped shape without the others
+          # having to demonstrate two things at once. A real repository writes one value and leaves
+          # it: which shape a team wants is a property of how they review rather than of the change
+          # in front of them.
+          diff-view: ${{ contains(github.event.pull_request.labels.*.name, 'diff-view:actions') && 'actions' || 'findings' }}
           # code-scanning-min-priority: P1   # narrow further, to what is urgent
           # fail-on: error       # (push) gate the build
           # fail-on-new: error   # (PR)   gate only on findings this PR introduces

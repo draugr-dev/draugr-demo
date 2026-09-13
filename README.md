@@ -120,9 +120,12 @@ rather than one.
 
 The finding is **not deleted**. It stays in the report marked suppressed:
 
+```console
+ACCEPTED
+  config.exclude  1 finding suppressed
 ```
-1 finding suppressed by config.exclude · 1 accepted by demo@example.com
-```
+
+`--evidence` adds who decided, with the reason and the date it lapses, one row per decision.
 
 The question an auditor asks is never "did the scanner run". It is who decided this was acceptable,
 and when. Delete the fragment and re-scan: the finding comes back, which is the point.
@@ -141,36 +144,31 @@ a function two of them are about, and never touches the parts the other two are 
 scanner reports all four identically; `govulncheck` says which two matter here.
 
 ```bash
-draugr scan draugr.saga.yaml --top 0 | grep -A1 'checkout/go.mod'
+draugr scan draugr.saga.yaml --controls sca --top 0 | grep -A2 'checkout/go.mod'
 ```
 
 ```console
-P1  high  7.5  CVE-2022-32149  sca  trivy  api  checkout/go.mod
-    → reachable: main → ListenAndServe → Serve → serve → ServeHTTP → handler → preferred → ParseAcceptLanguage
-P2  high  7.5  CVE-2020-14040  sca  trivy  api  checkout/go.mod
-    ↓ ranked as medium · the vulnerable code is never called
+  P1        high      CVE-2022-32149         trivy     checkout/go.mod:5            golang.org/x/text v0.3.0 → 0.3.8
+            reachable: main → ListenAndServe → ListenAndServe → Serve → serve → ServeHTTP → ServeHTTP → ServeHTTP → handler → preferred → ParseAcceptLanguage (govulncheck, 2026-09-12)
+            golang: golang.org/x/text/language: ParseAcceptLanguage takes a long time to parse complex tags
+  P2        medium    CVE-2020-14040         trivy     checkout/go.mod:5            golang.org/x/text v0.3.0 → 0.3.3
+            ↓ unreachable · possibility to trigger an infinite loop in… · govulncheck, 2026-09-12
 ```
 
-Two things to notice. The **severity is unchanged** on all four, reachability feeds the priority
-band and never rewrites what the scanner reported. And the two nothing calls are **still in the
-report**, one band lower, not removed: a call graph does not see reflection or dynamic dispatch, so
-an unreachable finding is ranked down rather than excused. Excusing one is
-[`config.exclude`](draugr.saga.yaml) or a VEX document, both of which carry an author.
+Trivy rates both `high`. The Severity column shows the rating the band was computed from, so the
+unreachable one reads one step lower, and what the scanner itself said is carried unchanged into
+`report.json` and the SARIF. The two nothing calls are **still in the report**, one band down and
+not removed: a call graph does not see reflection or dynamic dispatch, so an unreachable finding is
+ranked down rather than excused. Excusing one is [`config.exclude`](draugr.saga.yaml) or a VEX
+document, both of which carry an author.
 
-The run summary says how it went, including how much it could not determine:
-
-```console
-Reachability:
-  govulncheck  2 reachable, 2 unreachable
-  Unreachable findings are ranked down in priority, not removed from the report.
-```
-
-The other two repositories in this component are Python and YAML, and the report says so rather
-than leaving them looking unexamined:
+What argued with the ranking is one block, beside everything else that moved one:
 
 ```console
-Measured against:
-  sca  govulncheck · coverage this repository has no go.mod, so its findings carry no verdict
+SIGNALS
+  KEV           1 finding raised
+  EPSS          1 finding raised
+  reachability  govulncheck · 2 reachable, 2 unreachable
 ```
 
 Go only, today. Needs `govulncheck` on your PATH, `go install
@@ -230,23 +228,37 @@ did *not* cover, and a partial scan reading as a complete one is worse than a ve
 
 ### Diff, the PR story
 
-**Three example pull requests are permanently open on this repo, on purpose.** They aren't neglected
+**Five example pull requests are permanently open on this repo, on purpose.** They aren't neglected
 work. Each one shows the pull-request gate on a real change, in the two places it appears, without
 your having to set it up.
 
-They are **drafts**, and stay that way. Two of them fix findings and one adds a new one, so
-merging any of them would quietly change the sandbox everything else here is measured against:
+They are **drafts**, and stay that way. They fix findings, add them, or change a decision about
+them, so merging any would quietly change the sandbox everything else here is measured against:
 
 | PR | What it shows |
 |---|---|
+| [#38 Revisit the accepted risks](https://github.com/draugr-dev/draugr-demo/pull/38) | Nothing introduced, nothing fixed: one acceptance ends and another begins |
+| [#37 Add a dependency carrying several advisories](https://github.com/draugr-dev/draugr-demo/pull/37) | The other shape a comment comes in: six findings, one thing to do |
 | [#3 Add /download endpoint](https://github.com/draugr-dev/draugr-demo/pull/3) | A change that **introduces** a new finding, which is what the gate is for. **Its check fails, and that is the exhibit** |
 | [#2 Bump vulnerable dependencies](https://github.com/draugr-dev/draugr-demo/pull/2) | Findings reported as **fixed** |
 | [#1 Harden the API](https://github.com/draugr-dev/draugr-demo/pull/1) | Source fixes clearing `sast` findings |
 
+**A finding is new, unaccepted, accepted, fixed or unchanged.** #38 is the exhibit for the middle
+two, because they are the ones a word does not give away: **unaccepted** is a finding nobody
+introduced and nobody ever fixed, whose exclusion was removed or reached its `expires` date, so it
+counts again and somebody decides a second time. Neither state trips the gate, which is why #38's
+check passes and #3's fails.
+
+**The comment comes in two shapes.** `--view findings` is a row per finding and is what four of
+them carry. `--view actions` groups a change into the things somebody would do, so six advisories
+in one library are one upgrade, and #37 exists to show it rather than asking another exhibit to
+demonstrate two things at once. The workflow picks from a label; a real repository writes one value
+in its template and leaves it.
+
 Open one and you get both surfaces:
 
-- **A sticky comment**, new, fixed and unchanged counts, updated in place on every push rather
-  than added to.
+- **A sticky comment**, counting what the change introduced, un-accepted, accepted and fixed,
+  updated in place on every push rather than added to.
 - **Annotations on the Files changed tab**, and only for the findings *that pull request
   introduced*. This repository is deliberately full of vulnerabilities, so an upload of everything
   would bury a reviewer under hundreds they did not cause; the workflow sets `code-scanning: new`,
@@ -262,11 +274,17 @@ draugr scan draugr.saga.yaml -o base/
 
 # Make a change (e.g. fix app/app.py or bump a dependency), then:
 draugr scan draugr.saga.yaml -o head/
-draugr diff base/results.sarif head/results.sarif                    # new / fixed / unchanged
-draugr diff base/results.sarif head/results.sarif --fail-on-new-priority P1
-draugr diff base/results.sarif head/results.sarif --format sarif     # just the new findings, for code scanning
-draugr diff base/results.sarif head/results.sarif --format markdown  # ready-made PR comment
+draugr diff base/results.sarif head/results.sarif                     # everything the change touched
+draugr diff base/results.sarif head/results.sarif --view compact      # one line each
+draugr diff base/results.sarif head/results.sarif --view actions      # the things to do about it
+draugr diff base/results.sarif head/results.sarif --fail-on-new P1    # gate on what it introduced
+draugr diff base/results.sarif head/results.sarif --format sarif      # just the new findings, for code scanning
+draugr diff base/results.sarif head/results.sarif --format markdown   # ready-made PR comment
 ```
+
+A finding is **new**, **unaccepted**, **accepted**, **fixed** or **unchanged**, which
+[#38](https://github.com/draugr-dev/draugr-demo/pull/38) shows without anything else happening in
+the same change.
 
 ## Suggested "fix it" exercise
 
