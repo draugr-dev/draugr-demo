@@ -228,23 +228,30 @@ did *not* cover, and a partial scan reading as a complete one is worse than a ve
 
 ### Diff, the PR story
 
-**Four example pull requests are permanently open on this repo, on purpose.** They aren't neglected
+**Five example pull requests are permanently open on this repo, on purpose.** They aren't neglected
 work. Each one shows the pull-request gate on a real change, in the two places it appears, without
 your having to set it up.
 
-They are **drafts**, and stay that way. They fix findings, add them, or both, so merging any of
-them would quietly change the sandbox everything else here is measured against:
+They are **drafts**, and stay that way. They fix findings, add them, or change a decision about
+them, so merging any would quietly change the sandbox everything else here is measured against:
 
 | PR | What it shows |
 |---|---|
+| [#38 Revisit the accepted risks](https://github.com/draugr-dev/draugr-demo/pull/38) | Nothing introduced, nothing fixed: one acceptance ends and another begins |
 | [#37 Add a dependency carrying several advisories](https://github.com/draugr-dev/draugr-demo/pull/37) | The other shape a comment comes in: six findings, one thing to do |
 | [#3 Add /download endpoint](https://github.com/draugr-dev/draugr-demo/pull/3) | A change that **introduces** a new finding, which is what the gate is for. **Its check fails, and that is the exhibit** |
 | [#2 Bump vulnerable dependencies](https://github.com/draugr-dev/draugr-demo/pull/2) | Findings reported as **fixed** |
 | [#1 Harden the API](https://github.com/draugr-dev/draugr-demo/pull/1) | Source fixes clearing `sast` findings |
 
-**The comment comes in two shapes.** `--view findings` is a row per finding and is what #1, #2 and
-#3 carry. `--view actions` groups a change into the things somebody would do, so six advisories in
-one library are one upgrade, and #37 exists to show it rather than asking another exhibit to
+**A finding is new, unaccepted, accepted, fixed or unchanged.** #38 is the exhibit for the middle
+two, because they are the ones a word does not give away: **unaccepted** is a finding nobody
+introduced and nobody ever fixed, whose exclusion was removed or reached its `expires` date, so it
+counts again and somebody decides a second time. Neither state trips the gate, which is why #38's
+check passes and #3's fails.
+
+**The comment comes in two shapes.** `--view findings` is a row per finding and is what four of
+them carry. `--view actions` groups a change into the things somebody would do, so six advisories
+in one library are one upgrade, and #37 exists to show it rather than asking another exhibit to
 demonstrate two things at once. The workflow picks from a label; a real repository writes one value
 in its template and leaves it.
 
@@ -275,9 +282,9 @@ draugr diff base/results.sarif head/results.sarif --format sarif      # just the
 draugr diff base/results.sarif head/results.sarif --format markdown   # ready-made PR comment
 ```
 
-A finding is **new**, **unaccepted**, **accepted**, **fixed** or **unchanged**. Unaccepted is the
-one worth knowing about: an exclusion was removed or reached its `expires` date, so a finding
-nobody introduced counts again, and nothing about it was ever fixed.
+A finding is **new**, **unaccepted**, **accepted**, **fixed** or **unchanged**, which
+[#38](https://github.com/draugr-dev/draugr-demo/pull/38) shows without anything else happening in
+the same change.
 
 ## Suggested "fix it" exercise
 
