@@ -1,0 +1,9 @@
+{
+  "name": "storefront",
+  "version": "1.0.0",
+  "description": "The same jQuery twice over: named in the lockfile a manifest scanner reads, and present as the file retire.js fingerprints.",
+  "private": true,
+  "dependencies": {
+    "jquery": "1.8.3"
+  }
+}
