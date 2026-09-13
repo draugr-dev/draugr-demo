@@ -269,3 +269,23 @@ components:
     #     ref: prod-cluster
     #     namespaces: [api, api-jobs]
     #     operatedBy: provider
+
+  # A second component, for the one thing a single repository cannot show: two scanners reporting
+  # the same flaw.
+  #
+  # `web/` carries jQuery twice over, named in a lockfile a manifest scanner reads and present as
+  # the file retire.js fingerprints. Draugr counts the flaw once and keeps the other scanner's
+  # rating beside it, which is what running two scanners is for. Reporting five vulnerabilities as
+  # ten is the arithmetic that stops.
+  #
+  # Its own component rather than a third repository under `api`, so every count the rest of this
+  # sandbox is measured against stays where it was.
+  - name: storefront
+    exposure: public
+    criticality: important
+    labels:
+      team: web
+    repositories:
+      - url: .
+        paths:
+          - web

@@ -29,6 +29,7 @@ draugr scan .
 | `app/requirements.txt` | old, vulnerable dependencies | `sca` | Trivy fs |
 | `app/static/js/jquery.min.js` | a vendored library in no lockfile | `sca` | retire.js |
 | `app/config.example.pem` | a fake private key | `secrets` | Gitleaks |
+| `web/package-lock.json` + `web/static/js/jquery.min.js` | the same jQuery twice, so two scanners report one flaw | `sca` | Trivy fs + retire.js |
 | `app/Dockerfile` | runs as root, old base image | `iac` / `images` | Trivy |
 | `deploy/pod.yaml` | privileged pod, `latest` tag, no limits | `iac` | Trivy config |
 | `checkout/go.mod` | a Go library with four CVEs, two the code calls, two it does not | `sca` | Trivy fs + govulncheck |
@@ -136,6 +137,35 @@ draugr classify draugr.saga.yaml     # set component exposure/criticality via a 
 draugr scan draugr.saga.yaml --min-priority P2   # focus on what matters now
 ```
 Change `exposure`/`criticality` in the Saga and watch the P1–P4 banding shift.
+
+### Two scanners, one flaw
+
+The `storefront` component covers `web/`, which carries jQuery 1.8.3 twice over. It is named in
+`package-lock.json`, which a manifest scanner reads, and it is present as
+`static/js/jquery.min.js`, which retire.js fingerprints. Both report the same CVEs.
+
+```bash
+draugr scan draugr.saga.yaml --controls sca --components storefront --top 0
+```
+
+```console
+  P2        medium    CVE-2012-6708          trivy     web/package-lock.json:10     jquery 1.8.3 → 1.9.0
+            also found by retirejs · js-jquery: XSS via improper selector detection
+```
+
+**The flaw is counted once.** Fourteen findings come back and nine rows are reported, the bands, the
+controls row and the component row all agree, and the copy retire.js found is still in
+`results.sarif` carrying `correlation.countedUnder`. Reporting five flaws as ten is the arithmetic
+this prevents, and it is the test worth running against anything that offers to combine scanners,
+which is to point two of them at one target and count the tickets.
+
+**Both opinions are kept.** Trivy rates that CVE 6.8 and retire.js rates it 5. Two scanners
+disagreeing about one flaw have said something about coverage that neither says alone, so the row
+names the other tool and the SARIF carries its rating, rather than quietly picking a winner.
+
+**It is a component of its own**, not a fourth repository under `api`, because the same package at
+the same version in two components is two flaws, with two teams, two places to fix and two
+classifications. `api` keeps every count it had.
 
 ### Reachability, which vulnerabilities this code can actually reach
 
