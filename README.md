@@ -140,30 +140,31 @@ Change `exposure`/`criticality` in the Saga and watch the P1–P4 banding shift.
 
 ### Two scanners, one flaw
 
-`web/` is a second component carrying jQuery 1.8.3 twice over: named in `package-lock.json`, which a
-manifest scanner reads, and present as `static/js/jquery.min.js`, which retire.js fingerprints. Both
-report the same CVEs.
+The `storefront` component covers `web/`, which carries jQuery 1.8.3 twice over. It is named in
+`package-lock.json`, which a manifest scanner reads, and it is present as
+`static/js/jquery.min.js`, which retire.js fingerprints. Both report the same CVEs.
 
 ```bash
 draugr scan draugr.saga.yaml --controls sca --components storefront --top 0
 ```
 
 ```console
-  P2        medium    CVE-2020-11023         trivy     web/package-lock.json:7      jquery 1.8.3 → 3.5.0
-            also found by retirejs · Untrusted code execution via <option> tag in HTML passed to DOM…
+  P2        medium    CVE-2012-6708          trivy     web/package-lock.json:10     jquery 1.8.3 → 1.9.0
+            also found by retirejs · js-jquery: XSS via improper selector detection
 ```
 
-**The flaw is counted once.** The bands, the controls row and the component row all agree, and the
-copy is still in `results.sarif` carrying `correlation.countedUnder`. Reporting five vulnerabilities
-as ten is the arithmetic this prevents, and it is the test worth running against anything that
-offers to combine scanners: point two at one target and count the tickets.
+**The flaw is counted once.** Fourteen findings come back and nine rows are reported, the bands, the
+controls row and the component row all agree, and the copy retire.js found is still in
+`results.sarif` carrying `correlation.countedUnder`. Reporting five flaws as ten is the arithmetic
+this prevents, and it is the test worth running against anything that offers to combine scanners,
+which is to point two of them at one target and count the tickets.
 
-**Both opinions are kept.** Trivy rates that CVE 6.9 and retire.js rates it 5. Two scanners
+**Both opinions are kept.** Trivy rates that CVE 6.8 and retire.js rates it 5. Two scanners
 disagreeing about one flaw have said something about coverage that neither says alone, so the row
-names the other tool and its rating rather than quietly picking a winner.
+names the other tool and the SARIF carries its rating, rather than quietly picking a winner.
 
-**It is a component of its own**, not a third repository under `api`, because the same package at
-the same version in two components is two flaws: two teams, two places to fix, and two
+**It is a component of its own**, not a fourth repository under `api`, because the same package at
+the same version in two components is two flaws, with two teams, two places to fix and two
 classifications. `api` keeps every count it had.
 
 ### Reachability, which vulnerabilities this code can actually reach
