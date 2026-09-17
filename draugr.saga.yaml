@@ -97,6 +97,13 @@ config:
       #   namespaces: [user]         # the namespaces those checks declare
     images:
       enabled: true # Trivy → the component's container image
+    provenance:
+      enabled: true # cosign → can each image be shown to come from where it claims?
+      # What an image no signer covers is worth. `observe` reports who signed it and expects
+      # nothing, which is where a policy starts: most of what any project runs is published by
+      # somebody else and carries no signature at all. `fail` is where it arrives, once the
+      # inventory has been worked through. The signers themselves come from a fragment.
+      unmatched: observe
     licenses:
       enabled: true # Trivy → the licence of every dependency, against the policy below
 
@@ -164,6 +171,9 @@ fragments:
   # And a component described by the team that owns it, rather than by whoever owns this file.
   # A `url:` here would pull it from another repository entirely.
   - path: ".draugr/components/*.saga-fragment.yaml"
+  # And the organization's signing policy, which is the same answer for every product it owns.
+  # A fragment may contribute signers and nothing else that decides a verdict.
+  - path: ".draugr/policy/*.saga-fragment.yaml"
 
 # Two components, not one, because one is not what anyone's project looks like, and because
 # the parts of an application are not equally exposed or equally important. `paths` scopes each
@@ -220,6 +230,12 @@ components:
       # Try it both ways: `draugr scan draugr.saga.yaml --group action --controls images`, then
       # delete the line below and run it again.
       - image: python:3.8-slim # images: old base with known CVEs (Trivy)
+        builtBy: upstream
+      # Signed, and by a workload the policy names, so provenance checks it rather than merely
+      # observing it. Two images, not one, because that is what makes the control's account
+      # legible: it reports what it checked against what it found, and one image of each kind is
+      # the smallest inventory that has both.
+      - image: cgr.dev/chainguard/static:latest
         builtBy: upstream
         # A tag moves and a digest does not. Pinning one makes two runs comparable, and makes a
         # cache hit a statement about the same bytes rather than about the same name. Left off

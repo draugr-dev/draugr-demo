@@ -33,6 +33,7 @@ draugr scan .
 | `app/Dockerfile` | runs as root, old base image | `iac` / `images` | Trivy |
 | `deploy/pod.yaml` | privileged pod, `latest` tag, no limits | `iac` | Trivy config |
 | `checkout/go.mod` | a Go library with four CVEs, two the code calls, two it does not | `sca` | Trivy fs + govulncheck |
+| `cgr.dev/chainguard/static` beside `python:3.8-slim` | one image signed by a workload the policy names, one signed by nobody. The policy itself is contributed by [`.draugr/policy/signers.saga-fragment.yaml`](.draugr/policy/signers.saga-fragment.yaml) rather than written here | `provenance` | cosign |
 
 The scan is driven by [`draugr.saga.yaml`](draugr.saga.yaml).
 
@@ -40,7 +41,7 @@ The scan is driven by [`draugr.saga.yaml`](draugr.saga.yaml).
 
 ```bash
 # 1. Install Draugr (see draugr-dev/draugr releases) and the scanners it needs.
-draugr tools install            # Trivy, Gitleaks, Semgrep (pinned + verified)
+draugr tools install --saga     # Trivy, Gitleaks, Semgrep, cosign: what this descriptor needs
 draugr doctor draugr.saga.yaml  # confirms the environment is ready
 
 # 2. Scan, a readable console summary with a prioritized "fix first" list.
