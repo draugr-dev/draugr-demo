@@ -81,15 +81,17 @@ scanning** tab: each alert is tagged with the originating scanner (`scanner:semg
 The Saga also declares `github-issue` publishers, which keep an issue open while part of the gate
 fails:
 
-| Entry | Covers | Issues |
-|---|---|---|
-| `team: platform` | `api` | one, typed `Bug`, on `main` and `release/*` |
-| `team: web` | `storefront` | one |
-| `data-class: pii` | `api` | one per control holding a P1 finding, labeled `draugr-pii` |
+| Entry | Covers | Issues | Kept as labels |
+|---|---|---|---|
+| `team: platform` | `api` | one, typed `Bug`, on `main` and `release/*` | priority, exposure, criticality, incomplete |
+| `team: web` | `storefront` | one | priority |
+| `data-class: pii` | `api` | one per control holding a P1 finding, labeled `draugr-pii` | priority, control |
 
 A run on `main` in CI opens each issue, rewrites its body when the findings change, and closes it
 with a comment when its part passes. Pull-request runs and local runs change no issue. After a run
-on `main`, filter the repo's **Issues** tab on the `draugr` or `draugr-pii` label.
+on `main`, filter the repo's **Issues** tab on the `draugr` or `draugr-pii` label, or on a kept
+fact such as `draugr:priority:P1`. Each run adds the fact labels that apply and removes the ones
+that no longer do.
 
 The `platform` component comes from a fragment that sets no labels, so no entry covers it, and
 `draugr doctor` says so:

@@ -196,11 +196,16 @@ config:
         type: Bug # an issue type the organization defines
         # assignees: [octocat]
         # milestone: Q4 hardening # a milestone's title, open or closed
+      # Facts every run keeps on the issue as labels, such as draugr:priority:P1 and
+      # draugr:exposure:public, added when they apply and removed when they no longer do.
+      # incomplete appears only while a scan error stops a control this issue covers.
+      labelBy: [priority, exposure, criticality, incomplete]
     - kind: github-issue
       select:
         labels: { team: web }
       item:
         labels: ["team:web"]
+      # labelBy unset keeps the priority label alone; labelBy: [] keeps none.
     # One issue per control rather than one per team, for whoever reviews everything that holds
     # personal data. `minPriority: P1` opens an issue only while it holds a P1 finding and lists
     # only those; its count of failing findings stays complete.
@@ -218,6 +223,7 @@ config:
       split: control # or component: one issue per component within the selection
       minPriority: P1
       label: draugr-pii
+      labelBy: [priority, control]
 
 # Accepted risks live in their own files, merged in at load. One accepted risk here, carrying why,
 # who, when it lapses, and what it means to somebody consuming this product. See the fragment for
