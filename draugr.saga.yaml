@@ -163,6 +163,62 @@ config:
     #   marker: "<!-- draugr -->"
     #   tokenEnv: GITHUB_TOKEN
 
+    # An issue that stays open while the gate fails, for each team that owns a part of this
+    # project. A run on main opens it, rewrites its body when the findings change, and closes it
+    # with a comment when that part passes. A pull-request run changes nothing, because it is
+    # judged on changes nobody has merged. The workflow grants `issues: write` for this.
+    #
+    # Each entry's `select` is the part of the run it covers, in the vocabulary of `--components`,
+    # `--labels` and `--controls`. Labels are the natural key, since they are how the organization
+    # already says which team owns what, and a component a team adds later is covered by the label
+    # it carries rather than by an edit to this file.
+    #
+    # The `platform` component, contributed by the fragment, carries no team label, so none of
+    # these covers it and its findings open no issue. `draugr doctor` names it under UNTRACKED,
+    # because from the issue tracker a component nobody covers looks the same as a component with
+    # nothing to report.
+    #
+    # An issue body lists findings with their files and lines, and anyone can read an issue on a
+    # public repository. This one is deliberately vulnerable and publishes its findings anyway. A
+    # real public repository keeps them in code scanning, which the `github` publisher above
+    # uploads to and which only people with write access can read.
+    - kind: github-issue
+      select:
+        labels: { team: platform }
+      # The branches whose runs change an issue. The default branch when unset, which is all this
+      # repository builds; a project that keeps release branches names them too.
+      branches: [main, "release/*"]
+      # Set when an issue is created, then left to whoever triages it, so a reassignment or a moved
+      # milestone survives the next run. A label removed by hand is added back, since it is what a
+      # team's board filters on.
+      item:
+        labels: ["team:platform"]
+        type: Bug # an issue type the organization defines
+        # assignees: [octocat]
+        # milestone: Q4 hardening # a milestone's title, open or closed
+    - kind: github-issue
+      select:
+        labels: { team: web }
+      item:
+        labels: ["team:web"]
+    # One issue per control rather than one per team, for whoever reviews everything that holds
+    # personal data. `minPriority: P1` opens an issue only while it holds a P1 finding and lists
+    # only those; its count of failing findings stays complete.
+    #
+    # Two controls open nothing here, for different reasons. Provenance passes. Licenses fails
+    # the gate at P2 (see `gate.controls` above), but holds no P1 finding, so it stays below this
+    # entry's minimum; if an issue for it were open, the run would close it saying so.
+    #
+    # `label` finds this entry's issues and is applied to each, so a board can filter on it. The
+    # entries above share the default, `draugr`, and a hidden marker in each body keeps their
+    # issues apart.
+    - kind: github-issue
+      select:
+        labels: { data-class: pii }
+      split: control # or component: one issue per component within the selection
+      minPriority: P1
+      label: draugr-pii
+
 # Accepted risks live in their own files, merged in at load. One accepted risk here, carrying why,
 # who, when it lapses, and what it means to somebody consuming this product. See the fragment for
 # why it is not in this file.

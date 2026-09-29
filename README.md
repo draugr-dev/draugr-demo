@@ -78,6 +78,25 @@ workflow](.github/workflows/draugr.yml). After a run on GitHub, open the repo's 
 scanning** tab: each alert is tagged with the originating scanner (`scanner:semgrep`,
 `scanner:trivy`, …).
 
+The Saga also declares `github-issue` publishers, which keep an issue open while part of the gate
+fails:
+
+| Entry | Covers | Issues |
+|---|---|---|
+| `team: platform` | `api` | one, typed `Bug`, on `main` and `release/*` |
+| `team: web` | `storefront` | one |
+| `data-class: pii` | `api` | one per control holding a P1 finding, labeled `draugr-pii` |
+
+A run on `main` in CI opens each issue, rewrites its body when the findings change, and closes it
+with a comment when its part passes. Pull-request runs and local runs change no issue. After a run
+on `main`, filter the repo's **Issues** tab on the `draugr` or `draugr-pii` label.
+
+The `platform` component comes from a fragment that sets no labels, so no entry covers it, and
+`draugr doctor` says so:
+```bash
+draugr doctor draugr.saga.yaml    # lists platform under UNTRACKED
+```
+
 ### Gating
 ```bash
 draugr scan draugr.saga.yaml                 # the default gate: block on any P1
