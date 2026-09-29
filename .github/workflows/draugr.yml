@@ -26,6 +26,7 @@ on:
 permissions:
   contents: read
   security-events: write # push: upload SARIF to code scanning
+  issues: write # push: the github-issue publishers keep one issue open per failing part of the gate
   pull-requests: write # PR: the sticky diff comment
 
 jobs:
