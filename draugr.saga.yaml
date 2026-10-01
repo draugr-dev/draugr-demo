@@ -206,7 +206,7 @@ config:
       children: actions
       # The most sub-issues open at once, highest priority first. The actions without one are
       # listed in this issue's body and get a sub-issue as open ones close. 100 when unset.
-      maxChildren: 10
+      maxChildren: 20
     - kind: github-issue
       select:
         labels: { team: web }
