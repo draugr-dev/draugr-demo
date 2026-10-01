@@ -200,6 +200,13 @@ config:
       # draugr:exposure:public, added when they apply and removed when they no longer do.
       # incomplete appears only while a scan error stops a control this issue covers.
       labelBy: [priority, exposure, criticality, incomplete]
+      # A sub-issue per action under this one, titled with its priority, such as
+      # `P1 · Upgrade Jinja2 2.10`, so each fix is assigned and closed on its own. `controls`
+      # instead gives a sub-issue per control holding that control's actions.
+      children: actions
+      # The most sub-issues open at once, highest priority first. The actions without one are
+      # listed in this issue's body and get a sub-issue as open ones close. 100 when unset.
+      maxChildren: 10
     - kind: github-issue
       select:
         labels: { team: web }
