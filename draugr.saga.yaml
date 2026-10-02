@@ -347,11 +347,11 @@ components:
     #       path: openapi.yaml
     #       methods: [GET, HEAD]
     #
-    # `infrastructure` is a cluster. `operatedBy: provider` says a managed control plane is not
-    # this team's to fix, which changes what the report tells them to do rather than what it finds.
-    # infrastructure:
-    #   - kind: kubernetes
-    #     ref: prod-cluster
+    # `kubernetes` lists the clusters it runs on. `operatedBy: provider` says a managed control plane
+    # is not this team's to fix, which changes what the report tells them to do rather than what it
+    # finds.
+    # kubernetes:
+    #   - ref: prod-cluster
     #     namespaces: [api, api-jobs]
     #     operatedBy: provider
 
