@@ -244,6 +244,15 @@ fragments:
   # A fragment may contribute signers and nothing else that decides a verdict.
   - path: ".draugr/policy/*.saga-fragment.yaml"
 
+# The Kubernetes clusters the components run on, each declared once and named by the components
+# that use it. Commented, because this demo runs on no cluster. `context` is the kubeconfig
+# context that reaches it, and `operatedBy: provider` says a managed control plane is not this
+# team's to fix, which changes what the report tells them to do rather than what it finds.
+# clusters:
+#   prod-cluster:
+#     context: prod-admin
+#     operatedBy: provider
+
 # Two components, not one, because one is not what anyone's project looks like, and because
 # the parts of an application are not equally exposed or equally important. `paths` scopes each
 # to its own subtree of this repository; files at the repository root come with both, since that
@@ -347,13 +356,11 @@ components:
     #       path: openapi.yaml
     #       methods: [GET, HEAD]
     #
-    # `kubernetes` lists the clusters it runs on. `operatedBy: provider` says a managed control plane
-    # is not this team's to fix, which changes what the report tells them to do rather than what it
-    # finds.
+    # `kubernetes` lists the clusters it runs on, by their names under `clusters:`. `namespaces`
+    # narrows a cluster to the part this component owns.
     # kubernetes:
-    #   - ref: prod-cluster
+    #   - cluster: prod-cluster
     #     namespaces: [api, api-jobs]
-    #     operatedBy: provider
 
   # A second component, for the one thing a single repository cannot show: two scanners reporting
   # the same flaw.
