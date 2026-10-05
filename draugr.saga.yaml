@@ -49,6 +49,14 @@ config:
     controls:
       licenses: P2
 
+  # The largest version step the fix list proposes for a dependency. jquery 1.8.3 in web/ needs
+  # 3.5.0, a major upgrade, to clear every advisory; 1.12.2, within the same major, clears the
+  # older ones. With this set, `--view actions` shows both: the minor upgrade, and a second row,
+  # labeled `major · beyond policy minor`, for the findings only the major one clears. The gate
+  # still counts every finding.
+  fixes:
+    upgrade: minor # patch | minor | major (the default); a component can set its own
+
   # What a scanner may do to a target beyond reading it. Nothing this descriptor enables needs it,
   # which is why it is commented: kube-bench runs a Job in a cluster and deletes it, and the Mend
   # connectors create a project in your account. Both are refused until the effect is listed.
@@ -268,6 +276,10 @@ components:
     # exposure/criticality feed prioritization (P1–P4). Run `draugr classify` to change them.
     exposure: public
     criticality: important
+    # A component's own upgrade policy, replacing config.fixes for its findings. Jinja2 2.10 has a
+    # patch release, 2.10.1, that clears its oldest advisory; the rest wait for 3.1.6.
+    fixes:
+      upgrade: patch
     # The organization's own vocabulary, not Draugr's. Labels do not change a verdict; they are
     # what a fleet is sliced by when there are two hundred components and the question is which
     # team's, which environment, which regime.
@@ -305,7 +317,7 @@ components:
       # the default `self`, the fix list would say "upgrade openssl", which is advice this team
       # cannot take.
       #
-      # Try it both ways: `draugr scan draugr.saga.yaml --group action --controls images`, then
+      # Try it both ways: `draugr scan draugr.saga.yaml --view actions --controls images`, then
       # delete the line below and run it again.
       - image: python:3.8-slim # images: old base with known CVEs (Trivy)
         builtBy: upstream
