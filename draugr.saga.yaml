@@ -48,6 +48,11 @@ config:
     # here under a band gate is refused rather than ignored.
     controls:
       licenses: P2
+    # Kinds of caveat that fail the run as an error does. Every dependency file in this repository
+    # is read today, so the run passes this; add a manifest with no lockfile, a requirements file of
+    # bare version ranges, and it fails with the file marked under CAVEATS as `✗ unread`. The other
+    # kinds are not-checked, not-measured and unread-checks.
+    failOnCaveats: [unread-files]
 
   # The largest version step the fix list proposes for a dependency. jquery 1.8.3 in web/ needs
   # 3.5.0, a major upgrade, to clear every advisory; 1.12.2, within the same major, clears the
