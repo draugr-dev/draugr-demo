@@ -291,6 +291,14 @@ components:
     labels:
       team: platform
       data-class: pii
+    # A SARIF file another tool wrote, read into one of Draugr's controls. Bandit's findings take
+    # this component's exposure and criticality into their priority, rank in the fix list beside
+    # Semgrep's, and count toward the gate; look for `scanner bandit` there. Bandit names no commit,
+    # so the report lists the file under Caveats as unbound-imports. A pipeline binds the file to
+    # its commit with the jq step in docs/guides/importing-sarif.md, and the caveat goes away.
+    imports:
+      - control: sast
+        file: reports/bandit.sarif
     # Three repositories, because a component is rarely one. Draugr plans a job per repository and
     # runs them concurrently, so this is the shape that exercises per-repository checkout,
     # provenance and caching. In a real project these would be three separate URLs; here they are
