@@ -270,10 +270,10 @@ draugr scan draugr.saga.yaml --evidence                   # on the console
 draugr scan draugr.saga.yaml --report evidence            # as a document
 ```
 
-Which build of which tool produced each finding, the revision each repository was scanned at, and
-what the run cost. Out of the default view because a developer is asking what to fix; an auditor is
-a real reader, just not the default one, and both render from the same code, so they cannot disagree
-about what the run did.
+Which build of which tool produced each finding, the revision each repository was scanned at, how
+old each scanner's data is, and what the run cost. Out of the default view because a developer is
+asking what to fix; an auditor is a real reader, just not the default one, and both render from the
+same code, so they cannot disagree about what the run did.
 
 What a control was **measured against** stays in the default view either way. It says what a scan
 did *not* cover, and a partial scan reading as a complete one is worse than a verbose one.
@@ -332,7 +332,12 @@ draugr diff base/results.sarif head/results.sarif --view actions      # the thin
 draugr diff base/results.sarif head/results.sarif --fail-on-new P1    # gate on what it introduced
 draugr diff base/results.sarif head/results.sarif --format sarif      # just the new findings, for code scanning
 draugr diff base/results.sarif head/results.sarif --format markdown   # ready-made PR comment
+draugr diff head/results.sarif                                        # the head alone, every finding new
 ```
+
+With one report, every finding in it is new. The GitHub Action and the GitLab and Azure DevOps
+templates compare that way when the base commit has no descriptor, so the pull request that adds a
+repository's first descriptor is gated too.
 
 A finding is **new**, **unaccepted**, **accepted**, **fixed** or **unchanged**, which
 [#38](https://github.com/draugr-dev/draugr-demo/pull/38) shows without anything else happening in
