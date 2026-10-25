@@ -229,28 +229,33 @@ golang.org/x/vuln/cmd/govulncheck@latest`; `draugr doctor` will tell you.
 ### Fix list, actions, not just findings
 
 ```bash
-draugr scan draugr.saga.yaml --group action   # one row per thing to do
+draugr scan draugr.saga.yaml --view actions   # one row per thing to do
 draugr scan draugr.saga.yaml                  # the default: one row per finding
 ```
 
-Grouped, this sandbox's 474 findings become ten things to do:
+Each row is one action, with its priority, the component and control it belongs to, and how many
+findings it clears. Three of the rows from this sandbox:
 
 ```
-Fix first · 10 actions clear 419 findings:
-  P1  Update python:3.8-slim  images · 394 findings · upstream
-      CVE-2026-42010 +393
-  P1  Upgrade Jinja2 2.10  sca · 6 findings
-      app/requirements.txt · CVE-2019-10906 +5
+WHAT TO DO  10 actions clear 555 findings
+  P1  Update python:3.8-slim
+      component api · control images · 520 findings · upstream · CVE-2025-15467 +519
+  P1  Upgrade Jinja2 2.10 → 2.10.1
+      component api · control sca · 1 finding · app/requirements.txt:5 · CVE-2019-10906
+  P1  Upgrade Jinja2 2.10.1 → 3.1.6  major · beyond policy patch
+      component api · control sca · 5 findings · app/requirements.txt:5 · CVE-2025-27516 +4
 ```
 
-A library carrying six CVEs is one upgrade, not six rows, and each row says what it clears.
-Ungrouped is the default because grouping is only right once a descriptor says which images you
-build and which infrastructure you operate; without that it can state a fix nobody can apply.
+Jinja2 appears twice because clearing its CVEs takes two upgrade steps, 2.10 to 2.10.1 and then
+2.10.1 to 3.1.6. The second is a major-version jump, and the `api` component allows only patch
+upgrades (`fixes.upgrade: patch`), so that row is marked `major · beyond policy patch`.
 
-This descriptor says. `python:3.8-slim` is declared `builtBy: upstream`, which is why 394 findings
-collapse into one action, *take a newer image*, rather than a list of libraries nobody here can
-upgrade. Delete that line and run it again: the same 394 findings come back as packages, and the tip
-at the foot of the report tells you why.
+The default view lists findings. `--view actions` is accurate once the descriptor declares who
+builds each image (`builtBy`), because otherwise it can name a fix nobody here can apply. This
+descriptor declares `python:3.8-slim` as `builtBy: upstream`, so its findings collapse into one
+action, *take a newer image*, instead of a list of libraries nobody here can upgrade. Delete that
+line and run the scan again, and the image's findings reappear as one upgrade per OS package inside
+it.
 
 ### Explain, what a finding means and how to fix it
 
