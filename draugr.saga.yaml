@@ -84,6 +84,17 @@ config:
     epssThreshold: 0.5 # the probability at or above which a finding is raised
     maxAge: 168h # refuse a copy older than this rather than ranking on stale data
 
+  # Is any package here malicious, or a version its publisher has deprecated?
+  #
+  # The one setting in this file that reaches the network during a scan: it sends deps.dev the
+  # names and versions of the packages the run found, and nothing else. jquery 1.8.3 is a version
+  # its publisher deprecated, so its findings rise one band and carry `↑ deprecated`, in
+  # web/package-lock.json and in both copied jquery.min.js files, and SIGNALS lists `malicious` and
+  # `deprecated` with the findings each raised. Offline, the run says the lookup did not answer,
+  # ranks without it, and lists neither row.
+  dependencyHealth:
+    enabled: true
+
   controllers:
     sca:
       enabled: true # Trivy fs → app/requirements.txt (old, vulnerable deps) + checkout/go.mod
