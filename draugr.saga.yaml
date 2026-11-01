@@ -53,6 +53,12 @@ config:
     # bare version ranges, and it fails with the file marked under CAVEATS as `✗ unread`. The other
     # kinds are not-checked, not-measured and unread-checks.
     failOnCaveats: [unread-files]
+    # The gate a pull request is judged on: what it introduces, against the branch it merges into.
+    # The backlog above fails `failOn` on main and decides nothing on a pull request. Of the example
+    # pull requests, the one adding a dependency with several advisories brings in new P1 findings
+    # and fails its Draugr check on purpose; the others introduce P2 findings or none and pass.
+    # `draugr scan --base base/results.sarif` judges a scan the same way.
+    failOnNew: P1
 
   # The largest version step the fix list proposes for a dependency. jquery 1.8.3 in web/ needs
   # 3.5.0, a major upgrade, to clear every advisory; 1.12.2, within the same major, clears the
