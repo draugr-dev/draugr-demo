@@ -138,7 +138,11 @@ jobs:
 
             # The findings this pull request introduces, and only those. Uploaded against the pull
             # request's own ref, so it is what that PR shows and main keeps every alert it had.
-            draugr diff base/results.sarif head/results.sarif --format sarif > "new-$num.sarif"
+            #
+            # A pull request that trips the gate exits non-zero here too, after the SARIF is written,
+            # and a run: step is `bash -e` whatever this script sets. The upload below reports a
+            # missing or empty file, so the exit is not what decides this pull request's refresh.
+            draugr diff base/results.sarif head/results.sarif --format sarif > "new-$num.sarif" || true
             if ! gh api -X POST "repos/$REPO/code-scanning/sarifs" \
                  -f "commit_sha=$sha" -f "ref=refs/pull/$num/merge" \
                  -f "sarif=$(gzip -c "new-$num.sarif" | base64 -w0)" >/dev/null; then
