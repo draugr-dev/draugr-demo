@@ -120,9 +120,20 @@ jobs:
 
             # The publisher reads the pull request from GITHUB_REF, which is this job's branch,
             # so it is told which pull request it is commenting on.
-            if ! GITHUB_REF="refs/pull/$num/merge" draugr diff base/results.sarif head/results.sarif --publish; then
-              echo "::error::PR #$num: posting the diff comment failed"
-              failed=1
+            #
+            # The descriptor's failOnNew gates this diff, so a pull request that introduces a P1
+            # exits non-zero once its comment is posted, which is the demo showing the gate. Only an
+            # error naming publishing is a failed post. `grep >/dev/null`, never `grep -q`, after a
+            # pipe or on a file read under pipefail.
+            if ! GITHUB_REF="refs/pull/$num/merge" draugr diff base/results.sarif head/results.sarif \
+                 --saga draugr.saga.yaml --publish 2>"diff-$num.err"; then
+              cat "diff-$num.err" >&2
+              if grep 'publishing' "diff-$num.err" >/dev/null; then
+                echo "::error::PR #$num: posting the diff comment failed"
+                failed=1
+              else
+                echo "::notice::PR #$num fails the gate on new findings, as the descriptor intends"
+              fi
             fi
 
             # The findings this pull request introduces, and only those. Uploaded against the pull
