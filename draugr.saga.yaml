@@ -48,6 +48,25 @@ config:
     # here under a band gate is refused rather than ignored.
     controls:
       licenses: P2
+    # Kinds of caveat that fail the run as an error does. Every dependency file in this repository
+    # is read today, so the run passes this; add a manifest with no lockfile, a requirements file of
+    # bare version ranges, and it fails with the file marked under CAVEATS as `✗ unread`. The other
+    # kinds are not-checked, not-measured and unread-checks.
+    failOnCaveats: [unread-files]
+    # The gate a pull request is judged on: what it introduces, against the branch it merges into.
+    # The backlog above fails `failOn` on main and decides nothing on a pull request. Of the example
+    # pull requests, the one adding a dependency with several advisories brings in new P1 findings
+    # and fails its Draugr check on purpose; the others introduce P2 findings or none and pass.
+    # `draugr scan --base base/results.sarif` judges a scan the same way.
+    failOnNew: P1
+
+  # The largest version step the fix list proposes for a dependency. jquery 1.8.3 in web/ needs
+  # 3.5.0, a major upgrade, to clear every advisory; 1.12.2, within the same major, clears the
+  # older ones. With this set, `--view actions` shows both: the minor upgrade, and a second row,
+  # labeled `major · beyond policy minor`, for the findings only the major one clears. The gate
+  # still counts every finding.
+  fixes:
+    upgrade: minor # patch | minor | major (the default); a component can set its own
 
   # What a scanner may do to a target beyond reading it. Nothing this descriptor enables needs it,
   # which is why it is commented: kube-bench runs a Job in a cluster and deletes it, and the Mend
@@ -70,6 +89,17 @@ config:
     epss: cache # the same three choices
     epssThreshold: 0.5 # the probability at or above which a finding is raised
     maxAge: 168h # refuse a copy older than this rather than ranking on stale data
+
+  # Is any package here malicious, or a version its publisher has deprecated?
+  #
+  # The one setting in this file that reaches the network during a scan: it sends deps.dev the
+  # names and versions of the packages the run found, and nothing else. jquery 1.8.3 is a version
+  # its publisher deprecated, so its findings rise one band and carry `↑ deprecated`, in
+  # web/package-lock.json and in both copied jquery.min.js files, and SIGNALS lists `malicious` and
+  # `deprecated` with the findings each raised. Offline, the run says the lookup did not answer,
+  # ranks without it, and lists neither row.
+  dependencyHealth:
+    enabled: true
 
   controllers:
     sca:
@@ -97,6 +127,13 @@ config:
       #   namespaces: [user]         # the namespaces those checks declare
     images:
       enabled: true # Trivy → the component's container image
+    provenance:
+      enabled: true # cosign → can each image be shown to come from where it claims?
+      # What an image no signer covers is worth. `observe` reports who signed it and expects
+      # nothing, which is where a policy starts: most of what any project runs is published by
+      # somebody else and carries no signature at all. `fail` is where it arrives, once the
+      # inventory has been worked through. The signers themselves come from a fragment.
+      unmatched: observe
     licenses:
       enabled: true # Trivy → the licence of every dependency, against the policy below
 
@@ -156,6 +193,75 @@ config:
     #   marker: "<!-- draugr -->"
     #   tokenEnv: GITHUB_TOKEN
 
+    # An issue that stays open while the gate fails, for each team that owns a part of this
+    # project. A run on main opens it, rewrites its body when the findings change, and closes it
+    # with a comment when that part passes. A pull-request run changes nothing, because it is
+    # judged on changes nobody has merged. The workflow grants `issues: write` for this.
+    #
+    # Each entry's `select` is the part of the run it covers, in the vocabulary of `--components`,
+    # `--labels` and `--controls`. Labels are the natural key, since they are how the organization
+    # already says which team owns what, and a component a team adds later is covered by the label
+    # it carries rather than by an edit to this file.
+    #
+    # The `platform` component, contributed by the fragment, carries no team label, so none of
+    # these covers it and its findings open no issue. `draugr doctor` names it under UNTRACKED,
+    # because from the issue tracker a component nobody covers looks the same as a component with
+    # nothing to report.
+    #
+    # An issue body lists findings with their files and lines, and anyone can read an issue on a
+    # public repository. This one is deliberately vulnerable and publishes its findings anyway. A
+    # real public repository keeps them in code scanning, which the `github` publisher above
+    # uploads to and which only people with write access can read.
+    - kind: github-issue
+      select:
+        labels: { team: platform }
+      # The branches whose runs change an issue. The default branch when unset, which is all this
+      # repository builds; a project that keeps release branches names them too.
+      branches: [main, "release/*"]
+      # Set when an issue is created, then left to whoever triages it, so a reassignment or a moved
+      # milestone survives the next run. A label removed by hand is added back, since it is what a
+      # team's board filters on.
+      item:
+        labels: ["team:platform"]
+        type: Bug # an issue type the organization defines
+        # assignees: [octocat]
+        # milestone: Q4 hardening # a milestone's title, open or closed
+      # Facts every run keeps on the issue as labels, such as draugr:priority:P1 and
+      # draugr:exposure:public, added when they apply and removed when they no longer do.
+      # incomplete appears only while a scan error stops a control this issue covers.
+      labelBy: [priority, exposure, criticality, incomplete]
+      # A sub-issue per action under this one, titled with its priority, such as
+      # `P1 · Upgrade Jinja2 2.10`, so each fix is assigned and closed on its own. `controls`
+      # instead gives a sub-issue per control holding that control's actions.
+      children: actions
+      # The most sub-issues open at once, highest priority first. The actions without one are
+      # listed in this issue's body and get a sub-issue as open ones close. 100 when unset.
+      maxChildren: 20
+    - kind: github-issue
+      select:
+        labels: { team: web }
+      item:
+        labels: ["team:web"]
+      # labelBy unset keeps the priority label alone; labelBy: [] keeps none.
+    # One issue per control rather than one per team, for whoever reviews everything that holds
+    # personal data. `minPriority: P1` opens an issue only while it holds a P1 finding and lists
+    # only those; its count of failing findings stays complete.
+    #
+    # Two controls open nothing here, for different reasons. Provenance passes. Licenses fails
+    # the gate at P2 (see `gate.controls` above), but holds no P1 finding, so it stays below this
+    # entry's minimum; if an issue for it were open, the run would close it saying so.
+    #
+    # `label` finds this entry's issues and is applied to each, so a board can filter on it. The
+    # entries above share the default, `draugr`, and a hidden marker in each body keeps their
+    # issues apart.
+    - kind: github-issue
+      select:
+        labels: { data-class: pii }
+      split: control # or component: one issue per component within the selection
+      minPriority: P1
+      label: draugr-pii
+      labelBy: [priority, control]
+
 # Accepted risks live in their own files, merged in at load. One accepted risk here, carrying why,
 # who, when it lapses, and what it means to somebody consuming this product. See the fragment for
 # why it is not in this file.
@@ -164,6 +270,18 @@ fragments:
   # And a component described by the team that owns it, rather than by whoever owns this file.
   # A `url:` here would pull it from another repository entirely.
   - path: ".draugr/components/*.saga-fragment.yaml"
+  # And the organization's signing policy, which is the same answer for every product it owns.
+  # A fragment may contribute signers and nothing else that decides a verdict.
+  - path: ".draugr/policy/*.saga-fragment.yaml"
+
+# The Kubernetes clusters the components run on, each declared once and named by the components
+# that use it. Commented, because this demo runs on no cluster. `context` is the kubeconfig
+# context that reaches it, and `operatedBy: provider` says a managed control plane is not this
+# team's to fix, which changes what the report tells them to do rather than what it finds.
+# clusters:
+#   prod-cluster:
+#     context: prod-admin
+#     operatedBy: provider
 
 # Two components, not one, because one is not what anyone's project looks like, and because
 # the parts of an application are not equally exposed or equally important. `paths` scopes each
@@ -180,12 +298,24 @@ components:
     # exposure/criticality feed prioritization (P1–P4). Run `draugr classify` to change them.
     exposure: public
     criticality: important
+    # A component's own upgrade policy, replacing config.fixes for its findings. Jinja2 2.10 has a
+    # patch release, 2.10.1, that clears its oldest advisory; the rest wait for 3.1.6.
+    fixes:
+      upgrade: patch
     # The organization's own vocabulary, not Draugr's. Labels do not change a verdict; they are
     # what a fleet is sliced by when there are two hundred components and the question is which
     # team's, which environment, which regime.
     labels:
       team: platform
       data-class: pii
+    # A SARIF file another tool wrote, read into one of Draugr's controls. Bandit's findings take
+    # this component's exposure and criticality into their priority, rank in the fix list beside
+    # Semgrep's, and count toward the gate; look for `scanner bandit` there. Bandit names no commit,
+    # so the report lists the file under Caveats as unbound-imports. A pipeline binds the file to
+    # its commit with the jq step in docs/guides/importing-sarif.md, and the caveat goes away.
+    imports:
+      - control: sast
+        file: reports/bandit.sarif
     # Three repositories, because a component is rarely one. Draugr plans a job per repository and
     # runs them concurrently, so this is the shape that exercises per-repository checkout,
     # provenance and caching. In a real project these would be three separate URLs; here they are
@@ -217,9 +347,15 @@ components:
       # the default `self`, the fix list would say "upgrade openssl", which is advice this team
       # cannot take.
       #
-      # Try it both ways: `draugr scan draugr.saga.yaml --group action --controls images`, then
+      # Try it both ways: `draugr scan draugr.saga.yaml --view actions --controls images`, then
       # delete the line below and run it again.
       - image: python:3.8-slim # images: old base with known CVEs (Trivy)
+        builtBy: upstream
+      # Signed, and by a workload the policy names, so provenance checks it rather than merely
+      # observing it. Two images, not one, because that is what makes the control's account
+      # legible: it reports what it checked against what it found, and one image of each kind is
+      # the smallest inventory that has both.
+      - image: cgr.dev/chainguard/static:latest
         builtBy: upstream
         # A tag moves and a digest does not. Pinning one makes two runs comparable, and makes a
         # cache hit a statement about the same bytes rather than about the same name. Left off
@@ -262,13 +398,11 @@ components:
     #       path: openapi.yaml
     #       methods: [GET, HEAD]
     #
-    # `infrastructure` is a cluster. `operatedBy: provider` says a managed control plane is not
-    # this team's to fix, which changes what the report tells them to do rather than what it finds.
-    # infrastructure:
-    #   - kind: kubernetes
-    #     ref: prod-cluster
+    # `kubernetes` lists the clusters it runs on, by their names under `clusters:`. `namespaces`
+    # narrows a cluster to the part this component owns.
+    # kubernetes:
+    #   - cluster: prod-cluster
     #     namespaces: [api, api-jobs]
-    #     operatedBy: provider
 
   # A second component, for the one thing a single repository cannot show: two scanners reporting
   # the same flaw.

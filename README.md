@@ -33,6 +33,7 @@ draugr scan .
 | `app/Dockerfile` | runs as root, old base image | `iac` / `images` | Trivy |
 | `deploy/pod.yaml` | privileged pod, `latest` tag, no limits | `iac` | Trivy config |
 | `checkout/go.mod` | a Go library with four CVEs, two the code calls, two it does not | `sca` | Trivy fs + govulncheck |
+| `cgr.dev/chainguard/static` beside `python:3.8-slim` | one image signed by a workload the policy names, one signed by nobody. The policy itself is contributed by [`.draugr/policy/signers.saga-fragment.yaml`](.draugr/policy/signers.saga-fragment.yaml) rather than written here | `provenance` | cosign |
 
 The scan is driven by [`draugr.saga.yaml`](draugr.saga.yaml).
 
@@ -40,7 +41,7 @@ The scan is driven by [`draugr.saga.yaml`](draugr.saga.yaml).
 
 ```bash
 # 1. Install Draugr (see draugr-dev/draugr releases) and the scanners it needs.
-draugr tools install            # Trivy, Gitleaks, Semgrep (pinned + verified)
+draugr tools install --saga     # Trivy, Gitleaks, Semgrep, cosign: what this descriptor needs
 draugr doctor draugr.saga.yaml  # confirms the environment is ready
 
 # 2. Scan, a readable console summary with a prioritized "fix first" list.
@@ -76,6 +77,27 @@ The `github` publisher **no-ops locally** and **uploads to code scanning in CI**
 workflow](.github/workflows/draugr.yml). After a run on GitHub, open the repo's **Security → Code
 scanning** tab: each alert is tagged with the originating scanner (`scanner:semgrep`,
 `scanner:trivy`, …).
+
+The Saga also declares `github-issue` publishers, which keep an issue open while part of the gate
+fails:
+
+| Entry | Covers | Issues | Kept as labels |
+|---|---|---|---|
+| `team: platform` | `api` | one, typed `Bug`, on `main` and `release/*` | priority, exposure, criticality, incomplete |
+| `team: web` | `storefront` | one | priority |
+| `data-class: pii` | `api` | one per control holding a P1 finding, labeled `draugr-pii` | priority, control |
+
+A run on `main` in CI opens each issue, rewrites its body when the findings change, and closes it
+with a comment when its part passes. Pull-request runs and local runs change no issue. After a run
+on `main`, filter the repo's **Issues** tab on the `draugr` or `draugr-pii` label, or on a kept
+fact such as `draugr:priority:P1`. Each run adds the fact labels that apply and removes the ones
+that no longer do.
+
+The `platform` component comes from a fragment that sets no labels, so no entry covers it, and
+`draugr doctor` says so:
+```bash
+draugr doctor draugr.saga.yaml    # lists platform under UNTRACKED
+```
 
 ### Gating
 ```bash
@@ -207,28 +229,33 @@ golang.org/x/vuln/cmd/govulncheck@latest`; `draugr doctor` will tell you.
 ### Fix list, actions, not just findings
 
 ```bash
-draugr scan draugr.saga.yaml --group action   # one row per thing to do
+draugr scan draugr.saga.yaml --view actions   # one row per thing to do
 draugr scan draugr.saga.yaml                  # the default: one row per finding
 ```
 
-Grouped, this sandbox's 474 findings become ten things to do:
+Each row is one action, with its priority, the component and control it belongs to, and how many
+findings it clears. Three of the rows from this sandbox:
 
 ```
-Fix first · 10 actions clear 419 findings:
-  P1  Update python:3.8-slim  images · 394 findings · upstream
-      CVE-2026-42010 +393
-  P1  Upgrade Jinja2 2.10  sca · 6 findings
-      app/requirements.txt · CVE-2019-10906 +5
+WHAT TO DO  10 actions clear 555 findings
+  P1  Update python:3.8-slim
+      component api · control images · 520 findings · upstream · CVE-2025-15467 +519
+  P1  Upgrade Jinja2 2.10 → 2.10.1
+      component api · control sca · 1 finding · app/requirements.txt:5 · CVE-2019-10906
+  P1  Upgrade Jinja2 2.10.1 → 3.1.6  major · beyond policy patch
+      component api · control sca · 5 findings · app/requirements.txt:5 · CVE-2025-27516 +4
 ```
 
-A library carrying six CVEs is one upgrade, not six rows, and each row says what it clears.
-Ungrouped is the default because grouping is only right once a descriptor says which images you
-build and which infrastructure you operate; without that it can state a fix nobody can apply.
+Jinja2 appears twice because clearing its CVEs takes two upgrade steps, 2.10 to 2.10.1 and then
+2.10.1 to 3.1.6. The second is a major-version jump, and the `api` component allows only patch
+upgrades (`fixes.upgrade: patch`), so that row is marked `major · beyond policy patch`.
 
-This descriptor says. `python:3.8-slim` is declared `builtBy: upstream`, which is why 394 findings
-collapse into one action, *take a newer image*, rather than a list of libraries nobody here can
-upgrade. Delete that line and run it again: the same 394 findings come back as packages, and the tip
-at the foot of the report tells you why.
+The default view lists findings. `--view actions` is accurate once the descriptor declares who
+builds each image (`builtBy`), because otherwise it can name a fix nobody here can apply. This
+descriptor declares `python:3.8-slim` as `builtBy: upstream`, so its findings collapse into one
+action, *take a newer image*, instead of a list of libraries nobody here can upgrade. Delete that
+line and run the scan again, and the image's findings reappear as one upgrade per OS package inside
+it.
 
 ### Explain, what a finding means and how to fix it
 
@@ -248,10 +275,10 @@ draugr scan draugr.saga.yaml --evidence                   # on the console
 draugr scan draugr.saga.yaml --report evidence            # as a document
 ```
 
-Which build of which tool produced each finding, the revision each repository was scanned at, and
-what the run cost. Out of the default view because a developer is asking what to fix; an auditor is
-a real reader, just not the default one, and both render from the same code, so they cannot disagree
-about what the run did.
+Which build of which tool produced each finding, the revision each repository was scanned at, how
+old each scanner's data is, and what the run cost. Out of the default view because a developer is
+asking what to fix; an auditor is a real reader, just not the default one, and both render from the
+same code, so they cannot disagree about what the run did.
 
 What a control was **measured against** stays in the default view either way. It says what a scan
 did *not* cover, and a partial scan reading as a complete one is worse than a verbose one.
@@ -310,7 +337,12 @@ draugr diff base/results.sarif head/results.sarif --view actions      # the thin
 draugr diff base/results.sarif head/results.sarif --fail-on-new P1    # gate on what it introduced
 draugr diff base/results.sarif head/results.sarif --format sarif      # just the new findings, for code scanning
 draugr diff base/results.sarif head/results.sarif --format markdown   # ready-made PR comment
+draugr diff head/results.sarif                                        # the head alone, every finding new
 ```
+
+With one report, every finding in it is new. The GitHub Action and the GitLab and Azure DevOps
+templates compare that way when the base commit has no descriptor, so the pull request that adds a
+repository's first descriptor is gated too.
 
 A finding is **new**, **unaccepted**, **accepted**, **fixed** or **unchanged**, which
 [#38](https://github.com/draugr-dev/draugr-demo/pull/38) shows without anything else happening in

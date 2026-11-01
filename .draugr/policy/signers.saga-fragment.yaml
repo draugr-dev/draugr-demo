@@ -1,0 +1,30 @@
+# Who is allowed to have signed what this product runs.
+#
+# In its own file because it is the organization's answer rather than this product's. A signing
+# policy is the same across every descriptor a company owns, and copying it into each one means
+# correcting it in each one. A `url:` on the `fragments:` entry that names this would pull it from
+# a central repository, so a team adds one line and inherits the policy.
+#
+# A fragment may carry this and almost nothing else. It cannot switch a control off, move the gate,
+# or decide what an uncovered image is worth, because the worst an included file may do is add
+# findings. Adding a signer does exactly that: an image that was merely observed becomes one that
+# is checked, and a signature from the wrong workload becomes a critical finding.
+#
+# `report.json` records this file under `descriptor.contributed`, so a reviewer can see which
+# included document expects an identity nobody reading the descriptor declared.
+config:
+  controls:
+    provenance:
+      signers:
+        # Chainguard publish from their own repository's release workflow, and sign with Sigstore
+        # keyless, so the identity is the workflow rather than a key anybody holds.
+        #
+        # A regular expression here rather than one exact identity, because the pattern covers
+        # every image in that catalog and they are released by the same workflow at different
+        # refs. It is anchored at both ends: a pattern loose enough to match anything accepts a
+        # signature from anybody, which is a policy that reads like a policy and checks nothing.
+        - name: chainguard
+          images: ["cgr.dev/chainguard/*"]
+          keyless:
+            issuer: https://token.actions.githubusercontent.com
+            identityRegexp: ^https://github\.com/chainguard-images/images/\.github/workflows/release\.yaml@refs/heads/main$
