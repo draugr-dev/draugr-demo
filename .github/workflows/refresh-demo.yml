@@ -86,7 +86,11 @@ jobs:
         run: gh workflow run Draugr --repo "$REPO" --ref main
 
       - name: Baseline main
-        run: draugr scan draugr.saga.yaml -o base --no-publish --no-gate
+        # This scan and the one per pull request below write the reports `draugr diff` compares, and
+        # the diff is the gate. `--fail-on-caveats none` lets them finish under the descriptor's
+        # failOnCaveats, which `--no-gate` leaves in force; CAVEATS still lists every caveat, and a
+        # scanner that could not run still fails the step.
+        run: draugr scan draugr.saga.yaml -o base --no-publish --no-gate --fail-on-caveats none
 
       - name: Refresh every open example PR
         run: |
@@ -110,7 +114,7 @@ jobs:
 
             rm -rf head pr-src
             git worktree add --detach pr-src "$sha" >/dev/null
-            ( cd pr-src && draugr scan draugr.saga.yaml -o "$GITHUB_WORKSPACE/head" --no-publish --no-gate ) || true
+            ( cd pr-src && draugr scan draugr.saga.yaml -o "$GITHUB_WORKSPACE/head" --no-publish --no-gate --fail-on-caveats none ) || true
             git worktree remove --force pr-src
 
             if [ ! -f head/results.sarif ]; then

@@ -48,10 +48,12 @@ config:
     # here under a band gate is refused rather than ignored.
     controls:
       licenses: P2
-    # Kinds of caveat that fail the run as an error does. Every dependency file in this repository
-    # is read today, so the run passes this; add a manifest with no lockfile, a requirements file of
-    # bare version ranges, and it fails with the file marked under CAVEATS as `✗ unread`. The other
-    # kinds are not-checked, not-measured and unread-checks.
+    # Kinds of caveat that fail the run as an error does, and this run fails on three. `licenses`
+    # reads no license from `app/requirements.txt`, whose format records none, from
+    # `web/package-lock.json`, whose jquery entry carries no `license` field, or from
+    # `checkout/go.mod` until `go mod download` fills the module cache. CAVEATS marks each
+    # `✗ unread-files`. A manifest with no lockfile, or a requirements file of bare version ranges,
+    # fails the same way. The other kinds are not-checked, not-measured and unread-checks.
     failOnCaveats: [unread-files]
     # The gate a pull request is judged on: what it introduces, against the branch it merges into.
     # The backlog above fails `failOn` on main and decides nothing on a pull request. Of the example
