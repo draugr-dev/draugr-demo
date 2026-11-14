@@ -51,9 +51,10 @@ jobs:
       - name: Draugr
         id: draugr
         # This repo is intentionally vulnerable, so a full scan "fails" by design. Keep the push
-        # scan non-blocking so findings still upload. In a real repo, drop this and gate with
-        # fail-on (push) / fail-on-new (PR).
-        continue-on-error: true
+        # scan non-blocking so findings still upload. A pull request is gated as a real repository
+        # would gate it: the descriptor's config.gate.failOnNew fails the check on a P1 the change
+        # introduces, and the backlog decides nothing. In a real repo, drop this line.
+        continue-on-error: ${{ github.event_name != 'pull_request' }}
         uses: draugr-dev/draugr@v0 # moving major tag: always the latest v0.x (binary also tracks latest via version: latest below)
         with:
           saga: draugr.saga.yaml
