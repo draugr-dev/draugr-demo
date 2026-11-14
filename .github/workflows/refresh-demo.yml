@@ -147,6 +147,11 @@ jobs:
             # and a run: step is `bash -e` whatever this script sets. The upload below reports a
             # missing or empty file, so the exit is not what decides this pull request's refresh.
             draugr diff base/results.sarif head/results.sarif --format sarif > "new-$num.sarif" || true
+            # Under draugr.yml's own category, the automation id its upload-sarif step writes, so
+            # this replaces that pull request's analysis rather than adding a second one beside it.
+            # The upload endpoint takes no category; code scanning reads it from the SARIF.
+            jq '.runs[].automationDetails.id = ".github/workflows/draugr.yml:draugr/"' "new-$num.sarif" \
+              > "new-$num.cat.sarif" && mv "new-$num.cat.sarif" "new-$num.sarif"
             if ! gh api -X POST "repos/$REPO/code-scanning/sarifs" \
                  -f "commit_sha=$sha" -f "ref=refs/pull/$num/merge" \
                  -f "sarif=$(gzip -c "new-$num.sarif" | base64 -w0)" >/dev/null; then
