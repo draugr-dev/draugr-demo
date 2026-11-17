@@ -83,7 +83,7 @@ fails:
 
 | Entry | Covers | Issues | Kept as labels |
 |---|---|---|---|
-| `team: platform` | `api` | one, typed `Bug`, on `main` and `release/*` | priority, exposure, criticality, incomplete |
+| `team: platform` | `api`, `worker` | one, typed `Bug`, on `main` and `release/*` | priority, exposure, criticality, incomplete |
 | `team: web` | `storefront` | one | priority |
 | `data-class: pii` | `api` | one per control holding a P1 finding, labeled `draugr-pii` | priority, control |
 

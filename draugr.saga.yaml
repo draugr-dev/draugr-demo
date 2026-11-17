@@ -425,3 +425,20 @@ components:
       - url: .
         paths:
           - web
+
+  # The shop's nightly settlement reconciliation, a job cron runs behind the firewall. Its findings
+  # are as severe as the storefront's, lodash advisories rated critical and high and a signing
+  # secret Semgrep rates high, and they rank lower: a high is P3 here where the storefront's is P1,
+  # and a critical is P2. Nothing outside reaches the job, and a night it fails to run delays a
+  # report rather than a sale. Its `exposure` and `criticality` are the whole difference: set them
+  # to public and important and scan again, and the critical and the highs move up to P1, the
+  # mediums to P2, and the worker fails the gate it passes now.
+  - name: worker
+    exposure: internal
+    criticality: supporting
+    labels:
+      team: platform
+    repositories:
+      - url: .
+        paths:
+          - worker
