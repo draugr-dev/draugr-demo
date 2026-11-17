@@ -1,0 +1,14 @@
+{
+  "name": "settlement-worker",
+  "version": "1.0.0",
+  "description": "The shop's nightly settlement reconciliation, run behind the firewall: checks each line of the payment provider's settlement file against the order it pays for.",
+  "private": true,
+  "main": "reconcile.js",
+  "scripts": {
+    "start": "node reconcile.js"
+  },
+  "dependencies": {
+    "jsonwebtoken": "9.0.2",
+    "lodash": "4.17.20"
+  }
+}
