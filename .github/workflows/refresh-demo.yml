@@ -106,8 +106,27 @@ jobs:
 
             # The merge ref is main-as-it-stands with this pull request applied. Scanning it is what
             # makes the refresh current: nothing here reads the branch as it was cut.
-            if ! git fetch --no-tags --force origin "refs/pull/$num/merge:refs/remotes/pr/$num"; then
+            #
+            # GitHub rebuilds a merge ref lazily, when somebody asks whether the pull request can be
+            # merged, so after main moves the ref can still sit on an older main. Diffed against the
+            # baseline above, everything main gained since then reads as fixed by the pull request.
+            # Asking for mergeability starts the rebuild, and the ref is used only once its first
+            # parent is the commit the baseline scanned.
+            parent=""
+            for attempt in 1 2 3 4 5 6 7 8 9 10 11 12; do
+              gh pr view "$num" --repo "$REPO" --json mergeable --jq .mergeable >/dev/null || true
+              if git fetch --no-tags --force origin "refs/pull/$num/merge:refs/remotes/pr/$num" 2>/dev/null; then
+                parent=$(git rev-parse "refs/remotes/pr/$num^1")
+                [ "$parent" = "$GITHUB_SHA" ] && break
+              fi
+              sleep 10
+            done
+            if [ -z "$parent" ]; then
               echo "::error::PR #$num has no merge ref. It may have conflicts with main"
+              failed=1; echo "::endgroup::"; continue
+            fi
+            if [ "$parent" != "$GITHUB_SHA" ]; then
+              echo "::error::PR #$num's merge ref is built on $parent, not on main at $GITHUB_SHA, so its diff would credit the pull request with main's own changes"
               failed=1; echo "::endgroup::"; continue
             fi
             sha=$(git rev-parse "refs/remotes/pr/$num")
