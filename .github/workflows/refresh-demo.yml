@@ -10,9 +10,10 @@
 # help either, because an event caused by GITHUB_TOKEN does not start a workflow run. Either way
 # the demo would keep showcasing whatever the branches happened to contain when they were cut.
 #
-# So this job does the diff itself, against `refs/pull/N/merge`, which is what the pull request
-# would be if merged into main as it stands today. That is current by construction: the Saga, the workflow and
-# the app baseline all come from main, and only the pull request's own change is layered on top.
+# So this job does the diff itself, against `refs/pull/N/merge`, which is the pull request merged
+# onto main as GitHub last built it, and compares it with a scan of that same main. The Saga, the
+# workflow and the app baseline all come from main, and only the pull request's own change is
+# layered on top.
 # It is also the plain CLI a reader would run, which is the thing being demonstrated.
 name: Refresh demo
 
@@ -107,29 +108,33 @@ jobs:
             # The merge ref is main-as-it-stands with this pull request applied. Scanning it is what
             # makes the refresh current: nothing here reads the branch as it was cut.
             #
-            # GitHub rebuilds a merge ref lazily, when somebody asks whether the pull request can be
-            # merged, so after main moves the ref can still sit on an older main. Diffed against the
-            # baseline above, everything main gained since then reads as fixed by the pull request.
-            # Asking for mergeability starts the rebuild, and the ref is used only once its first
-            # parent is the commit the baseline scanned.
-            parent=""
-            for attempt in 1 2 3 4 5 6 7 8 9 10 11 12; do
-              gh pr view "$num" --repo "$REPO" --json mergeable --jq .mergeable >/dev/null || true
-              if git fetch --no-tags --force origin "refs/pull/$num/merge:refs/remotes/pr/$num" 2>/dev/null; then
-                parent=$(git rev-parse "refs/remotes/pr/$num^1")
-                [ "$parent" = "$GITHUB_SHA" ] && break
-              fi
-              sleep 10
-            done
-            if [ -z "$parent" ]; then
+            # GitHub rebuilds a merge ref lazily, on its own schedule, so after main moves the ref can
+            # still sit on an older main for a while, and asking for mergeability does not hurry it.
+            # Diffed against the baseline above, everything main gained since would read as fixed
+            # or added by the pull request. So each pull request is diffed against the commit its
+            # merge ref is built on, its first parent, which is scanned once as a baseline of its
+            # own when it is not the main this run checked out.
+            if ! git fetch --no-tags --force origin "refs/pull/$num/merge:refs/remotes/pr/$num"; then
               echo "::error::PR #$num has no merge ref. It may have conflicts with main"
               failed=1; echo "::endgroup::"; continue
             fi
-            if [ "$parent" != "$GITHUB_SHA" ]; then
-              echo "::error::PR #$num's merge ref is built on $parent, not on main at $GITHUB_SHA, so its diff would credit the pull request with main's own changes"
-              failed=1; echo "::endgroup::"; continue
-            fi
             sha=$(git rev-parse "refs/remotes/pr/$num")
+            parent=$(git rev-parse "$sha^1")
+            basedir=base
+            if [ "$parent" != "$GITHUB_SHA" ]; then
+              basedir="base-$parent"
+              echo "::notice::PR #$num's merge ref is built on $parent, not on main at $GITHUB_SHA, so its diff compares against $parent"
+              if [ ! -f "$basedir/results.sarif" ]; then
+                rm -rf base-src
+                git worktree add --detach base-src "$parent" >/dev/null
+                ( cd base-src && draugr scan draugr.saga.yaml -o "$GITHUB_WORKSPACE/$basedir" --no-publish --no-gate --fail-on-caveats none ) || true
+                git worktree remove --force base-src
+              fi
+              if [ ! -f "$basedir/results.sarif" ]; then
+                echo "::error::PR #$num: the scan of $parent, the commit its merge ref is built on, did not complete"
+                failed=1; echo "::endgroup::"; continue
+              fi
+            fi
 
             rm -rf head pr-src
             git worktree add --detach pr-src "$sha" >/dev/null
@@ -148,7 +153,7 @@ jobs:
             # exits non-zero once its comment is posted, which is the demo showing the gate. Only an
             # error naming publishing is a failed post. `grep >/dev/null`, never `grep -q`, after a
             # pipe or on a file read under pipefail.
-            if ! GITHUB_REF="refs/pull/$num/merge" draugr diff base/results.sarif head/results.sarif \
+            if ! GITHUB_REF="refs/pull/$num/merge" draugr diff "$basedir/results.sarif" head/results.sarif \
                  --saga draugr.saga.yaml --publish 2>"diff-$num.err"; then
               cat "diff-$num.err" >&2
               if grep 'publishing' "diff-$num.err" >/dev/null; then
@@ -165,7 +170,7 @@ jobs:
             # A pull request that trips the gate exits non-zero here too, after the SARIF is written,
             # and a run: step is `bash -e` whatever this script sets. The upload below reports a
             # missing or empty file, so the exit is not what decides this pull request's refresh.
-            draugr diff base/results.sarif head/results.sarif --format sarif > "new-$num.sarif" || true
+            draugr diff "$basedir/results.sarif" head/results.sarif --format sarif > "new-$num.sarif" || true
             # Under draugr.yml's own category, the automation id its upload-sarif step writes, so
             # this replaces that pull request's analysis rather than adding a second one beside it.
             # The upload endpoint takes no category; code scanning reads it from the SARIF.
@@ -181,7 +186,7 @@ jobs:
             # From `summary`, which counts all three. The top-level arrays carry only new and
             # fixed, reading `unchanged` from them yields 0 on every run, and a table of zeroes
             # looks like an answer.
-            read -r n f u < <(draugr diff base/results.sarif head/results.sarif --format json \
+            read -r n f u < <(draugr diff "$basedir/results.sarif" head/results.sarif --format json \
                      | jq -r '.summary | "\(.new) \(.fixed) \(.unchanged)"')
             echo "| #$num | $n | $f | $u |" >>"$GITHUB_STEP_SUMMARY"
             echo "::endgroup::"
