@@ -296,7 +296,7 @@ them, so merging any would quietly change the sandbox everything else here is me
 |---|---|
 | [#38 Revisit the accepted risks](https://github.com/draugr-dev/draugr-demo/pull/38) | Nothing introduced, nothing fixed: one acceptance ends and another begins |
 | [#37 Add a dependency carrying several advisories](https://github.com/draugr-dev/draugr-demo/pull/37) | The other shape a comment comes in: six findings, one thing to do |
-| [#3 Add /download endpoint](https://github.com/draugr-dev/draugr-demo/pull/3) | A change that **introduces** a new finding, which is what the gate is for. **Its check fails, and that is the exhibit** |
+| [#3 Add /download endpoint](https://github.com/draugr-dev/draugr-demo/pull/3) | A **new** finding below the gate: a P2 the comment reports while the `failOnNew: P1` check passes. [#37](https://github.com/draugr-dev/draugr-demo/pull/37) is the one whose check fails |
 | [#2 Bump vulnerable dependencies](https://github.com/draugr-dev/draugr-demo/pull/2) | Findings reported as **fixed** |
 | [#1 Harden the API](https://github.com/draugr-dev/draugr-demo/pull/1) | Source fixes clearing `sast` findings |
 
